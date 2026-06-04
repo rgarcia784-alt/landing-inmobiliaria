@@ -1,6 +1,3 @@
-Aquí está el sitemap completo. Copia y pega todo reemplazando lo que hay:
-
-```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
@@ -34,6 +31,3 @@ Aquí está el sitemap completo. Copia y pega todo reemplazando lo que hay:
     <priority>0.9</priority>
   </url>
 </urlset>
-```
-
-Luego **Commit changes**.
