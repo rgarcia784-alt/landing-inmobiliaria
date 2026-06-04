@@ -508,6 +508,17 @@
 
   footer a { color: var(--gold); text-decoration: none; }
 
+  /* FAQ */
+  .faq-list { display: flex; flex-direction: column; gap: 8px; }
+  .faq-item { background: var(--white); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .faq-q { width: 100%; text-align: left; background: none; border: none; padding: 1.1rem 1.25rem; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; color: var(--text); cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 12px; transition: color 0.2s; }
+  .faq-q:hover { color: #18396b; }
+  .faq-q.open { color: #18396b; }
+  .faq-arrow { font-size: 18px; transition: transform 0.3s; flex-shrink: 0; }
+  .faq-q.open .faq-arrow { transform: rotate(180deg); }
+  .faq-a { display: none; padding: 0 1.25rem 1.1rem; font-size: 14px; color: var(--muted); line-height: 1.75; border-top: 1px solid var(--border); }
+  .faq-a.open { display: block; }
+
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
@@ -769,6 +780,55 @@
   </div>
 </section>
 
+<!-- FAQ -->
+<section class="section">
+  <p class="section-tag">Preguntas frecuentes</p>
+  <h2 class="section-title">Todo lo que necesitas saber para vender</h2>
+  <p class="section-sub">Las dudas más comunes de propietarios que quieren vender en Guadalajara y Zapopan.</p>
+  <div class="faq-list">
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">¿Cómo vendo mi casa en Guadalajara rápido y al mejor precio? <span class="faq-arrow">▾</span></button>
+      <div class="faq-a">La clave es precio correcto desde el inicio, presentación profesional y difusión amplia. Una propiedad bien valuada, con fotografía de calidad y publicada en los portales correctos, puede venderse en 4 a 12 semanas en zonas de alta demanda como Providencia o Ladrón de Guevara.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">¿Cuánto cuesta vender una casa con una inmobiliaria en Guadalajara? <span class="faq-arrow">▾</span></button>
+      <div class="faq-a">Los honorarios inmobiliarios en México son típicamente del 3% al 5% del precio de venta más IVA, y se cobran solo al cerrar la operación. Contáctanos para conocer nuestra propuesta específica para tu propiedad.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">¿Qué impuestos pago al vender mi casa en México? <span class="faq-arrow">▾</span></button>
+      <div class="faq-a">El principal es el ISR sobre la ganancia. Si es tu casa habitación y cumples ciertos requisitos (tiempo de residencia, monto de la operación), puedes estar exento o pagar menos. Te asesoramos para que aproveches todas las deducciones legales disponibles.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">¿Qué documentos necesito para vender mi propiedad en Jalisco? <span class="faq-arrow">▾</span></button>
+      <div class="faq-a">Los principales son: escritura pública de la propiedad, identificación oficial, comprobante de pago de predial al corriente, certificado de no adeudo de agua, CURP y RFC. Si tiene hipoteca, también necesitas el estado de cuenta. Te guiamos en cada paso.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">¿Cuánto vale mi casa en Guadalajara o Zapopan? <span class="faq-arrow">▾</span></button>
+      <div class="faq-a">El valor depende de zona, metros de construcción y terreno, edad del inmueble, acabados y oferta actual en el mercado. Te hacemos una opinión de valor profesional gratuita con datos reales de operaciones recientes en tu colonia.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">¿Cuánto tiempo tarda en venderse una propiedad en Guadalajara? <span class="faq-arrow">▾</span></button>
+      <div class="faq-a">En colonias de alta demanda como Providencia, Colonia Americana o Puerta de Hierro, entre 4 y 16 semanas con precio correcto. El factor más importante es el precio: una propiedad sobrevaluada puede tardar meses o años sin venderse.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">¿Puedo vender mi casa si tiene hipoteca vigente? <span class="faq-arrow">▾</span></button>
+      <div class="faq-a">Sí, es perfectamente posible. Al cerrar la venta, el saldo pendiente de la hipoteca se liquida con el producto de la venta ante notario. Te asesoramos para coordinar este proceso con tu banco sin contratiempos.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">¿Necesito contratar a un notario para vender mi propiedad? <span class="faq-arrow">▾</span></button>
+      <div class="faq-a">Sí, en México toda compraventa de inmuebles debe formalizarse ante notario público para tener validez legal. El notario da fe de la operación, calcula los impuestos y realiza la inscripción en el Registro Público de la Propiedad.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">¿Cómo sé si una inmobiliaria en Guadalajara es confiable? <span class="faq-arrow">▾</span></button>
+      <div class="faq-a">Busca experiencia comprobable en el mercado local, referencias de clientes anteriores y transparencia en sus honorarios. UNO Brokers tiene más de 31 años operando en Jalisco, con presencia en Guadalajara y Zapopan y cientos de operaciones concretadas.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">¿Qué pasa si el comprador se arrepiente después de firmar el contrato? <span class="faq-arrow">▾</span></button>
+      <div class="faq-a">En el contrato de promesa de compraventa se establece un anticipo o arras. Si el comprador desiste, generalmente pierde ese anticipo a favor del vendedor. Te asesoramos para que el contrato esté bien redactado y te proteja ante cualquier eventualidad.</div>
+    </div>
+  </div>
+</section>
+
 <!-- CTA FINAL -->
 <section class="cta-section">
   <h2>¿Listo para vender tu propiedad?</h2>
@@ -791,6 +851,14 @@
 </footer>
 
 <script>
+function toggleFaq(btn) {
+  var answer = btn.nextElementSibling;
+  var isOpen = btn.classList.contains('open');
+  document.querySelectorAll('.faq-q').forEach(function(b){ b.classList.remove('open'); });
+  document.querySelectorAll('.faq-a').forEach(function(a){ a.classList.remove('open'); });
+  if (!isOpen) { btn.classList.add('open'); answer.classList.add('open'); }
+}
+
 function enviarWA() {
   var nombre = document.getElementById('f-nombre').value.trim();
   var tel = document.getElementById('f-tel').value.trim();
@@ -811,6 +879,21 @@ function enviarWA() {
     + (metros ? 'Metros: ' + metros : '');
 
   window.open('https://wa.me/523339675255?text=' + msg, '_blank');
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"¿Cómo vendo mi casa en Guadalajara rápido y al mejor precio?","acceptedAnswer":{"@type":"Answer","text":"La clave es precio correcto desde el inicio, presentación profesional y difusión amplia. Una propiedad bien valuada puede venderse en 4 a 12 semanas en zonas de alta demanda."}},
+    {"@type":"Question","name":"¿Cuánto cuesta vender una casa con una inmobiliaria en Guadalajara?","acceptedAnswer":{"@type":"Answer","text":"Los honorarios inmobiliarios son típicamente del 3% al 5% del precio de venta más IVA, y se cobran solo al cerrar la operación."}},
+    {"@type":"Question","name":"¿Qué impuestos pago al vender mi casa en México?","acceptedAnswer":{"@type":"Answer","text":"El principal es el ISR sobre la ganancia. Si es tu casa habitación y cumples ciertos requisitos, puedes estar exento o pagar menos."}},
+    {"@type":"Question","name":"¿Qué documentos necesito para vender mi propiedad en Jalisco?","acceptedAnswer":{"@type":"Answer","text":"Escritura pública, identificación oficial, predial al corriente, certificado de no adeudo de agua, CURP y RFC. Si tiene hipoteca, también el estado de cuenta."}},
+    {"@type":"Question","name":"¿Cuánto vale mi casa en Guadalajara o Zapopan?","acceptedAnswer":{"@type":"Answer","text":"El valor depende de zona, metros, edad del inmueble, acabados y oferta actual. Te hacemos una opinión de valor profesional gratuita."}},
+    {"@type":"Question","name":"¿Puedo vender mi casa si tiene hipoteca vigente?","acceptedAnswer":{"@type":"Answer","text":"Sí. Al cerrar la venta, el saldo de la hipoteca se liquida con el producto de la venta ante notario."}},
+    {"@type":"Question","name":"¿Necesito contratar a un notario para vender mi propiedad?","acceptedAnswer":{"@type":"Answer","text":"Sí, en México toda compraventa de inmuebles debe formalizarse ante notario público para tener validez legal."}}
+  ]
 }
 </script>
 
