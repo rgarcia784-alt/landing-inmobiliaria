@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Propiedades · UNO Brokers · Guadalajara y Zapopan</title>
+<meta name="description" content="Casas, departamentos, terrenos y locales en venta y renta en Guadalajara y Zapopan. UNO Brokers, tu inmobiliaria de confianza.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
+:root{--gold:#C9A96E;--navy:#0B1220;--navy2:#111827;--navy3:#1a2335;--navy4:#222d42;--white:#F5F0E8;--gray:#7a8899;--green:#4CAF7D;--orange:#E8834A;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--navy);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;}
+
+header{background:var(--navy2);border-bottom:1px solid rgba(201,169,110,.2);padding:0 20px;height:62px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.brand{display:flex;align-items:center;gap:12px;}
+.brand-box{width:38px;height:38px;background:linear-gradient(135deg,var(--gold),#8a6030);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;color:var(--navy);}
+.brand-name{font-family:'Playfair Display',serif;font-size:18px;}
+.brand-sub{font-size:10px;color:var(--gray);letter-spacing:2px;text-transform:uppercase;}
+.btn-wa-top{background:#25D366;color:#fff;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:700;font-size:13px;display:flex;align-items:center;gap:6px;white-space:nowrap;}
+
+.hero{background:linear-gradient(160deg,#0d1525,#111827 60%,#141e30);padding:56px 20px 48px;text-align:center;border-bottom:1px solid rgba(201,169,110,.12);position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(201,169,110,.08) 0%,transparent 70%);}
+.hero-pill{display:inline-block;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);border:1px solid rgba(201,169,110,.25);padding:5px 16px;border-radius:20px;margin-bottom:24px;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(32px,6vw,56px);line-height:1.1;margin-bottom:16px;}
+.hero h1 em{font-style:italic;color:var(--gold);}
+.hero p{color:var(--gray);font-size:15px;max-width:480px;margin:0 auto 36px;line-height:1.7;}
+.stats{display:flex;justify-content:center;gap:40px;flex-wrap:wrap;}
+.stat-n{font-family:'Playfair Display',serif;font-size:32px;color:var(--gold);}
+.stat-l{font-size:10px;color:var(--gray);letter-spacing:1.5px;text-transform:uppercase;margin-top:2px;}
+
+.filters{display:flex;gap:8px;padding:16px 20px;overflow-x:auto;border-bottom:1px solid rgba(255,255,255,.05);}
+.filters::-webkit-scrollbar{display:none;}
+.fb{background:transparent;border:1px solid rgba(255,255,255,.1);color:var(--gray);padding:7px 16px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;transition:all .18s;white-space:nowrap;font-family:'Inter',sans-serif;}
+.fb.on,.fb:hover{background:var(--gold);color:var(--navy);border-color:var(--gold);font-weight:700;}
+
+#loading{text-align:center;padding:60px 20px;color:var(--gray);}
+.spin{display:inline-block;width:32px;height:32px;border:3px solid rgba(201,169,110,.2);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;margin-bottom:16px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1px;background:rgba(255,255,255,.05);}
+
+.card{background:var(--navy2);padding:24px;display:flex;flex-direction:column;transition:background .15s;cursor:default;}
+.card:hover{background:var(--navy3);}
+.card-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+.tipo{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border-radius:4px;}
+.t-renta{background:rgba(232,131,74,.15);color:var(--orange);}
+.t-venta{background:rgba(76,175,125,.12);color:var(--green);}
+.card h3{font-family:'Playfair Display',serif;font-size:17px;line-height:1.3;margin-bottom:6px;}
+.card-loc{font-size:12px;color:var(--gray);margin-bottom:14px;display:flex;align-items:center;gap:5px;}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;}
+.chip{background:var(--navy4);border:1px solid rgba(255,255,255,.06);color:rgba(245,240,232,.65);font-size:11px;padding:4px 10px;border-radius:4px;}
+.precio-main{font-family:'Playfair Display',serif;font-size:22px;color:var(--gold);margin-bottom:3px;}
+.precio-sub{font-size:11px;color:var(--gray);margin-bottom:18px;}
+.hr{height:1px;background:rgba(255,255,255,.06);margin-bottom:16px;}
+.actions{display:flex;gap:8px;margin-top:auto;}
+.btn-wa{flex:1;background:#25D366;color:#fff;border:none;padding:12px 8px;border-radius:8px;font-weight:700;font-size:12px;cursor:pointer;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:5px;transition:opacity .15s;font-family:'Inter',sans-serif;}
+.btn-wa:hover{opacity:.88;}
+.btn-ver{flex:1;background:transparent;color:var(--gold);border:1px solid rgba(201,169,110,.35);padding:12px 8px;border-radius:8px;font-weight:600;font-size:12px;cursor:pointer;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:5px;transition:all .15s;font-family:'Inter',sans-serif;}
+.btn-ver:hover{background:rgba(201,169,110,.1);border-color:var(--gold);}
+
+.wa-float{position:fixed;bottom:24px;right:20px;background:#25D366;color:#fff;border-radius:50px;padding:14px 22px;font-weight:700;font-size:14px;text-decoration:none;display:flex;align-items:center;gap:8px;box-shadow:0 4px 20px rgba(37,211,102,.4);z-index:50;transition:transform .2s;}
+.wa-float:hover{transform:scale(1.05);}
+
+footer{border-top:1px solid rgba(201,169,110,.1);padding:40px 20px;text-align:center;}
+.footer-brand{font-family:'Playfair Display',serif;font-size:22px;color:var(--gold);margin-bottom:10px;}
+footer p{color:var(--gray);font-size:13px;line-height:1.9;}
+footer a{color:var(--gold);text-decoration:none;}
+
+@media(max-width:560px){.grid{grid-template-columns:1fr;}.hero{padding:40px 16px;}.stats{gap:24px;}.btn-wa-top span{display:none;}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <div class="brand-box">UB</div>
+    <div>
+      <div class="brand-name">UNO Brokers</div>
+      <div class="brand-sub">Guadalajara · Zapopan</div>
+    </div>
+  </div>
+  <a class="btn-wa-top" href="https://wa.me/523339675255?text=Hola%2C%20vi%20sus%20propiedades%20y%20quisiera%20informaci%C3%B3n." target="_blank">
+    💬 <span>Contáctanos</span>
+  </a>
+</header>
+
+<div class="hero">
+  <div class="hero-pill">Guadalajara · Zapopan · Jalisco</div>
+  <h1>Encuentra tu próxima<br><em>propiedad</em> ideal</h1>
+  <p>Casas, departamentos, terrenos y locales en venta y renta. Asesoría sin costo, respuesta inmediata por WhatsApp.</p>
+  <div class="stats">
+    <div class="stat"><div class="stat-n" id="total-props">—</div><div class="stat-l">Propiedades</div></div>
+    <div class="stat"><div class="stat-n" id="total-renta">—</div><div class="stat-l">En Renta</div></div>
+    <div class="stat"><div class="stat-n" id="total-venta">—</div><div class="stat-l">En Venta</div></div>
+  </div>
+</div>
+
+<div class="filters">
+  <button class="fb on" onclick="filtrar('todos',this)">Todas</button>
+  <button class="fb" onclick="filtrar('renta',this)">En Renta</button>
+  <button class="fb" onclick="filtrar('venta',this)">En Venta</button>
+  <button class="fb" onclick="filtrar('terreno',this)">Terrenos</button>
+  <button class="fb" onclick="filtrar('casa',this)">Casas</button>
+  <button class="fb" onclick="filtrar('departamento',this)">Departamentos</button>
+  <button class="fb" onclick="filtrar('local',this)">Locales</button>
+  <button class="fb" onclick="filtrar('industrial',this)">Industrial</button>
+</div>
+
+<div id="loading"><div class="spin"></div><p>Cargando propiedades...</p></div>
+<div class="grid" id="grid" style="display:none;"></div>
+
+<a class="wa-float" href="https://wa.me/523339675255?text=Hola%2C%20vi%20sus%20propiedades%20y%20quisiera%20informaci%C3%B3n." target="_blank">💬 Escríbenos</a>
+
+<footer>
+  <div class="footer-brand">UNO Brokers</div>
+  <p>
+    Inmobiliaria en Guadalajara y Zapopan · Especialistas en compra, venta y renta<br>
+    <a href="https://wa.me/523339675255" target="_blank">💬 WhatsApp: 33 3967 5255</a> · 
+    <a href="https://www.unobrokers.mx" target="_blank">unobrokers.mx</a>
+  </p>
+</footer>
+
+<script>
+var todasProps=[];
+
+
+
+function parseProps(html){
+  var props=[];var re=/href="(https?:\/\/www\.unobrokers\.mx\/p\/(\d+)-([^"]+))"/g;var m;var seen=new Set();
+  while((m=re.exec(html))!==null){
+    var url=m[1],id=m[2],slug=m[3];
+    if(seen.has(id))continue;seen.add(id);
+    var slugL=slug.toLowerCase();
+    var esRenta=slugL.includes('renta')||slugL.includes('en-renta');
+    var tipo=esRenta?'renta':'venta';
+    var cat='terreno';
+    if(slugL.includes('casa-en-condominio'))cat='casa';
+    else if(slugL.includes('casa'))cat='casa';
+    else if(slugL.includes('departamento'))cat='departamento';
+    else if(slugL.includes('local'))cat='local';
+    else if(slugL.includes('industrial')||slugL.includes('logistico')||slugL.includes('bodega')||slugL.includes('nubax'))cat='industrial';
+    else if(slugL.includes('terreno-comercial'))cat='local';
+    var name=slug.replace(/^\d+-/,'').replace(/-/g,' ').trim();
+    var parts=name.split(/en venta |en renta |zapopan |guadalajara |jalisco /i);
+    var titulo=parts[parts.length-1]||name;
+    titulo=titulo.trim().replace(/^\s*[-·,|]\s*/,'');
+    if(!titulo||titulo.length<5)titulo=name;
+    titulo=titulo.charAt(0).toUpperCase()+titulo.slice(1);
+    var idx=html.indexOf(url);
+    var ctx=html.substring(Math.max(0,idx-300),idx+500);
+    var priceM=ctx.match(/MXN[\s]*([\d,]+)/);
+    var precio=null;
+    if(priceM){
+      var n=parseInt(priceM[1].replace(/,/g,''));
+      if(n>=1000000)precio='$'+(n/1000000).toFixed(1).replace('.0','')+' MDP';
+      else if(n>=10000)precio='$'+n.toLocaleString('es-MX')+' MXN'+(tipo==='renta'?'/mes':'');
+      else if(n>0)precio='$'+n.toLocaleString('es-MX')+' MXN'+(tipo==='renta'?'/mes':'');
+    }
+    var m2M=ctx.match(/([\d,]+\.?\d*)\s*m²/);
+    var m2=m2M?m2M[1]+' m²':null;
+    var zona='';
+    if(slugL.includes('zapopan'))zona='Zapopan';
+    if(slugL.includes('guadalajara'))zona='Guadalajara';
+    if(slugL.includes('tlajomulco'))zona='Tlajomulco';
+    if(slugL.includes('tepic'))zona='Tepic, Nayarit';
+    if(slugL.includes('huixquilucan'))zona='Huixquilucan, CDMX';
+    if(slugL.includes('el-salto')||slugL.includes('nubax'))zona='El Salto, Jalisco';
+    if(slugL.includes('bajio')||slugL.includes('bajío'))zona=(zona?zona+' · ':')+'El Bajío';
+    if(slugL.includes('puerta-del-valle'))zona='Puerta del Valle, Zapopan';
+    if(slugL.includes('puerta-de-hierro'))zona='Puerta de Hierro, Zapopan';
+    if(slugL.includes('lafayette'))zona='Col. Lafayette, Guadalajara';
+    if(slugL.includes('altavista'))zona='Altavista Residencial, Zapopan';
+    if(slugL.includes('bosque-vallarta')||slugL.includes('bosques-vallarta'))zona='Bosques Vallarta, Zapopan';
+    if(slugL.includes('americana'))zona='Col. Americana, Guadalajara';
+    if(slugL.includes('san-juan-de-ocotan'))zona='San Juan de Ocotán, Zapopan';
+    if(slugL.includes('sueños')||slugL.includes('suenos'))zona=zona||'Los Sueños Residencial, Zapopan';
+    if(slugL.includes('campo-real'))zona='Campo Real, Zapopan';
+    if(slugL.includes('bosques-de-san-gonzalo'))zona='Bosques de San Gonzalo, Zapopan';
+    if(slugL.includes('armadillo'))zona='Col. El Armadillo, Tepic';
+    if(slugL.includes('canteras')||slugL.includes('bosque-real'))zona='Huixquilucan, Edo. de México';
+    if(!zona)zona='Guadalajara / Zapopan';
+    props.push({id,url,titulo,tipo,cat,precio,m2,zona});
+  }
+  return props;
+}
+
+function renderizar(props){
+  var grid=document.getElementById('grid');
+  grid.innerHTML='';
+  var renta=props.filter(p=>p.tipo==='renta').length;
+  var venta=props.filter(p=>p.tipo==='venta').length;
+  document.getElementById('total-props').textContent=props.length;
+  document.getElementById('total-renta').textContent=renta;
+  document.getElementById('total-venta').textContent=venta;
+  props.forEach(function(p){
+    var wa_msg=encodeURIComponent('Hola, me interesa la propiedad:\n📌 '+p.titulo+'\n📍 '+p.zona+(p.precio?'\n💰 '+p.precio:'')+'\n\n¿Podría darme más información?');
+    var cats=[p.tipo,p.cat];
+    if(p.cat==='industrial')cats.push('terreno');
+    if(p.cat==='local')cats.push('terreno');
+    var chips=[];
+    if(p.m2)chips.push(p.m2);
+    var tipol={'casa':'Casa','departamento':'Departamento','terreno':'Terreno','local':'Local·Comercial','industrial':'Industrial·Logístico'};
+    chips.push(tipol[p.cat]||'Propiedad');
+    var div=document.createElement('div');
+    div.className='card';
+    div.dataset.cat=cats.join(' ');
+    div.innerHTML=`
+      <div class="card-top">
+        <span class="tipo ${p.tipo==='renta'?'t-renta':'t-venta'}">${p.tipo==='renta'?'RENTA':'VENTA'}</span>
+      </div>
+      <h3>${p.titulo}</h3>
+      <div class="card-loc">📍 ${p.zona}</div>
+      <div class="chips">${chips.map(c=>`<span class="chip">${c}</span>`).join('')}</div>
+      <div class="precio-main">${p.precio||'Consultar precio'}</div>
+      <div class="precio-sub">Asesoría sin costo · Respuesta inmediata</div>
+      <div class="hr"></div>
+      <div class="actions">
+        <a class="btn-wa" href="https://wa.me/523339675255?text=${wa_msg}" target="_blank">💬 Informes por WhatsApp</a>
+        <a class="btn-ver" href="${p.url}" target="_blank">Ver más →</a>
+      </div>`;
+    grid.appendChild(div);
+  });
+  document.getElementById('loading').style.display='none';
+  grid.style.display='grid';
+}
+
+function filtrar(cat,btn){
+  document.querySelectorAll('.fb').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.card').forEach(c=>{
+    c.style.display=(cat==='todos'||c.dataset.cat.includes(cat))?'':'none';
+  });
+}
+
+function usarStaticos(){
+  todasProps=[
+    {id:'8050592',url:'https://www.unobrokers.mx/p/8050592',titulo:'Casa en renta · Campo Real, Zapopan',tipo:'renta',cat:'casa',precio:'$13,500 MXN/mes',m2:'95 m²',zona:'Campo Real, Zapopan'},
+    {id:'7923962',url:'https://www.unobrokers.mx/p/7923962',titulo:'Suite en renta · The Lighthouse · Puerta del Valle',tipo:'renta',cat:'departamento',precio:'$13,500–$14,000 MXN/mes',m2:'40 m²',zona:'Puerta del Valle, Zapopan'},
+    {id:'7948834',url:'https://www.unobrokers.mx/p/7948834',titulo:'Terreno logístico en renta · El Bajío, Zapopan',tipo:'renta',cat:'industrial',precio:'$70,000 MXN/mes',m2:'3,000 m²',zona:'El Bajío, Zapopan'},
+    {id:'7938706',url:'https://www.unobrokers.mx/p/7938706',titulo:'Terreno en renta uso logístico · San Juan de Ocotán',tipo:'renta',cat:'industrial',precio:'$110,000 MXN/mes',m2:'6,000 m²',zona:'San Juan de Ocotán, Zapopan'},
+    {id:'7983689',url:'https://www.unobrokers.mx/p/7983689',titulo:'Casa en renta · Bosques de San Gonzalo · 3 recámaras',tipo:'renta',cat:'casa',precio:'$12,000 MXN/mes',m2:'100 m²',zona:'Bosques de San Gonzalo, Zapopan'},
+    {id:'8054276',url:'https://www.unobrokers.mx/p/8054276',titulo:'Terreno comercial en renta · Tepic, Nayarit',tipo:'renta',cat:'local',precio:'$35,000 MXN/mes',m2:'552 m²',zona:'Col. El Armadillo, Tepic'},
+    {id:'7368505',url:'https://www.unobrokers.mx/p/7368505',titulo:'Local en pre-renta · Los Sueños Residencial 50 m²',tipo:'renta',cat:'local',precio:'Consultar precio',m2:'50 m²',zona:'Los Sueños Residencial, Zapopan'},
+    {id:'7368499',url:'https://www.unobrokers.mx/p/7368499',titulo:'Casa de lujo en venta · Los Sueños Residencial',tipo:'venta',cat:'casa',precio:'$26 MDP',m2:'650 m²',zona:'Los Sueños Residencial, Zapopan'},
+    {id:'7368487',url:'https://www.unobrokers.mx/p/7368487',titulo:'Casa en venta · Puerta de Hierro · Condominio Murcia',tipo:'venta',cat:'casa',precio:'Consultar precio',m2:null,zona:'Puerta de Hierro, Zapopan'},
+    {id:'7387061',url:'https://www.unobrokers.mx/p/7387061',titulo:'Casa en venta · Col. Lafayette · Ideal oficinas',tipo:'venta',cat:'casa',precio:'Consultar precio',m2:null,zona:'Col. Lafayette, Guadalajara'},
+    {id:'7846656',url:'https://www.unobrokers.mx/p/7846656',titulo:'Casa nueva en venta · Altavista Residencial · Zapopan',tipo:'venta',cat:'casa',precio:'Consultar precio',m2:null,zona:'Altavista Residencial, Zapopan'},
+    {id:'7405808',url:'https://www.unobrokers.mx/p/7405808',titulo:'Departamento en venta · The Lighthouse · Puerta del Valle',tipo:'venta',cat:'departamento',precio:'$4,100,000 MXN',m2:'72 m²',zona:'Puerta del Valle, Zapopan'},
+    {id:'7983120',url:'https://www.unobrokers.mx/p/7983120',titulo:'Suite en venta · Torre Undici · Col. Americana GDL',tipo:'venta',cat:'departamento',precio:'$2,200,000 MXN',m2:'34 m²',zona:'Col. Americana, Guadalajara'},
+    {id:'7983224',url:'https://www.unobrokers.mx/p/7983224',titulo:'Suite con terraza · Torre XII Morelos · Col. Americana',tipo:'venta',cat:'departamento',precio:'$2,945,000 MXN',m2:'56 m²',zona:'Col. Americana, Guadalajara'},
+    {id:'7368501',url:'https://www.unobrokers.mx/p/7368501',titulo:'Terreno en venta · Los Sueños Residencial 590 m²',tipo:'venta',cat:'terreno',precio:'$10.5 MDP',m2:'590 m²',zona:'Los Sueños Residencial, Zapopan'},
+    {id:'7368514',url:'https://www.unobrokers.mx/p/7368514',titulo:'Terreno 591 m² · Los Sueños Residencial',tipo:'venta',cat:'terreno',precio:'$10.5 MDP',m2:'591 m²',zona:'Los Sueños Residencial, Zapopan'},
+    {id:'7408445',url:'https://www.unobrokers.mx/p/7408445',titulo:'Terreno residencial 408 m² · Los Sueños Zapopan',tipo:'venta',cat:'terreno',precio:'$8,700,000 MXN',m2:'408 m²',zona:'Los Sueños Residencial, Zapopan'},
+    {id:'7368468',url:'https://www.unobrokers.mx/p/7368468',titulo:'Terreno premium 448 m² · Los Sueños Residencial',tipo:'venta',cat:'terreno',precio:'$8,000,000 MXN',m2:'448 m²',zona:'Los Sueños Residencial, Zapopan'},
+    {id:'7922349',url:'https://www.unobrokers.mx/p/7922349',titulo:'Terreno 3,796 m² · Circunvalación del Bosque',tipo:'venta',cat:'terreno',precio:'$12,160,000 MXN',m2:'3,796 m²',zona:'El Bajío, Zapopan'},
+    {id:'7824362',url:'https://www.unobrokers.mx/p/7824362',titulo:'Terreno 3,796 m² con luz · Circunvalación del Bosque',tipo:'venta',cat:'terreno',precio:'$12,147,200 MXN',m2:'3,796 m²',zona:'El Bajío, Zapopan'},
+    {id:'7767297',url:'https://www.unobrokers.mx/p/7767297',titulo:'Terreno 190 m² · Bosques Vallarta, Zona Real',tipo:'venta',cat:'terreno',precio:'$3,500,000 MXN',m2:'190 m²',zona:'Bosques Vallarta, Zapopan'},
+    {id:'7799929',url:'https://www.unobrokers.mx/p/7799929',titulo:'Terreno 10,000 m² sobre Av. Circunvalación',tipo:'venta',cat:'terreno',precio:'$25 MDP',m2:'10,000 m²',zona:'El Bajío, Zapopan'},
+    {id:'7959980',url:'https://www.unobrokers.mx/p/7959980',titulo:'Terrenos en venta · Bosque Real, Huixquilucan',tipo:'venta',cat:'terreno',precio:'Desde $3,900,000 MXN',m2:null,zona:'Huixquilucan, Edo. de México'},
+    {id:'7788069',url:'https://www.unobrokers.mx/p/7788069',titulo:'Terreno industrial junto a Amazon GDL1 · 1,919 m²',tipo:'venta',cat:'industrial',precio:'$4,123,208 MXN',m2:'1,919 m²',zona:'Zapote del Valle, Tlajomulco'},
+    {id:'7968769',url:'https://www.unobrokers.mx/p/7968769',titulo:'Terreno comercial 5,000 m² · Zapopan · Av. Vallarta',tipo:'venta',cat:'local',precio:'$75 MDP',m2:'5,000 m²',zona:'Los Sueños, Zapopan'},
+    {id:'8164651',url:'https://www.unobrokers.mx/p/8164651',titulo:'Lotes Industriales · Parque Nubax · El Salto',tipo:'venta',cat:'industrial',precio:'Consultar precio',m2:null,zona:'Corredor El Salto, Jalisco'},
+  ];
+  renderizar(todasProps);
+}
+
+usarStaticos();
+</script>
+</body>
+</html>
