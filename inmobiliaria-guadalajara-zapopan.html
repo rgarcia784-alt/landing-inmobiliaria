@@ -96,6 +96,12 @@ header{position:sticky;top:0;z-index:100;background:rgba(14,21,37,.85);backdrop-
 .servicio-item{background:linear-gradient(160deg,var(--navy-3),var(--navy-2));border:1px solid var(--line);border-radius:16px;padding:28px 26px;}
 .servicio-item h3{font-size:1.1rem;margin-bottom:10px;color:var(--gold-light)}
 .servicio-item p{color:var(--muted);font-size:.93rem}
+.herramientas-lista{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-top:16px}
+.herramienta-item{background:linear-gradient(160deg,var(--navy-3),var(--navy-2));border:1px solid var(--line);border-radius:16px;padding:28px 26px;text-decoration:none;display:block;transition:.3s;}
+.herramienta-item:hover{border-color:var(--gold);transform:translateY(-3px);}
+.herramienta-item h3{font-size:1.1rem;margin-bottom:10px;color:var(--gold-light)}
+.herramienta-item p{color:var(--muted);font-size:.93rem;margin-bottom:14px}
+.herramienta-item .ir{font-size:.82rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--gold)}
 .faq{max-width:780px;margin:0 auto}
 .faq-item{background:linear-gradient(160deg,var(--navy-3),var(--navy-2));border:1px solid var(--line);border-radius:16px;padding:26px 28px;margin-bottom:16px}
 .faq-item h3{font-size:1.1rem;margin-bottom:10px;color:var(--gold-light)}
@@ -177,6 +183,37 @@ footer a{color:var(--gold-light);text-decoration:none}
         <h3>&#9783; Oficinas y locales comerciales</h3>
         <p>Búsqueda y comercialización de espacios corporativos y locales en las principales zonas comerciales de la ZMG.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="herramientas">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Herramientas gratuitas para propietarios</h2>
+      <p>Genera tu documento o solicita tu estudio en minutos, directamente desde nuestro sitio.</p>
+    </div>
+    <div class="herramientas-lista">
+      <a class="herramienta-item" href="investigacion-inquilinos.html">
+        <h3>&#128269; Investigación de Inquilinos</h3>
+        <p>Dictamen completo de antecedentes antes de firmar con un candidato a inquilino.</p>
+        <span class="ir">Conocer el servicio &rarr;</span>
+      </a>
+      <a class="herramienta-item" href="generador-contrato-renta.html">
+        <h3>&#128196; Generador de Contrato de Renta</h3>
+        <p>Genera tu contrato de arrendamiento base gratis, en minutos y sin compromiso.</p>
+        <span class="ir">Generar mi contrato &rarr;</span>
+      </a>
+      <a class="herramienta-item" href="generador-contrato-compraventa.html">
+        <h3>&#128190; Contrato de Compraventa</h3>
+        <p>Promesa de compraventa o compraventa directa para tu casa, depa, oficina o bodega.</p>
+        <span class="ir">Generar mi contrato &rarr;</span>
+      </a>
+      <a class="herramienta-item" href="captacion-rentas-zapopan-guadalajara.html">
+        <h3>&#127968; Renta tu Propiedad con Nosotros</h3>
+        <p>Publicación, filtro de inquilinos y administración completa para propietarios.</p>
+        <span class="ir">Quiero rentar &rarr;</span>
+      </a>
     </div>
   </div>
 </section>
