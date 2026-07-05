@@ -150,21 +150,41 @@ footer strong{color:var(--amber)}
     <div class="logo-sub">INMOBILIARIA · GDL · ZPN</div>
   </div>
   <div class="header-contact">
-    <a class="hdr-wa" href="https://wa.me/523339675255" target="_blank">💬 WhatsApp</a>
-    <a class="hdr-tel" href="tel:+523339675255">📞 33 3967 5255</a>
+    <a class="hdr-wa" id="hdrWa" href="https://wa.me/523339675255" target="_blank">💬 WhatsApp</a>
+    <a class="hdr-tel" id="hdrTel" href="tel:+523339675255">📞 33 3967 5255</a>
   </div>
 </header>
 
 <div class="hero">
   <h1>¿Cuánto vale tu propiedad en<br/><span>Guadalajara o Zapopan?</span></h1>
-  <p>Obtén gratis una opinión de valor inmobiliario con comparables de mercado actualizados y estimación de renta mensual. Respaldado por UNO Brokers.</p>
+  <p id="heroP">Obtén gratis una opinión de valor inmobiliario con comparables de mercado actualizados y estimación de renta mensual. Respaldado por UNO Brokers.</p>
   <div class="hero-cta">
-    <a class="hero-btn-wa" href="https://wa.me/523339675255" target="_blank">💬 Hablar con un asesor</a>
+    <a class="hero-btn-wa" id="heroWa" href="https://wa.me/523339675255" target="_blank">💬 Hablar con un asesor</a>
     <a class="hero-btn-ghost" href="#calculadora">⬇ Calcular ahora</a>
   </div>
 </div>
 
 <main id="calculadora">
+
+  <!-- Personalización para asesores -->
+  <div id="personalizaBox" style="max-width:640px;margin:0 auto 24px;padding:16px 20px;background:#fff8e6;border:2px solid #e8a020;border-radius:10px;box-shadow:0 2px 10px rgba(232,160,32,0.25);">
+    <button id="personalizaToggle" style="background:none;border:none;cursor:pointer;font-size:15px;font-weight:800;color:#b8720a;padding:0;display:flex;align-items:center;gap:8px;width:100%;text-align:left">
+      <span style="background:#e8a020;color:#fff;padding:2px 8px;border-radius:5px;font-size:12px;letter-spacing:.03em">NUEVO</span>
+      🔗 <span>¿Eres asesor inmobiliario? Genera tu propio link personalizado →</span>
+    </button>
+    <div id="personalizaPanel" style="display:none;margin-top:14px">
+      <p style="font-size:12.5px;color:#5a6a7a;margin-bottom:10px">Pon tu nombre y tu WhatsApp. Te damos un link único de esta misma calculadora — cuando tus clientes entren por ahí, todos los botones de contacto y la opinión de valor descargable van a aparecer con tus datos, no los nuestros.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+        <input id="pAgentName" type="text" placeholder="Tu nombre o el de tu inmobiliaria" style="flex:1;min-width:180px;padding:9px 10px;border:1px solid #cfd8e0;border-radius:6px;font-size:13px">
+        <input id="pAgentTel" type="text" placeholder="WhatsApp (10 dígitos)" maxlength="10" style="width:170px;padding:9px 10px;border:1px solid #cfd8e0;border-radius:6px;font-size:13px">
+      </div>
+      <button id="pGenBtn" style="background:#e8a020;color:#fff;border:none;padding:9px 18px;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer">Generar mi link</button>
+      <div id="pResultBox" style="display:none;margin-top:12px;padding:10px 12px;background:#fff;border:1px solid #cfd8e0;border-radius:6px">
+        <input id="pResultLink" type="text" readonly style="width:100%;border:none;font-size:12px;color:#333;background:transparent">
+        <button id="pCopyBtn" style="margin-top:8px;background:var(--navy,#0a1f3d);color:#fff;border:none;padding:7px 14px;border-radius:6px;font-size:12px;cursor:pointer">📋 Copiar link</button>
+      </div>
+    </div>
+  </div>
 
   <div id="formulario">
 
@@ -366,7 +386,7 @@ footer strong{color:var(--amber)}
 
     <!-- Valor hero -->
     <div class="valor-hero">
-      <div class="label">OPINIÓN DE VALOR — UNO BROKERS 2026</div>
+      <div class="label" id="resLabel">OPINIÓN DE VALOR — UNO BROKERS 2026</div>
       <div class="mid-value" id="res-mid">$0</div>
       <div style="color:#8899AA;font-size:12px;margin-top:5px">Valor de venta estimado</div>
       <div class="valor-tabs" style="margin-top:16px">
@@ -422,10 +442,22 @@ footer strong{color:var(--amber)}
     <!-- CTA resultado -->
     <div class="cta-card">
       <h3>¿Quieres vender o rentar tu propiedad?</h3>
-      <p>En UNO Brokers te ayudamos a obtener el mejor precio del mercado con una estrategia de venta o renta personalizada. Contacta ahora a un asesor.</p>
+      <p id="ctaP">En UNO Brokers te ayudamos a obtener el mejor precio del mercado con una estrategia de venta o renta personalizada. Contacta ahora a un asesor.</p>
       <div class="cta-buttons">
-        <a class="btn-wa-big" href="https://wa.me/523339675255?text=Hola%2C%20me%20interesa%20vender%20o%20rentar%20mi%20propiedad.%20Me%20puede%20dar%20m%C3%A1s%20informaci%C3%B3n%3F" target="_blank">💬 WhatsApp directo</a>
-        <a class="btn-tel-big" href="tel:+523339675255">📞 33 3967 5255</a>
+        <a class="btn-wa-big" id="ctaWa" href="https://wa.me/523339675255?text=Hola%2C%20me%20interesa%20vender%20o%20rentar%20mi%20propiedad.%20Me%20puede%20dar%20m%C3%A1s%20informaci%C3%B3n%3F" target="_blank">💬 WhatsApp directo</a>
+        <a class="btn-tel-big" id="ctaTel" href="tel:+523339675255">📞 33 3967 5255</a>
+      </div>
+    </div>
+
+    <!-- Referidos -->
+    <div class="card">
+      <div class="card-header"><div class="icon">🎁</div><h2>COMPARTE Y OBTÉN TU OPINIÓN DE VALOR PREMIUM GRATIS</h2></div>
+      <div class="card-body">
+        <p style="font-size:13px;color:var(--gray);margin-bottom:14px">
+          Comparte esta calculadora con <strong>3 personas</strong> que también estén pensando en vender o rentar su propiedad, y te regalamos una opinión de valor <strong>premium</strong> — con visita física de un asesor y comparables exactos de tu zona, sin costo.
+        </p>
+        <a class="btn-wa-big" id="refShare" style="margin-bottom:10px" href="#" target="_blank">📤 Compartir con 3 personas</a>
+        <a class="btn-tel-big" id="refClaim" style="width:100%;justify-content:center;box-sizing:border-box" href="#" target="_blank">✅ Ya compartí, reclamar mi premio</a>
       </div>
     </div>
 
@@ -526,11 +558,11 @@ footer strong{color:var(--amber)}
   </div>
 
   <div class="faq-item">
-    <button class="faq-q" onclick="toggleFaq(this)">¿Cómo contacto a UNO Brokers para vender o rentar mi propiedad? <span class="faq-icon">+</span></button>
+    <button class="faq-q" onclick="toggleFaq(this)">¿Cómo contacto a <span id="faqAgentName">UNO Brokers</span> para vender o rentar mi propiedad? <span class="faq-icon">+</span></button>
     <div class="faq-a"><p>Puedes contactarnos por cualquiera de estos canales:</p>
       <ul>
-        <li>💬 <strong>WhatsApp</strong>: <a href="https://wa.me/523339675255" target="_blank" style="color:var(--teal)">33 3967 5255</a></li>
-        <li>📞 <strong>Teléfono</strong>: 33 3967 5255</li>
+        <li>💬 <strong>WhatsApp</strong>: <a id="faqWa" href="https://wa.me/523339675255" target="_blank" style="color:var(--teal)">33 3967 5255</a></li>
+        <li>📞 <strong>Teléfono</strong>: <span id="faqTelTxt">33 3967 5255</span></li>
         <li>🌐 <strong>Sitio web</strong>: unobrokers.mx</li>
       </ul>
       <p>Atendemos propiedades en Guadalajara, Zapopan, Tlajomulco, Tlaquepaque y toda la zona metropolitana.</p>
@@ -541,22 +573,117 @@ footer strong{color:var(--amber)}
 <!-- CTA BOTTOM -->
 <div class="cta-bottom">
   <h2>¿Listo para vender o rentar tu propiedad?</h2>
-  <p>Asesórate con expertos. En UNO Brokers te ayudamos a conseguir el mejor precio del mercado.</p>
+  <p id="bottomP">Asesórate con expertos. En UNO Brokers te ayudamos a conseguir el mejor precio del mercado.</p>
   <div class="cta-row">
-    <a class="btn-wa-big" href="https://wa.me/523339675255?text=Quiero%20informaci%C3%B3n%20sobre%20vender%20o%20rentar%20mi%20propiedad" target="_blank">💬 WhatsApp</a>
-    <a class="btn-tel-big" href="tel:+523339675255">📞 33 3967 5255</a>
+    <a class="btn-wa-big" id="bottomWa" href="https://wa.me/523339675255?text=Quiero%20informaci%C3%B3n%20sobre%20vender%20o%20rentar%20mi%20propiedad" target="_blank">💬 WhatsApp</a>
+    <a class="btn-tel-big" id="bottomTel" href="tel:+523339675255">📞 33 3967 5255</a>
   </div>
 </div>
 
 <footer>
-  <strong>UNO BROKERS</strong> · Inmobiliaria Guadalajara y Zapopan, Jalisco<br/>
-  📞 <strong>33 3967 5255</strong> · unobrokers.mx
+  <strong id="footerName">UNO BROKERS</strong> · Inmobiliaria Guadalajara y Zapopan, Jalisco<br/>
+  📞 <strong id="footerTel">33 3967 5255</strong> · unobrokers.mx
+  <div id="poweredBy" style="margin-top:6px;font-size:11px;color:#5a6a7a"></div>
 </footer>
 
 <!-- WhatsApp flotante -->
-<a class="wa-float" href="https://wa.me/523339675255" target="_blank" title="Contactar por WhatsApp">💬</a>
+<a class="wa-float" id="floatWa" href="https://wa.me/523339675255" target="_blank" title="Contactar por WhatsApp">💬</a>
 
 <script>
+// ── PERSONALIZACIÓN POR ASESOR ──
+const DEFAULT_AGENT = { name:'UNO Brokers', tel:'523339675255', telDisplay:'33 3967 5255', isDefault:true };
+function buildAgentFromParams(){
+  const qs = new URLSearchParams(window.location.search);
+  const nombre = qs.get('asesor');
+  const telRaw = qs.get('tel');
+  if(!nombre || !telRaw) return DEFAULT_AGENT;
+  const telClean = telRaw.replace(/\D/g,'');
+  if(telClean.length < 10) return DEFAULT_AGENT;
+  const tel10 = telClean.slice(-10);
+  const telFull = telClean.length===10 ? '52'+telClean : telClean;
+  const display = tel10.replace(/(\d{2})(\d{4})(\d{4})/,'$1 $2 $3');
+  return { name: decodeURIComponent(nombre).slice(0,60), tel: telFull, telDisplay: display, isDefault:false };
+}
+const AGENT = buildAgentFromParams();
+
+function applyAgentBranding(){
+  const a = AGENT;
+  const waLink = (msg) => `https://wa.me/${a.tel}` + (msg ? `?text=${encodeURIComponent(msg)}` : '');
+  const telLink = `tel:+${a.tel}`;
+
+  const setHref = (id,href)=>{const el=document.getElementById(id); if(el) el.href=href;};
+  const setTxt = (id,txt)=>{const el=document.getElementById(id); if(el) el.textContent=txt;};
+
+  setHref('hdrWa', waLink()); setTxt('hdrTel','📞 '+a.telDisplay); setHref('hdrTel', telLink);
+  setHref('heroWa', waLink());
+  setHref('ctaWa', waLink('Hola, me interesa vender o rentar mi propiedad. ¿Me puede dar más información?'));
+  setTxt('ctaTel','📞 '+a.telDisplay); setHref('ctaTel', telLink);
+  setHref('bottomWa', waLink('Quiero información sobre vender o rentar mi propiedad'));
+  setTxt('bottomTel','📞 '+a.telDisplay); setHref('bottomTel', telLink);
+  setHref('faqWa', waLink()); setTxt('faqWa', a.telDisplay);
+  setTxt('faqTelTxt', a.telDisplay);
+  setTxt('faqAgentName', a.name);
+  setHref('floatWa', waLink());
+  setTxt('footerName', a.isDefault ? 'UNO BROKERS' : a.name.toUpperCase());
+  setTxt('footerTel', a.telDisplay);
+
+  const resLabel = document.getElementById('resLabel');
+  if(resLabel) resLabel.textContent = `OPINIÓN DE VALOR — ${a.isDefault ? 'UNO BROKERS' : a.name.toUpperCase()} 2026`;
+
+  if(!a.isDefault){
+    setTxt('heroP', `Obtén gratis una opinión de valor inmobiliario con comparables de mercado actualizados y estimación de renta mensual. Respaldado por ${a.name}.`);
+    setTxt('ctaP', `Con ${a.name} te ayudamos a obtener el mejor precio del mercado con una estrategia de venta o renta personalizada. Contacta ahora a un asesor.`);
+    setTxt('bottomP', `Asesórate con expertos. Con ${a.name} te ayudamos a conseguir el mejor precio del mercado.`);
+    const pb = document.getElementById('poweredBy');
+    if(pb) pb.textContent = 'Herramienta de UNO Brokers, usada por ' + a.name;
+  }
+
+  // Link de referidos: comparte la MISMA url actual (con los params del asesor) para que el crédito se mantenga
+  const shareUrl = window.location.origin + window.location.pathname + window.location.search;
+  const refShare = document.getElementById('refShare');
+  if(refShare) refShare.href = `https://wa.me/?text=${encodeURIComponent('Encontré esta calculadora gratis de opinión de valor para saber cuánto vale tu casa o depa en Guadalajara/Zapopan: '+shareUrl)}`;
+  const refClaim = document.getElementById('refClaim');
+  if(refClaim) refClaim.href = waLink('Hola, ya compartí la calculadora de opinión de valor con 3 personas, quiero reclamar mi opinión de valor premium gratis.');
+}
+applyAgentBranding();
+
+// ── Generador de link personalizado para asesores ──
+(function(){
+  const toggleBtn = document.getElementById('personalizaToggle');
+  const panel = document.getElementById('personalizaPanel');
+  if(toggleBtn) toggleBtn.addEventListener('click', ()=>{ panel.style.display = panel.style.display==='none' ? 'block' : 'none'; });
+
+  const genBtn = document.getElementById('pGenBtn');
+  if(genBtn) genBtn.addEventListener('click', ()=>{
+    const nombre = document.getElementById('pAgentName').value.trim();
+    const tel = document.getElementById('pAgentTel').value.trim().replace(/\D/g,'');
+    if(!nombre || tel.length!==10){
+      alert('Escribe tu nombre y un WhatsApp válido a 10 dígitos.');
+      return;
+    }
+    const base = window.location.origin + window.location.pathname;
+    const link = `${base}?asesor=${encodeURIComponent(nombre)}&tel=${tel}`;
+    document.getElementById('pResultLink').value = link;
+    document.getElementById('pResultBox').style.display = 'block';
+  });
+
+  const copyBtn = document.getElementById('pCopyBtn');
+  if(copyBtn) copyBtn.addEventListener('click', ()=>{
+    const input = document.getElementById('pResultLink');
+    input.select(); input.setSelectionRange(0,9999);
+    navigator.clipboard.writeText(input.value).then(()=>{
+      copyBtn.textContent='✅ ¡Copiado!';
+      setTimeout(()=>{copyBtn.textContent='📋 Copiar link';},2000);
+    }).catch(()=>{document.execCommand('copy');});
+  });
+
+  // Si alguien entra ya con datos de asesor, ocultamos el panel de auto-generación (no aplica para el cliente final)
+  if(!AGENT.isDefault){
+    const box = document.getElementById('personalizaBox');
+    if(box) box.style.display='none';
+  }
+})();
+
 const PRECIOS={
   'zapopan-premium':     {min:30000,mid:42000,max:58000,tierra:.35,yield:[.0045,.0055]},
   'zapopan-residencial': {min:20000,mid:28000,max:38000,tierra:.28,yield:[.005,.006]},
@@ -782,19 +909,19 @@ function generarPDF(){
   doc.setFillColor(...NAVY);doc.rect(0,0,W,40,'F');
   doc.setFillColor(...AMBER);doc.rect(0,40,W,3,'F');
   doc.setFont('helvetica','bold');doc.setFontSize(21);doc.setTextColor(...WHITE);
-  doc.text('UNO BROKERS',mar,16);
+  doc.text(san(AGENT.name.toUpperCase()),mar,16);
   doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(150,175,200);
   doc.text('INMOBILIARIA  |  GUADALAJARA & ZAPOPAN, JALISCO',mar,23);
-  doc.text('Tel: 33 3967 5255   |   unobrokers.mx',mar,29);
+  doc.text('Tel: '+AGENT.telDisplay+(AGENT.isDefault?'   |   unobrokers.mx':''),mar,29);
   doc.setFontSize(7.5);doc.setTextColor(100,140,170);
-  doc.text('wa.me/523339675255',mar,35);
+  doc.text('wa.me/'+AGENT.tel,mar,35);
 
   doc.setFillColor(...AMBER);doc.roundedRect(W-70,7,58,24,3,3,'F');
   doc.setFont('helvetica','bold');doc.setFontSize(8.5);doc.setTextColor(...NAVY);
   doc.text('OPINION DE VALOR',W-41,15,{align:'center'});
   doc.text('REFERENCIAL 2026',W-41,21,{align:'center'});
   doc.setFontSize(7);
-  doc.text('UNO Brokers',W-41,27,{align:'center'});
+  doc.text(san(AGENT.name),W-41,27,{align:'center'});
   y=52;
 
   // Datos generales
@@ -947,22 +1074,22 @@ function generarPDF(){
   doc.setFillColor(...NAVY);doc.roundedRect(mar,y,W-(mar*2),22,3,3,'F');
   doc.setFillColor(...WA);doc.roundedRect(mar+3,y+4,52,14,3,3,'F');
   doc.setFont('helvetica','bold');doc.setFontSize(9);doc.setTextColor(...WHITE);
-  doc.text('WhatsApp: 33 3967 5255',mar+7,y+12);
+  doc.text('WhatsApp: '+AGENT.telDisplay,mar+7,y+12);
   doc.setFillColor(...AMBER);doc.roundedRect(mar+60,y+4,60,14,3,3,'F');
-  doc.setTextColor(...NAVY);doc.text('Tel: 33 3967 5255',mar+64,y+12);
+  doc.setTextColor(...NAVY);doc.text('Tel: '+AGENT.telDisplay,mar+64,y+12);
   doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(150,175,200);
-  doc.text('unobrokers.mx  |  Guadalajara & Zapopan',mar+125,y+12);
+  doc.text(AGENT.isDefault?'unobrokers.mx  |  Guadalajara & Zapopan':'Guadalajara & Zapopan, Jalisco',mar+125,y+12);
   y+=26;
 
   // ══ FOOTER ══
   doc.setFillColor(...AMBER);doc.rect(0,279,W,2,'F');
   doc.setFillColor(...NAVY);doc.rect(0,281,W,16,'F');
   doc.setFont('helvetica','bold');doc.setFontSize(9.5);doc.setTextColor(...WHITE);
-  doc.text('UNO BROKERS',mar,289);
+  doc.text(san(AGENT.name.toUpperCase()),mar,289);
   doc.setFont('helvetica','normal');doc.setFontSize(7.5);doc.setTextColor(150,175,200);
-  doc.text('Tel: 33 3967 5255   |   unobrokers.mx   |   Guadalajara & Zapopan, Jalisco',mar+38,289);
+  doc.text('Tel: '+AGENT.telDisplay+(AGENT.isDefault?'   |   unobrokers.mx':'')+'   |   Guadalajara & Zapopan, Jalisco',mar+38,289);
   doc.setFontSize(6.5);doc.setTextColor(80,110,130);
-  doc.text('Generado el '+d.fecha+' por UNO Brokers — Documento referencial, no sustituye avaluo formal.',mar,294);
+  doc.text('Generado el '+d.fecha+' por '+san(AGENT.name)+' — Documento referencial, no sustituye avaluo formal.',mar,294);
 
   doc.save('Opinion-de-Valor-UNO-Brokers.pdf');
 }
