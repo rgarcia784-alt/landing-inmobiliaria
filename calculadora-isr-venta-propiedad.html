@@ -140,16 +140,16 @@ footer strong{color:var(--amber)}
     <div class="logo-sub">INMOBILIARIA · GDL · ZPN</div>
   </div>
   <div class="header-contact">
-    <a class="hdr-wa" href="https://wa.me/523339675255" target="_blank">💬 WhatsApp</a>
-    <a class="hdr-tel" href="tel:+523339675255">📞 33 3967 5255</a>
+    <a class="hdr-wa" id="hdrWa" href="https://wa.me/523339675255" target="_blank">💬 WhatsApp</a>
+    <a class="hdr-tel" id="hdrTel" href="tel:+523339675255">📞 33 3967 5255</a>
   </div>
 </header>
 
 <div class="hero">
   <h1>¿Cuánto ISR pagarías al<br/><span>vender tu propiedad?</span></h1>
-  <p>Calcula gratis el impuesto sobre la renta por la venta de tu casa, departamento o terreno, con la tarifa fiscal 2026 vigente y la exención de casa habitación. UNO Brokers.</p>
+  <p id="heroP">Calcula gratis el impuesto sobre la renta por la venta de tu casa, departamento o terreno, con la tarifa fiscal 2026 vigente y la exención de casa habitación. UNO Brokers.</p>
   <div class="hero-cta">
-    <a class="hero-btn-wa" href="https://wa.me/523339675255" target="_blank">💬 Hablar con un asesor</a>
+    <a class="hero-btn-wa" id="heroWa" href="https://wa.me/523339675255" target="_blank">💬 Hablar con un asesor</a>
     <a class="hero-btn-ghost" href="#calculadora">⬇ Calcular ahora</a>
   </div>
 </div>
@@ -162,6 +162,26 @@ footer strong{color:var(--amber)}
 </div>
 
 <main id="calculadora">
+
+  <!-- Personalización para asesores -->
+  <div id="personalizaBox" style="max-width:640px;margin:0 auto 24px;padding:16px 20px;background:#fff8e6;border:2px solid #e8a020;border-radius:10px;box-shadow:0 2px 10px rgba(232,160,32,0.25);">
+    <button id="personalizaToggle" style="background:none;border:none;cursor:pointer;font-size:15px;font-weight:800;color:#b8720a;padding:0;display:flex;align-items:center;gap:8px;width:100%;text-align:left">
+      <span style="background:#e8a020;color:#fff;padding:2px 8px;border-radius:5px;font-size:12px;letter-spacing:.03em">NUEVO</span>
+      🔗 <span>¿Eres asesor inmobiliario? Genera tu propio link personalizado →</span>
+    </button>
+    <div id="personalizaPanel" style="display:none;margin-top:14px">
+      <p style="font-size:12.5px;color:#5a6a7a;margin-bottom:10px">Pon tu nombre y tu WhatsApp. Te damos un link único de esta misma calculadora — cuando tus clientes entren por ahí, todos los botones de contacto y el PDF descargable van a aparecer con tus datos, no los nuestros.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+        <input id="pAgentName" type="text" placeholder="Tu nombre o el de tu inmobiliaria" style="flex:1;min-width:180px;padding:9px 10px;border:1px solid #cfd8e0;border-radius:6px;font-size:13px">
+        <input id="pAgentTel" type="text" placeholder="WhatsApp (10 dígitos)" maxlength="10" style="width:170px;padding:9px 10px;border:1px solid #cfd8e0;border-radius:6px;font-size:13px">
+      </div>
+      <button id="pGenBtn" style="background:#e8a020;color:#fff;border:none;padding:9px 18px;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer">Generar mi link</button>
+      <div id="pResultBox" style="display:none;margin-top:12px;padding:10px 12px;background:#fff;border:1px solid #cfd8e0;border-radius:6px">
+        <input id="pResultLink" type="text" readonly style="width:100%;border:none;font-size:12px;color:#333;background:transparent">
+        <button id="pCopyBtn" style="margin-top:8px;background:var(--navy,#0a1f3d);color:#fff;border:none;padding:7px 14px;border-radius:6px;font-size:12px;cursor:pointer">📋 Copiar link</button>
+      </div>
+    </div>
+  </div>
 
   <div id="formulario">
 
@@ -310,10 +330,10 @@ footer strong{color:var(--amber)}
 
     <div class="cta-card">
       <h3>¿Quieres vender tu propiedad al mejor precio?</h3>
-      <p>En UNO Brokers te ayudamos a vender más rápido y con mejor precio de mercado, minimizando sorpresas fiscales con asesoría clara desde el primer momento. Contáctanos hoy.</p>
+      <p id="ctaP">En UNO Brokers te ayudamos a vender más rápido y con mejor precio de mercado, minimizando sorpresas fiscales con asesoría clara desde el primer momento. Contáctanos hoy.</p>
       <div class="cta-buttons">
-        <a class="btn-wa-big" href="https://wa.me/523339675255?text=Hola%2C%20quiero%20vender%20mi%20propiedad%20y%20me%20interesa%20saber%20m%C3%A1s%20sobre%20el%20ISR%20y%20el%20proceso%20de%20venta." target="_blank">💬 WhatsApp directo</a>
-        <a class="btn-tel-big" href="tel:+523339675255">📞 33 3967 5255</a>
+        <a class="btn-wa-big" id="ctaWa" href="https://wa.me/523339675255?text=Hola%2C%20quiero%20vender%20mi%20propiedad%20y%20me%20interesa%20saber%20m%C3%A1s%20sobre%20el%20ISR%20y%20el%20proceso%20de%20venta." target="_blank">💬 WhatsApp directo</a>
+        <a class="btn-tel-big" id="ctaTel" href="tel:+523339675255">📞 33 3967 5255</a>
       </div>
     </div>
 
@@ -384,11 +404,11 @@ footer strong{color:var(--amber)}
   </div>
 
   <div class="faq-item">
-    <button class="faq-q" onclick="toggleFaq(this)">¿Cómo contacto a UNO Brokers para vender mi propiedad? <span class="faq-icon">+</span></button>
+    <button class="faq-q" onclick="toggleFaq(this)">¿Cómo contacto a <span id="faqAgentName">UNO Brokers</span> para vender mi propiedad? <span class="faq-icon">+</span></button>
     <div class="faq-a"><p>Puedes contactarnos por cualquiera de estos canales:</p>
       <ul>
-        <li>💬 <strong>WhatsApp</strong>: <a href="https://wa.me/523339675255" target="_blank">33 3967 5255</a></li>
-        <li>📞 <strong>Teléfono</strong>: 33 3967 5255</li>
+        <li>💬 <strong>WhatsApp</strong>: <a id="faqWa" href="https://wa.me/523339675255" target="_blank">33 3967 5255</a></li>
+        <li>📞 <strong>Teléfono</strong>: <span id="faqTelTxt">33 3967 5255</span></li>
         <li>🌐 <strong>Sitio web</strong>: unobrokers.mx</li>
       </ul>
       <p>Atendemos propiedades en Guadalajara, Zapopan, Tlajomulco, Tlaquepaque y toda la zona metropolitana, ayudándote a vender al mejor precio con asesoría fiscal clara desde el inicio.</p>
@@ -398,21 +418,93 @@ footer strong{color:var(--amber)}
 
 <div class="cta-bottom">
   <h2>¿Listo para vender tu propiedad?</h2>
-  <p>Te ayudamos a conseguir el mejor precio del mercado con asesoría fiscal clara desde el primer momento.</p>
+  <p id="bottomP">Te ayudamos a conseguir el mejor precio del mercado con asesoría fiscal clara desde el primer momento.</p>
   <div class="cta-row">
-    <a class="btn-wa-big" href="https://wa.me/523339675255?text=Quiero%20informaci%C3%B3n%20sobre%20vender%20mi%20propiedad" target="_blank">💬 WhatsApp</a>
-    <a class="btn-tel-big" href="tel:+523339675255">📞 33 3967 5255</a>
+    <a class="btn-wa-big" id="bottomWa" href="https://wa.me/523339675255?text=Quiero%20informaci%C3%B3n%20sobre%20vender%20mi%20propiedad" target="_blank">💬 WhatsApp</a>
+    <a class="btn-tel-big" id="bottomTel" href="tel:+523339675255">📞 33 3967 5255</a>
   </div>
 </div>
 
 <footer>
-  <strong>UNO BROKERS</strong> · Inmobiliaria Guadalajara y Zapopan, Jalisco<br/>
-  📞 <strong>33 3967 5255</strong> · unobrokers.mx
+  <strong id="footerName">UNO BROKERS</strong> · Inmobiliaria Guadalajara y Zapopan, Jalisco<br/>
+  📞 <strong id="footerTel">33 3967 5255</strong> · unobrokers.mx
 </footer>
 
-<a class="wa-float" href="https://wa.me/523339675255" target="_blank" title="Contactar por WhatsApp">💬</a>
+<a class="wa-float" id="floatWa" href="https://wa.me/523339675255" target="_blank" title="Contactar por WhatsApp">💬</a>
+
+<!-- Personalización para asesores -->
+<div id="personalizaBoxContainer"></div>
 
 <script>
+// ── PERSONALIZACIÓN POR ASESOR ──
+const DEFAULT_AGENT = { name:'UNO Brokers', tel:'523339675255', telDisplay:'33 3967 5255', isDefault:true };
+function buildAgentFromParams(){
+  const qs = new URLSearchParams(window.location.search);
+  const nombre = qs.get('asesor');
+  const telRaw = qs.get('tel');
+  if(!nombre || !telRaw) return DEFAULT_AGENT;
+  const telClean = telRaw.replace(/\D/g,'');
+  if(telClean.length < 10) return DEFAULT_AGENT;
+  const tel10 = telClean.slice(-10);
+  const telFull = telClean.length===10 ? '52'+telClean : telClean;
+  const display = tel10.replace(/(\d{2})(\d{4})(\d{4})/,'$1 $2 $3');
+  return { name: decodeURIComponent(nombre).slice(0,60), tel: telFull, telDisplay: display, isDefault:false };
+}
+const AGENT = buildAgentFromParams();
+function applyAgentBranding(){
+  const a = AGENT;
+  const waLink = (msg) => `https://wa.me/${a.tel}` + (msg ? `?text=${encodeURIComponent(msg)}` : '');
+  const telLink = `tel:+${a.tel}`;
+  const setHref = (id,href)=>{const el=document.getElementById(id); if(el) el.href=href;};
+  const setTxt = (id,txt)=>{const el=document.getElementById(id); if(el) el.textContent=txt;};
+  setHref('hdrWa', waLink()); setTxt('hdrTel','📞 '+a.telDisplay); setHref('hdrTel', telLink);
+  setHref('heroWa', waLink());
+  setHref('ctaWa', waLink('Hola, quiero vender mi propiedad y me interesa saber más sobre el ISR y el proceso de venta.'));
+  setTxt('ctaTel','📞 '+a.telDisplay); setHref('ctaTel', telLink);
+  setHref('bottomWa', waLink('Quiero información sobre vender mi propiedad'));
+  setTxt('bottomTel','📞 '+a.telDisplay); setHref('bottomTel', telLink);
+  setHref('faqWa', waLink()); setTxt('faqWa', a.telDisplay);
+  setTxt('faqTelTxt', a.telDisplay);
+  setTxt('faqAgentName', a.name);
+  setHref('floatWa', waLink());
+  setTxt('footerName', a.isDefault ? 'UNO BROKERS' : a.name.toUpperCase());
+  setTxt('footerTel', a.telDisplay);
+  if(!a.isDefault){
+    setTxt('heroP', `Calcula gratis el impuesto sobre la renta por la venta de tu casa, departamento o terreno, con la tarifa fiscal 2026 vigente y la exención de casa habitación. ${a.name}.`);
+    setTxt('ctaP', `Con ${a.name} te ayudamos a vender más rápido y con mejor precio de mercado, minimizando sorpresas fiscales con asesoría clara desde el primer momento. Contáctanos hoy.`);
+    setTxt('bottomP', `Te ayudamos a conseguir el mejor precio del mercado con asesoría fiscal clara desde el primer momento, con ${a.name}.`);
+  }
+}
+applyAgentBranding();
+
+(function(){
+  const toggleBtn = document.getElementById('personalizaToggle');
+  const panel = document.getElementById('personalizaPanel');
+  if(toggleBtn) toggleBtn.addEventListener('click', ()=>{ panel.style.display = panel.style.display==='none' ? 'block' : 'none'; });
+  const genBtn = document.getElementById('pGenBtn');
+  if(genBtn) genBtn.addEventListener('click', ()=>{
+    const nombre = document.getElementById('pAgentName').value.trim();
+    const tel = document.getElementById('pAgentTel').value.trim().replace(/\D/g,'');
+    if(!nombre || tel.length!==10){ alert('Escribe tu nombre y un WhatsApp válido a 10 dígitos.'); return; }
+    const base = window.location.origin + window.location.pathname;
+    const link = `${base}?asesor=${encodeURIComponent(nombre)}&tel=${tel}`;
+    document.getElementById('pResultLink').value = link;
+    document.getElementById('pResultBox').style.display = 'block';
+  });
+  const copyBtn = document.getElementById('pCopyBtn');
+  if(copyBtn) copyBtn.addEventListener('click', ()=>{
+    const input = document.getElementById('pResultLink');
+    input.select(); input.setSelectionRange(0,9999);
+    navigator.clipboard.writeText(input.value).then(()=>{
+      copyBtn.textContent='✅ ¡Copiado!'; setTimeout(()=>{copyBtn.textContent='📋 Copiar link';},2000);
+    }).catch(()=>{document.execCommand('copy');});
+  });
+  if(!AGENT.isDefault){
+    const box = document.getElementById('personalizaBox');
+    if(box) box.style.display='none';
+  }
+})();
+
 // ══ TARIFA ANUAL ISR 2026 — Art. 152 LISR (Anexo 8 RMF 2026) ══
 const TARIFA_ANUAL_2026=[
   {li:0.12,ls:8952.48,cuota:0,pct:0.0192},
@@ -582,18 +674,18 @@ function generarPDF(){
   doc.setFillColor(...NAVY);doc.rect(0,0,W,40,'F');
   doc.setFillColor(...AMBER);doc.rect(0,40,W,3,'F');
   doc.setFont('helvetica','bold');doc.setFontSize(21);doc.setTextColor(...WHITE);
-  doc.text('UNO BROKERS',mar,16);
+  doc.text(san(AGENT.name.toUpperCase()),mar,16);
   doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(150,175,200);
   doc.text('INMOBILIARIA  |  GUADALAJARA & ZAPOPAN, JALISCO',mar,23);
-  doc.text('Tel: 33 3967 5255   |   unobrokers.mx',mar,29);
+  doc.text('Tel: '+AGENT.telDisplay+(AGENT.isDefault?'   |   unobrokers.mx':''),mar,29);
   doc.setFontSize(7.5);doc.setTextColor(100,140,170);
-  doc.text('wa.me/523339675255',mar,35);
+  doc.text('wa.me/'+AGENT.tel,mar,35);
 
   doc.setFillColor(...AMBER);doc.roundedRect(W-70,7,58,24,3,3,'F');
   doc.setFont('helvetica','bold');doc.setFontSize(8.5);doc.setTextColor(...NAVY);
   doc.text('CALCULO DE ISR',W-41,15,{align:'center'});
   doc.text('VENTA INMUEBLE 2026',W-41,21,{align:'center'});
-  doc.setFontSize(7);doc.text('UNO Brokers',W-41,27,{align:'center'});
+  doc.setFontSize(7);doc.text(san(AGENT.name),W-41,27,{align:'center'});
   y=52;
 
   const secH=(lbl,col)=>{doc.setFillColor(...col);doc.rect(mar,y,W-(mar*2),7,'F');
@@ -667,23 +759,23 @@ function generarPDF(){
   doc.setFillColor(...NAVY);doc.roundedRect(mar,y,W-(mar*2),22,3,3,'F');
   doc.setFillColor(...WA);doc.roundedRect(mar+3,y+4,52,14,3,3,'F');
   doc.setFont('helvetica','bold');doc.setFontSize(9);doc.setTextColor(...WHITE);
-  doc.text('WhatsApp: 33 3967 5255',mar+7,y+12);
+  doc.text('WhatsApp: '+AGENT.telDisplay,mar+7,y+12);
   doc.setFillColor(...AMBER);doc.roundedRect(mar+60,y+4,60,14,3,3,'F');
-  doc.setTextColor(...NAVY);doc.text('Tel: 33 3967 5255',mar+64,y+12);
+  doc.setTextColor(...NAVY);doc.text('Tel: '+AGENT.telDisplay,mar+64,y+12);
   doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(150,175,200);
-  doc.text('unobrokers.mx  |  Te ayudamos a vender al mejor precio',mar+125,y+12);
+  doc.text((AGENT.isDefault?'unobrokers.mx  |  ':'')+'Te ayudamos a vender al mejor precio',mar+125,y+12);
   y+=26;
 
   doc.setFillColor(...AMBER);doc.rect(0,279,W,2,'F');
   doc.setFillColor(...NAVY);doc.rect(0,281,W,16,'F');
   doc.setFont('helvetica','bold');doc.setFontSize(9.5);doc.setTextColor(...WHITE);
-  doc.text('UNO BROKERS',mar,289);
+  doc.text(san(AGENT.name.toUpperCase()),mar,289);
   doc.setFont('helvetica','normal');doc.setFontSize(7.5);doc.setTextColor(150,175,200);
-  doc.text('Tel: 33 3967 5255   |   unobrokers.mx   |   Guadalajara & Zapopan, Jalisco',mar+38,289);
+  doc.text('Tel: '+AGENT.telDisplay+(AGENT.isDefault?'   |   unobrokers.mx':'')+'   |   Guadalajara & Zapopan, Jalisco',mar+38,289);
   doc.setFontSize(6.5);doc.setTextColor(80,110,130);
-  doc.text('Generado el '+d.fecha+' por UNO Brokers — Estimacion referencial, no sustituye calculo notarial oficial.',mar,294);
+  doc.text('Generado el '+d.fecha+' por '+san(AGENT.name)+' — Estimacion referencial, no sustituye calculo notarial oficial.',mar,294);
 
-  doc.save('Calculo-ISR-Venta-UNO-Brokers.pdf');
+  doc.save('Calculo-ISR-Venta-'+(AGENT.isDefault?'UNO-Brokers':san(AGENT.name).replace(/\s+/g,'-'))+'.pdf');
 }
 </script>
 </body>
