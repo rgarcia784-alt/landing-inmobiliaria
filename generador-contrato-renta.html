@@ -267,7 +267,7 @@
 
 <footer>
   <div class="wrap">
-    <span id="footerBrand">UNO Brokers · Los Sueños Residencial · Zapopan, Jalisco</span><br>
+    <span id="footerBrand">UNO Brokers · Zapopan, Jalisco</span><br>
     <a href="https://wa.me/523339675255" id="footerWa" target="_blank">WhatsApp <span id="footerTel">33 3967 5255</span></a>
   </div>
 </footer>
@@ -294,7 +294,7 @@ function applyAgentBranding(){
   const setTxt = (id,txt)=>{const el=document.getElementById(id); if(el) el.textContent=txt;};
   setHref('footerWa', `https://wa.me/${a.tel}`);
   setTxt('footerTel', a.telDisplay);
-  setTxt('footerBrand', a.isDefault ? 'UNO Brokers · Los Sueños Residencial · Zapopan, Jalisco' : a.name);
+  setTxt('footerBrand', a.isDefault ? 'UNO Brokers · Zapopan, Jalisco' : a.name);
   if(!a.isDefault){
     setTxt('upsellAsesoriaP', `Agrega cláusulas de cobro ejecutivo, deslinde de responsabilidad, pagaré y revisión personalizada por ${a.name}.`);
   }
