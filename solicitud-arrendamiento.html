@@ -293,7 +293,7 @@
 
 <footer>
   <div class="wrap">
-    <span id="footerBrand">UNO Brokers · Los Sueños Residencial · Zapopan, Jalisco</span><br>
+    <span id="footerBrand">UNO Brokers · Zapopan, Jalisco</span><br>
     <a href="https://wa.me/523339675255" id="footerWa" target="_blank">WhatsApp <span id="footerTel">33 3967 5255</span></a>
   </div>
 </footer>
@@ -321,7 +321,7 @@ function applyAgentBranding(){
   setHref('hdrTelLink', `tel:+${a.tel}`); setTxt('hdrTelLink', a.telDisplay);
   setHref('footerWa', `https://wa.me/${a.tel}`);
   setTxt('footerTel', a.telDisplay);
-  setTxt('footerBrand', a.isDefault ? 'UNO Brokers · Los Sueños Residencial · Zapopan, Jalisco' : a.name);
+  setTxt('footerBrand', a.isDefault ? 'UNO Brokers · Zapopan, Jalisco' : a.name);
   if(!a.isDefault){
     setTxt('heroP', `Genera la solicitud que todo candidato a inquilino debe llenar antes de firmar contrato: datos generales, identificación y referencias. Un servicio de ${a.name}.`);
   }
