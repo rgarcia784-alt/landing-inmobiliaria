@@ -1,15 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-WBZQNYLQYF"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-WBZQNYLQYF');
-</script>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Generador de Contrato de Arrendamiento | UNO Brokers</title>
@@ -124,27 +115,6 @@
 
 <section>
   <div class="wrap">
-
-    <!-- Personalización para asesores -->
-    <div id="personalizaBox" style="max-width:100%;margin:0 0 24px;padding:16px 20px;background:#fff8e6;border:2px solid #e8a020;border-radius:10px;box-shadow:0 2px 10px rgba(232,160,32,0.25);">
-      <button id="personalizaToggle" style="background:none;border:none;cursor:pointer;font-size:15px;font-weight:800;color:#b8720a;padding:0;display:flex;align-items:center;gap:8px;width:100%;text-align:left">
-        <span style="background:#e8a020;color:#fff;padding:2px 8px;border-radius:5px;font-size:12px;letter-spacing:.03em">NUEVO</span>
-        🔗 <span>¿Eres asesor inmobiliario? Genera tu propio link personalizado →</span>
-      </button>
-      <div id="personalizaPanel" style="display:none;margin-top:14px">
-        <p style="font-size:12.5px;color:#5a6a7a;margin-bottom:10px">Pon tu nombre y tu WhatsApp. Te damos un link único de este mismo generador — cuando tus clientes entren por ahí, los botones de contacto van a aparecer con tus datos, no los nuestros.</p>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
-          <input id="pAgentName" type="text" placeholder="Tu nombre o el de tu inmobiliaria" style="flex:1;min-width:180px;padding:9px 10px;border:1px solid #cfd8e0;border-radius:6px;font-size:13px">
-          <input id="pAgentTel" type="text" placeholder="WhatsApp (10 dígitos)" maxlength="10" style="width:170px;padding:9px 10px;border:1px solid #cfd8e0;border-radius:6px;font-size:13px">
-        </div>
-        <button id="pGenBtn" style="background:#e8a020;color:#fff;border:none;padding:9px 18px;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer">Generar mi link</button>
-        <div id="pResultBox" style="display:none;margin-top:12px;padding:10px 12px;background:#fff;border:1px solid #cfd8e0;border-radius:6px">
-          <input id="pResultLink" type="text" readonly style="width:100%;border:none;font-size:12px;color:#333;background:transparent">
-          <button id="pCopyBtn" style="margin-top:8px;background:var(--navy);color:#fff;border:none;padding:7px 14px;border-radius:6px;font-size:12px;cursor:pointer">📋 Copiar link</button>
-        </div>
-      </div>
-    </div>
-
     <div class="card">
       <div class="section-title">Datos del contrato</div>
       <div class="section-sub">Toda la información se usa únicamente para generar tu documento.</div>
@@ -256,7 +226,7 @@
         <div class="txt">
           <div class="tag" style="color:var(--gold-light);">Recomendado</div>
           <h3 style="color:#fff;">Blinda tu contrato con asesoría completa</h3>
-          <p style="color:#c8cedb;" id="upsellAsesoriaP">Agrega cláusulas de cobro ejecutivo, deslinde de responsabilidad, pagaré y revisión personalizada por UNO Brokers.</p>
+          <p style="color:#c8cedb;">Agrega cláusulas de cobro ejecutivo, deslinde de responsabilidad, pagaré y revisión personalizada por UNO Brokers.</p>
         </div>
         <a class="btn btn-gold" id="waAsesoria" href="#" target="_blank">Solicitar asesoría</a>
       </div>
@@ -267,69 +237,12 @@
 
 <footer>
   <div class="wrap">
-    <span id="footerBrand">UNO Brokers · Zapopan, Jalisco</span><br>
-    <a href="https://wa.me/523339675255" id="footerWa" target="_blank">WhatsApp <span id="footerTel">33 3967 5255</span></a>
+    UNO Brokers · Los Sueños Residencial · Zapopan, Jalisco<br>
+    <a href="https://wa.me/523339675255" target="_blank">WhatsApp 33 3967 5255</a>
   </div>
 </footer>
 
 <script>
-// ── PERSONALIZACIÓN POR ASESOR ──
-const DEFAULT_AGENT = { name:'UNO Brokers', tel:'523339675255', telDisplay:'33 3967 5255', isDefault:true };
-function buildAgentFromParams(){
-  const qs = new URLSearchParams(window.location.search);
-  const nombre = qs.get('asesor');
-  const telRaw = qs.get('tel');
-  if(!nombre || !telRaw) return DEFAULT_AGENT;
-  const telClean = telRaw.replace(/\D/g,'');
-  if(telClean.length < 10) return DEFAULT_AGENT;
-  const tel10 = telClean.slice(-10);
-  const telFull = telClean.length===10 ? '52'+telClean : telClean;
-  const display = tel10.replace(/(\d{2})(\d{4})(\d{4})/,'$1 $2 $3');
-  return { name: decodeURIComponent(nombre).slice(0,60), tel: telFull, telDisplay: display, isDefault:false };
-}
-const AGENT = buildAgentFromParams();
-function applyAgentBranding(){
-  const a = AGENT;
-  const setHref = (id,href)=>{const el=document.getElementById(id); if(el) el.href=href;};
-  const setTxt = (id,txt)=>{const el=document.getElementById(id); if(el) el.textContent=txt;};
-  setHref('footerWa', `https://wa.me/${a.tel}`);
-  setTxt('footerTel', a.telDisplay);
-  setTxt('footerBrand', a.isDefault ? 'UNO Brokers · Zapopan, Jalisco' : a.name);
-  if(!a.isDefault){
-    setTxt('upsellAsesoriaP', `Agrega cláusulas de cobro ejecutivo, deslinde de responsabilidad, pagaré y revisión personalizada por ${a.name}.`);
-  }
-}
-applyAgentBranding();
-
-// ── Generador de link personalizado para asesores ──
-(function(){
-  const toggleBtn = document.getElementById('personalizaToggle');
-  const panel = document.getElementById('personalizaPanel');
-  if(toggleBtn) toggleBtn.addEventListener('click', ()=>{ panel.style.display = panel.style.display==='none' ? 'block' : 'none'; });
-  const genBtn = document.getElementById('pGenBtn');
-  if(genBtn) genBtn.addEventListener('click', ()=>{
-    const nombre = document.getElementById('pAgentName').value.trim();
-    const tel = document.getElementById('pAgentTel').value.trim().replace(/\D/g,'');
-    if(!nombre || tel.length!==10){ alert('Escribe tu nombre y un WhatsApp válido a 10 dígitos.'); return; }
-    const base = window.location.origin + window.location.pathname;
-    const link = `${base}?asesor=${encodeURIComponent(nombre)}&tel=${tel}`;
-    document.getElementById('pResultLink').value = link;
-    document.getElementById('pResultBox').style.display = 'block';
-  });
-  const copyBtn = document.getElementById('pCopyBtn');
-  if(copyBtn) copyBtn.addEventListener('click', ()=>{
-    const input = document.getElementById('pResultLink');
-    input.select(); input.setSelectionRange(0,9999);
-    navigator.clipboard.writeText(input.value).then(()=>{
-      copyBtn.textContent='✅ ¡Copiado!'; setTimeout(()=>{copyBtn.textContent='📋 Copiar link';},2000);
-    }).catch(()=>{document.execCommand('copy');});
-  });
-  if(!AGENT.isDefault){
-    const box = document.getElementById('personalizaBox');
-    if(box) box.style.display='none';
-  }
-})();
-
 function fnum(n){
   return new Intl.NumberFormat('es-MX').format(n);
 }
@@ -412,7 +325,7 @@ Documento generado automáticamente. No sustituye asesoría legal profesional.`;
 
   // Prepare WhatsApp CTA with lead + contract data pre-filled
   const waMsg = `Hola, soy ${data.leadNombre}. Generé un contrato de arrendamiento base en la página y me interesa la asesoría completa para blindarlo legalmente (cláusulas de cobro ejecutivo, deslinde de responsabilidad, pagaré). Datos: inmueble en ${data.direccion}, renta $${fnum(data.renta)}/mes.`;
-  document.getElementById('waAsesoria').href = `https://wa.me/${AGENT.tel}?text=${encodeURIComponent(waMsg)}`;
+  document.getElementById('waAsesoria').href = `https://wa.me/523339675255?text=${encodeURIComponent(waMsg)}`;
 
   // Download as Word-compatible file
   document.getElementById('downloadBtn').onclick = function(){
