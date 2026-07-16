@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Solicitud de Arrendamiento Gratis | UNO Brokers</title>
-<meta name="description" content="Genera gratis tu solicitud de arrendamiento con datos generales, identificación y referencias del arrendatario. Descarga en Word en minutos. UNO Brokers, Zapopan.">
-<meta name="keywords" content="solicitud de arrendamiento, formato solicitud renta, solicitud inquilino, datos arrendatario, referencias arrendamiento Guadalajara Zapopan">
-<meta property="og:title" content="Solicitud de Arrendamiento Gratis | UNO Brokers">
-<meta property="og:description" content="Genera gratis tu solicitud de arrendamiento con datos generales, identificación y referencias. Descarga en Word en minutos.">
+<title>Solicitud de Arrendamiento con Obligado Solidario | UNO Brokers</title>
+<meta name="description" content="Genera gratis tu solicitud de arrendamiento completa: datos generales, identificación, ocupación, referencias y obligado solidario (aval). Descarga en PDF o Word en minutos. UNO Brokers, Zapopan.">
+<meta name="keywords" content="solicitud de arrendamiento, formato solicitud renta, solicitud inquilino, obligado solidario, aval arrendamiento, datos arrendatario, referencias arrendamiento Guadalajara Zapopan">
+<meta property="og:title" content="Solicitud de Arrendamiento con Obligado Solidario | UNO Brokers">
+<meta property="og:description" content="Genera gratis tu solicitud de arrendamiento completa, con datos del obligado solidario. Descarga en PDF o Word en minutos.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -104,7 +104,7 @@
   <div class="wrap">
     <span class="eyebrow">Gratis · Sin registro</span>
     <h1>Solicitud de Arrendamiento</h1>
-    <p id="heroP">Genera la solicitud que todo candidato a inquilino debe llenar antes de firmar contrato: datos generales, identificación y referencias. Descarga en Word en minutos.</p>
+    <p id="heroP">Genera la solicitud que todo candidato a inquilino debe llenar antes de firmar contrato: datos generales, identificación, ocupación, referencias y obligado solidario. Descarga en PDF o Word en minutos.</p>
 
     <div class="personaliza-box" id="personalizaBox">
       <button class="personaliza-toggle" id="personalizaToggle">
@@ -265,6 +265,73 @@
           </div>
         </div>
 
+        <div class="field-group-title">Datos del obligado solidario (aval)</div>
+        <div class="section-sub" style="margin-top:-8px;margin-bottom:16px;">Persona que garantiza el cumplimiento del contrato junto con el solicitante.</div>
+        <div class="grid2">
+          <div class="field full">
+            <label for="obNombre">Nombre completo</label>
+            <input type="text" id="obNombre" placeholder="Nombre completo del obligado solidario">
+          </div>
+          <div class="field">
+            <label for="obRelacion">Relación con el solicitante</label>
+            <input type="text" id="obRelacion" placeholder="Ej. Padre, hermano, amigo">
+          </div>
+          <div class="field">
+            <label for="obEstadoCivil">Estado civil</label>
+            <select id="obEstadoCivil">
+              <option value="Soltero(a)">Soltero(a)</option>
+              <option value="Casado(a)">Casado(a)</option>
+              <option value="Unión libre">Unión libre</option>
+              <option value="Divorciado(a)">Divorciado(a)</option>
+              <option value="Viudo(a)">Viudo(a)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="obTelefono">Teléfono</label>
+            <input type="text" id="obTelefono" placeholder="33 0000 0000">
+          </div>
+          <div class="field">
+            <label for="obCorreo">Correo electrónico</label>
+            <input type="email" id="obCorreo" placeholder="correo@ejemplo.com">
+          </div>
+          <div class="field full">
+            <label for="obDomicilio">Domicilio</label>
+            <input type="text" id="obDomicilio" placeholder="Calle, número, colonia, municipio">
+          </div>
+          <div class="field">
+            <label for="obEsPropietario">¿Es propietario de ese domicilio?</label>
+            <select id="obEsPropietario">
+              <option value="Sí">Sí</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="obCurp">CURP</label>
+            <input type="text" id="obCurp" placeholder="18 caracteres">
+          </div>
+          <div class="field">
+            <label for="obIne">Identificación oficial (INE u otra), número</label>
+            <input type="text" id="obIne" placeholder="Número de folio o clave de elector">
+          </div>
+          <div class="field">
+            <label for="obOcupacion">Ocupación / puesto</label>
+            <input type="text" id="obOcupacion" placeholder="Ej. Gerente de ventas">
+          </div>
+          <div class="field">
+            <label for="obEmpresa">Empresa donde labora</label>
+            <input type="text" id="obEmpresa" placeholder="Nombre de la empresa">
+          </div>
+          <div class="field">
+            <label for="obIngresoMensual">Ingreso mensual aproximado (MXN)</label>
+            <input type="text" id="obIngresoMensual" placeholder="Ej. 40,000">
+          </div>
+          <div class="field">
+            <label for="obAntiguedadLaboral">Antigüedad laboral</label>
+            <input type="text" id="obAntiguedadLaboral" placeholder="Ej. 5 años">
+          </div>
+        </div>
+
+
         <div class="divider"></div>
         <button type="submit" class="btn btn-gold btn-block">Generar mi solicitud</button>
         <div style="text-align:center;font-size:.82rem;color:#8a93a0;margin-top:10px;">Toma menos de 2 minutos.</div>
@@ -276,7 +343,10 @@
         <div class="section-title">Tu solicitud está lista</div>
         <div class="section-sub">Revísala, descárgala, y compártela con el candidato o el propietario.</div>
         <div class="contract-box" id="contractText"></div>
-        <button class="btn btn-gold btn-block" style="margin-top:20px;" onclick="descargarWord()">Descargar en Word</button>
+        <div style="display:flex;gap:12px;margin-top:20px;flex-wrap:wrap;">
+          <button class="btn btn-gold" style="flex:1;min-width:200px;" onclick="descargarPDF()">📄 Descargar en PDF</button>
+          <button class="btn btn-gold" style="flex:1;min-width:200px;background:transparent;border:1.5px solid var(--gold);color:var(--navy);" onclick="descargarWord()">Descargar en Word</button>
+        </div>
       </div>
 
       <div class="upsell">
@@ -323,7 +393,7 @@ function applyAgentBranding(){
   setTxt('footerTel', a.telDisplay);
   setTxt('footerBrand', a.isDefault ? 'UNO Brokers · Zapopan, Jalisco' : a.name);
   if(!a.isDefault){
-    setTxt('heroP', `Genera la solicitud que todo candidato a inquilino debe llenar antes de firmar contrato: datos generales, identificación y referencias. Un servicio de ${a.name}.`);
+    setTxt('heroP', `Genera la solicitud que todo candidato a inquilino debe llenar antes de firmar contrato: datos generales, identificación, ocupación, referencias y obligado solidario. Un servicio de ${a.name}.`);
   }
 }
 applyAgentBranding();
@@ -424,14 +494,37 @@ REFERENCIA DE ARRENDADOR ANTERIOR
 Nombre: ${val('arrAntNombre')}
 Teléfono: ${val('arrAntTel')}
 
+DATOS DEL OBLIGADO SOLIDARIO (AVAL)
+
+Nombre completo: ${val('obNombre')}
+Relación con el solicitante: ${val('obRelacion')}
+Estado civil: ${val('obEstadoCivil')}
+Teléfono: ${val('obTelefono')}
+Correo electrónico: ${val('obCorreo')}
+Domicilio: ${val('obDomicilio')}
+¿Es propietario de ese domicilio?: ${val('obEsPropietario')}
+CURP: ${val('obCurp')}
+Identificación oficial (INE u otra), número: ${val('obIne')}
+Ocupación / puesto: ${val('obOcupacion')}
+Empresa donde labora: ${val('obEmpresa')}
+Ingreso mensual aproximado: $${val('obIngresoMensual')} (M.N.)
+Antigüedad laboral: ${val('obAntiguedadLaboral')}
+
 DECLARACIÓN
 
 El solicitante manifiesta que los datos proporcionados en este documento son verídicos, y autoriza al arrendador y/o a su representante a verificar la información aquí contenida con fines de evaluación para el arrendamiento del inmueble descrito.
+
+El obligado solidario manifiesta que los datos aquí proporcionados son verídicos, y declara su conformidad en constituirse como obligado solidario del solicitante para garantizar el cumplimiento de todas las obligaciones derivadas del contrato de arrendamiento que en su caso se celebre, incluyendo el pago de rentas, mantenimiento y demás cargos, renunciando expresamente a los beneficios de orden y excusión que la ley le concede.
 
 
 _________________________________
 FIRMA DEL SOLICITANTE
 ${val('nombreSolicitante')}
+
+
+_________________________________
+FIRMA DEL OBLIGADO SOLIDARIO
+${val('obNombre')}
 
 
 Esta solicitud fue generada a través de ${AGENT.name} · ${AGENT.telDisplay}`;
@@ -458,7 +551,88 @@ function descargarWord(){
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
 }
+
+function descargarPDF(){
+  const contenido = document.getElementById('contractText').innerText;
+  if(!contenido){ return; }
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: 'mm', format: 'letter' });
+  const marginLeft = 20, marginRight = 20, marginTop = 25, marginBottom = 20;
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const pageHeight = doc.internal.pageSize.getHeight();
+  const usableWidth = pageWidth - marginLeft - marginRight;
+  let y = marginTop;
+
+  const sectionTitles = ['DATOS DEL INMUEBLE Y ARRENDADOR','DATOS GENERALES DEL SOLICITANTE (ARRENDATARIO)','IDENTIFICACIÓN','OCUPACIÓN','REFERENCIAS PERSONALES','REFERENCIA DE ARRENDADOR ANTERIOR','DATOS DEL OBLIGADO SOLIDARIO (AVAL)','DECLARACIÓN'];
+
+  function nuevaPaginaSiHaceFalta(alturaNecesaria){
+    if(y + alturaNecesaria > pageHeight - marginBottom){
+      doc.addPage();
+      y = marginTop;
+    }
+  }
+
+  // Encabezado
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(15);
+  doc.setTextColor(12,31,61);
+  doc.text('SOLICITUD DE ARRENDAMIENTO', pageWidth/2, y, { align:'center' });
+  y += 6;
+  doc.setDrawColor(198,161,91);
+  doc.setLineWidth(0.6);
+  doc.line(marginLeft, y, pageWidth - marginRight, y);
+  y += 10;
+
+  const lineas = contenido.split('\n');
+  doc.setFontSize(10.5);
+
+  lineas.forEach(linea => {
+    const limpio = linea.trim();
+    const esTitulo = sectionTitles.includes(limpio);
+    const esFirmaLinea = limpio.startsWith('___');
+
+    if(limpio === ''){ y += 4; return; }
+
+    if(esTitulo){
+      nuevaPaginaSiHaceFalta(14);
+      y += 4;
+      doc.setFont('helvetica','bold');
+      doc.setFontSize(11);
+      doc.setTextColor(155,120,46);
+      doc.text(limpio, marginLeft, y);
+      y += 2;
+      doc.setDrawColor(198,161,91);
+      doc.setLineWidth(0.2);
+      doc.line(marginLeft, y, pageWidth - marginRight, y);
+      y += 6;
+      doc.setFontSize(10.5);
+      doc.setTextColor(28,37,48);
+      return;
+    }
+
+    if(esFirmaLinea){
+      nuevaPaginaSiHaceFalta(8);
+      doc.setDrawColor(28,37,48);
+      doc.setLineWidth(0.3);
+      doc.line(marginLeft, y, marginLeft + 80, y);
+      y += 5;
+      return;
+    }
+
+    doc.setFont('helvetica', linea.includes(':') && !linea.startsWith('El ') && !linea.startsWith('  ') ? 'bold' : 'normal');
+    const partido = doc.splitTextToSize(limpio, usableWidth);
+    partido.forEach(sub => {
+      nuevaPaginaSiHaceFalta(6);
+      doc.text(sub, marginLeft, y);
+      y += 5.2;
+    });
+  });
+
+  doc.save('solicitud-arrendamiento.pdf');
+}
 </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-WBZQNYLQYF"></script>
