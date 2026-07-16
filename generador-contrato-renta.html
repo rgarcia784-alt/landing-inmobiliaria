@@ -47,6 +47,7 @@
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
   @media(max-width:600px){.grid2{grid-template-columns:1fr;}}
   .field{margin-bottom:18px;}
+  .field.full{grid-column:1/-1;}
   .field label{display:block;font-size:12.5px;letter-spacing:1px;text-transform:uppercase;color:var(--navy);margin-bottom:7px;font-weight:500;}
   .field input, .field select{
     width:100%;padding:12px 14px;border:1px solid #d8d2c3;border-radius:2px;
@@ -133,17 +134,68 @@
           </div>
         </div>
 
-        <div class="fieldset-title">Partes del contrato</div>
+        <div class="fieldset-title">El arrendador</div>
         <div class="grid2">
           <div class="field">
-            <label for="arrendador">Nombre del arrendador</label>
+            <label for="arrendador">Nombre completo</label>
             <input type="text" id="arrendador" required placeholder="Nombre completo">
           </div>
           <div class="field">
-            <label for="arrendatario">Nombre del arrendatario</label>
-            <input type="text" id="arrendatario" required placeholder="Nombre completo">
+            <label for="estadoCivilArr">Estado civil</label>
+            <select id="estadoCivilArr">
+              <option value="">— Sin especificar —</option>
+              <option value="Soltero(a)">Soltero(a)</option>
+              <option value="Casado(a)">Casado(a)</option>
+              <option value="Unión libre">Unión libre</option>
+              <option value="Divorciado(a)">Divorciado(a)</option>
+              <option value="Viudo(a)">Viudo(a)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="ocupacionArr">Ocupación / actividad</label>
+            <input type="text" id="ocupacionArr" placeholder="Ej. Comerciante, empleado, jubilado(a)">
+          </div>
+          <div class="field">
+            <label for="fechaNacArr">Fecha de nacimiento</label>
+            <input type="date" id="fechaNacArr">
+          </div>
+          <div class="field full">
+            <label for="lugarNacArr">Lugar de nacimiento</label>
+            <input type="text" id="lugarNacArr" placeholder="Ciudad, estado">
           </div>
         </div>
+
+        <div class="fieldset-title">El arrendatario</div>
+        <div class="grid2">
+          <div class="field">
+            <label for="arrendatario">Nombre completo</label>
+            <input type="text" id="arrendatario" required placeholder="Nombre completo">
+          </div>
+          <div class="field">
+            <label for="estadoCivilArt">Estado civil</label>
+            <select id="estadoCivilArt">
+              <option value="">— Sin especificar —</option>
+              <option value="Soltero(a)">Soltero(a)</option>
+              <option value="Casado(a)">Casado(a)</option>
+              <option value="Unión libre">Unión libre</option>
+              <option value="Divorciado(a)">Divorciado(a)</option>
+              <option value="Viudo(a)">Viudo(a)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="ocupacionArt">Ocupación / actividad</label>
+            <input type="text" id="ocupacionArt" placeholder="Ej. Empleado, comerciante, profesionista">
+          </div>
+          <div class="field">
+            <label for="fechaNacArt">Fecha de nacimiento</label>
+            <input type="date" id="fechaNacArt">
+          </div>
+          <div class="field full">
+            <label for="lugarNacArt">Lugar de nacimiento</label>
+            <input type="text" id="lugarNacArt" placeholder="Ciudad, estado">
+          </div>
+        </div>
+        <div class="note" style="margin-top:-8px;margin-bottom:18px;">Los datos generales son opcionales, pero hacen tu contrato más formal y completo.</div>
 
         <div class="fieldset-title">El inmueble</div>
         <div class="field">
@@ -259,7 +311,15 @@ document.getElementById('contractForm').addEventListener('submit', function(e){
     leadNombre: document.getElementById('leadNombre').value.trim(),
     leadWhatsapp: document.getElementById('leadWhatsapp').value.trim(),
     arrendador: document.getElementById('arrendador').value.trim(),
+    estadoCivilArr: document.getElementById('estadoCivilArr').value,
+    ocupacionArr: document.getElementById('ocupacionArr').value.trim(),
+    fechaNacArr: document.getElementById('fechaNacArr').value,
+    lugarNacArr: document.getElementById('lugarNacArr').value.trim(),
     arrendatario: document.getElementById('arrendatario').value.trim(),
+    estadoCivilArt: document.getElementById('estadoCivilArt').value,
+    ocupacionArt: document.getElementById('ocupacionArt').value.trim(),
+    fechaNacArt: document.getElementById('fechaNacArt').value,
+    lugarNacArt: document.getElementById('lugarNacArt').value.trim(),
     direccion: document.getElementById('direccion').value.trim(),
     uso: document.getElementById('uso').value,
     amueblado: document.getElementById('amueblado').value,
@@ -270,6 +330,18 @@ document.getElementById('contractForm').addEventListener('submit', function(e){
     ciudad: document.getElementById('ciudad').value.trim()
   };
 
+  function generales(estadoCivil, ocupacion, fechaNacISO, lugarNac){
+    let partes = [];
+    if(estadoCivil) partes.push(`de estado civil ${estadoCivil.toLowerCase()}`);
+    if(ocupacion) partes.push(`con ocupación ${ocupacion}`);
+    if(lugarNac && fechaNacISO) partes.push(`originario(a) de ${lugarNac}, nacido(a) el ${fdate(fechaNacISO)}`);
+    else if(lugarNac) partes.push(`originario(a) de ${lugarNac}`);
+    else if(fechaNacISO) partes.push(`nacido(a) el ${fdate(fechaNacISO)}`);
+    return partes.length ? `, mayor de edad, ${partes.join(', ')},` : ', mayor de edad,';
+  }
+  const arrendadorGenerales = generales(data.estadoCivilArr, data.ocupacionArr, data.fechaNacArr, data.lugarNacArr);
+  const arrendatarioGenerales = generales(data.estadoCivilArt, data.ocupacionArt, data.fechaNacArt, data.lugarNacArt);
+
   const inicioTexto = fdate(data.inicio);
   const inicioDateObj = new Date(data.inicio + 'T00:00:00');
   const finDateObj = new Date(inicioDateObj);
@@ -278,7 +350,7 @@ document.getElementById('contractForm').addEventListener('submit', function(e){
 
   const contrato = `CONTRATO DE ARRENDAMIENTO
 
-Contrato de arrendamiento que celebran, por una parte ${data.arrendador.toUpperCase()}, a quien en lo sucesivo se le denominará "EL ARRENDADOR", y por la otra ${data.arrendatario.toUpperCase()}, a quien en lo sucesivo se le denominará "EL ARRENDATARIO", al tenor de las siguientes declaraciones y cláusulas:
+Contrato de arrendamiento que celebran, por una parte ${data.arrendador.toUpperCase()}${arrendadorGenerales} a quien en lo sucesivo se le denominará "EL ARRENDADOR", y por la otra ${data.arrendatario.toUpperCase()}${arrendatarioGenerales} a quien en lo sucesivo se le denominará "EL ARRENDATARIO", al tenor de las siguientes declaraciones y cláusulas:
 
 DECLARACIONES
 
