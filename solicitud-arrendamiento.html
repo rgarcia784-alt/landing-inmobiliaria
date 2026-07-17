@@ -345,6 +345,7 @@
         <div class="contract-box" id="contractText"></div>
         <div style="display:flex;gap:12px;margin-top:20px;flex-wrap:wrap;">
           <button class="btn btn-gold" style="flex:1;min-width:200px;" onclick="descargarPDF()">📄 Descargar en PDF</button>
+          <button class="btn btn-gold" style="flex:1;min-width:200px;background:#25D366;border:none;color:#fff;" onclick="compartirPDFWhatsApp()">💬 Compartir por WhatsApp</button>
           <button class="btn btn-gold" style="flex:1;min-width:200px;background:transparent;border:1.5px solid var(--gold);color:var(--navy);" onclick="descargarWord()">Descargar en Word</button>
         </div>
       </div>
@@ -552,9 +553,9 @@ function descargarWord(){
   URL.revokeObjectURL(url);
 }
 
-function descargarPDF(){
+function generarDocPDF(){
   const contenido = document.getElementById('contractText').innerText;
-  if(!contenido){ return; }
+  if(!contenido){ return null; }
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ unit: 'mm', format: 'letter' });
   const marginLeft = 20, marginRight = 20, marginTop = 25, marginBottom = 20;
@@ -628,7 +629,51 @@ function descargarPDF(){
     });
   });
 
-  doc.save('solicitud-arrendamiento.pdf');
+  return doc;
+}
+
+function nombreArchivoPDF(){
+  const nombre = (document.getElementById('nombreSolicitante').value || 'solicitud').trim();
+  const sinAcentos = nombre.normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  const limpio = sinAcentos.replace(/[^a-zA-Z0-9\s]/g,'').replace(/\s+/g,'-').toLowerCase() || 'solicitud';
+  return `solicitud-arrendamiento-${limpio}.pdf`;
+}
+
+function descargarPDF(){
+  const doc = generarDocPDF();
+  if(!doc) return;
+  doc.save(nombreArchivoPDF());
+}
+
+async function compartirPDFWhatsApp(){
+  const doc = generarDocPDF();
+  if(!doc){ return; }
+  const nombreArchivo = nombreArchivoPDF();
+  const blob = doc.output('blob');
+
+  // Intento 1: compartir nativo con el archivo adjunto (funciona en iPhone/Android)
+  if(navigator.canShare){
+    const archivo = new File([blob], nombreArchivo, { type: 'application/pdf' });
+    if(navigator.canShare({ files: [archivo] })){
+      try{
+        await navigator.share({
+          files: [archivo],
+          title: 'Solicitud de arrendamiento',
+          text: 'Te comparto mi solicitud de arrendamiento en PDF.'
+        });
+        return;
+      }catch(err){
+        // el usuario canceló el share o hubo un error; seguimos al respaldo
+        if(err && err.name === 'AbortError') return;
+      }
+    }
+  }
+
+  // Respaldo (computadoras de escritorio, navegadores sin soporte): descarga + abre WhatsApp con texto
+  doc.save(nombreArchivo);
+  const msg = encodeURIComponent('Hola, te comparto mi solicitud de arrendamiento. Adjunto el PDF que se acaba de descargar en mi computadora.');
+  window.open(`https://wa.me/${AGENT.tel}?text=${msg}`, '_blank');
+  alert('Tu navegador no permite adjuntar el PDF directo a WhatsApp. Se descargó el archivo — solo adjúntalo manualmente en el chat que se va a abrir.');
 }
 </script>
 
