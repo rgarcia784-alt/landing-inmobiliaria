@@ -38,6 +38,7 @@
   .tag.landing { background:#e8fdf0; color:#15803d; }
   .status-ok { color: var(--green); font-weight:700; font-size:12px; }
   .status-redirect { color: var(--orange); font-weight:700; font-size:12px; }
+  .status-pending { color: var(--gray); font-weight:700; font-size:12px; }
   .buttons { display:flex; gap:6px; flex-shrink:0; }
   .btn-open, .btn-copy, .btn-dl {
     font-size:12px; padding:7px 12px; border-radius:6px; text-decoration:none; font-weight:600; cursor:pointer; border:none;
@@ -65,6 +66,7 @@ const items = [
 {f:"altare.html", t:"ALTARE Suites — Av. México 2849, Guadalajara", u:"https://propiedades.unobrokers.mx/altare.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/landing-inmobiliaria/main/altare.html"},
 {f:"blog-errores-renta-zapopan.html", t:"¿Por qué tu casa lleva meses vacía? 5 errores comunes al rentar", u:"https://propiedades.unobrokers.mx/blog-errores-renta-zapopan.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/landing-inmobiliaria/main/blog-errores-renta-zapopan.html", tag:"blog", tagLabel:"BLOG"},
 {f:"blog-fraudes-compraventa.html", t:"Cómo comprar o vender tu propiedad sin caer en un fraude", u:"https://propiedades.unobrokers.mx/blog-fraudes-compraventa.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/landing-inmobiliaria/main/blog-fraudes-compraventa.html", tag:"blog", tagLabel:"BLOG"},
+{f:"precio-metro-cuadrado-zapopan-2026.html", t:"¿Cuánto Cuesta el Metro Cuadrado en Zapopan en 2026?", u:"http://blog.propiedades.unobrokers.mx/precio-metro-cuadrado-zapopan-2026.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/blog-inmobiliario-gdl/main/precio-metro-cuadrado-zapopan-2026.html", tag:"blog", tagLabel:"BLOG", status:"pending", statusText:"⏳ Pendiente propagación DNS (subdominio blog)"},
 {f:"busco-departamento-santa-fe-cdmx.html", t:"Comprar Departamento en Santa Fe CDMX", u:"https://propiedades.unobrokers.mx/busco-departamento-santa-fe-cdmx.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/landing-inmobiliaria/main/busco-departamento-santa-fe-cdmx.html"},
 {f:"calculadora-isr-venta-propiedad.html", t:"Calculadora de ISR por Venta de Propiedad en Guadalajara y Zapopan 2026", u:"https://propiedades.unobrokers.mx/calculadora-isr-venta-propiedad.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/landing-inmobiliaria/main/calculadora-isr-venta-propiedad.html"},
 {f:"calculadora-opinion-valor.html", t:"Calculadora de Opinión de Valor Inmobiliario en Guadalajara y Zapopan", u:"https://propiedades.unobrokers.mx/calculadora-opinion-valor.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/landing-inmobiliaria/main/calculadora-opinion-valor.html"},
@@ -83,6 +85,7 @@ const items = [
 {f:"inmobiliaria-guadalajara-zapopan.html", t:"Inmobiliaria en Guadalajara y Zapopan — Vende, Renta o Compra", u:"https://propiedades.unobrokers.mx/inmobiliaria-guadalajara-zapopan.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/landing-inmobiliaria/main/inmobiliaria-guadalajara-zapopan.html"},
 {f:"investigacion-inquilinos.html", t:"Investigación de Inquilinos en Guadalajara | Estudio Socioeconómico y Buró de Crédito", u:"https://propiedades.unobrokers.mx/investigacion-inquilinos.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/landing-inmobiliaria/main/investigacion-inquilinos.html"},
 {f:"landmark-reserve-andares-piso25.html", t:"Departamento de Lujo en Venta en Landmark Reserve, Andares Zapopan – Piso 25", u:"https://rgarcia784-alt.github.io/landmark-reserve-andares/", dl:"https://raw.githubusercontent.com/rgarcia784-alt/landmark-reserve-andares/main/index.html", tag:"indep", tagLabel:"DOMINIO INDEPENDIENTE"},
+{f:"penthouse-landmark-puerta-de-hierro.html", t:"Penthouse en Venta en Landmark, Puerta de Hierro Zapopan – Piso 33", u:"https://rgarcia784-alt.github.io/landmark-reserve-andares/penthouse-landmark-puerta-de-hierro.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/landmark-reserve-andares/main/penthouse-landmark-puerta-de-hierro.html", tag:"indep", tagLabel:"DOMINIO INDEPENDIENTE"},
 {f:"links.html", t:"UNO Brokers – Enlaces", u:"https://propiedades.unobrokers.mx/links.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/landing-inmobiliaria/main/links.html"},
 {f:"los-suenos-residencial.html", t:"Los Sueños Residencial — Terrenos en Venta en Zapopan", u:"https://propiedades.unobrokers.mx/los-suenos-residencial.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/landing-inmobiliaria/main/los-suenos-residencial.html"},
 {f:"los-suenos-terrenos.html", t:"Terrenos en Venta Los Sueños Residencial – Zapopan | Desde $8M MXN", u:"https://propiedades.unobrokers.mx/los-suenos-terrenos.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/landing-inmobiliaria/main/los-suenos-terrenos.html"},
@@ -126,7 +129,8 @@ function render(list) {
     div.className = 'item';
     const tagHtml = it.tag ? `<span class="tag ${it.tag}">${it.tagLabel}</span>` : '';
     const statusHtml = it.status === 'ok' ? `<span class="status-ok">${it.statusText}</span>`
-      : it.status === 'redirect' ? `<span class="status-redirect">${it.statusText}</span>` : '';
+      : it.status === 'redirect' ? `<span class="status-redirect">${it.statusText}</span>`
+      : it.status === 'pending' ? `<span class="status-pending">${it.statusText}</span>` : '';
     div.innerHTML = `
       <div>
         <div class="fname">${it.f} ${tagHtml} ${statusHtml}</div>
