@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel UNO Brokers — Rafa García</title>
+<meta name="robots" content="noindex">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Panel Rafa">
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxODAgMTgwIj48cmVjdCB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCIgcng9IjMyIiBmaWxsPSIjMGYxYzJlIi8+PHJlY3QgeD0iMCIgeT0iMTU2IiB3aWR0aD0iMTgwIiBoZWlnaHQ9IjYiIGZpbGw9IiNjOWE4NGMiLz48dGV4dCB4PSI5MCIgeT0iMTEwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iR2VvcmdpYSxzZXJpZiIgZm9udC1zaXplPSI3MiIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiNjOWE4NGMiPjwvdGV4dD48dGV4dCB4PSI5MCIgeT0iMTE1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iR2VvcmdpYSxzZXJpZiIgZm9udC1zaXplPSI3OCIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiNjOWE4NGMiPlVCPC90ZXh0Pjwvc3ZnPg==">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%230f1c2e'/><rect x='0' y='88' width='100' height='4' fill='%23c9a84c'/><text x='50' y='68' text-anchor='middle' font-family='Georgia,serif' font-size='44' font-weight='bold' fill='%23c9a84c'>UB</text></svg>">
+<!-- Firebase CDN v8 compatible con iOS -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+<!-- SheetJS para Excel -->
+<script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0f1c2e;--navy2:#1a2f4a;--gold:#c9a84c;--gold2:#dfc278;
+  --cream:#f5f1ea;--cream2:#ede8df;--white:#fff;--muted:#6b7280;
+  --border:#ddd8cf;--charcoal:#2c2c2c;
+  --red:#c0392b;--red-bg:#fdf3f2;
+  --green:#1a7a4a;--green-bg:#f0faf4;
+  --amber:#b7791f;--amber-bg:#fffbeb;
+  --fd:'Cormorant Garamond',Georgia,serif;
+  --fb:'Jost',system-ui,sans-serif;
+}
+body{font-family:var(--fb);background:var(--cream);color:var(--charcoal);min-height:100vh;-webkit-font-smoothing:antialiased;font-size:16px}
+
+/* ── TOP BAR ── */
+.topbar{background:var(--navy);padding:0 16px;height:56px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid var(--gold);position:sticky;top:0;z-index:100;gap:8px}
+.topbar-row{width:100%;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.topbar-logo{font-family:var(--fd);font-size:1.6rem;font-weight:600;color:#fff;letter-spacing:.04em}
+.topbar-logo span{color:var(--gold)}
+.topbar-date{font-size:.92rem;color:rgba(255,255,255,.45);letter-spacing:.06em;display:none}
+
+/* ── ALERTAS ── */
+#alertas-bar{background:var(--red-bg);border-bottom:2px solid var(--red);padding:0;display:none}
+.alertas-inner{padding:12px 24px;display:flex;flex-direction:column;gap:8px}
+.alerta-item{display:flex;align-items:center;gap:12px;font-size:.85rem;color:var(--red)}
+.alerta-item strong{color:var(--charcoal)}
+.btn-enterado{background:var(--green);color:#fff;border:none;border-radius:3px;padding:4px 12px;font-size:.72rem;font-weight:600;letter-spacing:.06em;cursor:pointer;white-space:nowrap;flex-shrink:0}
+.btn-apagar{background:var(--muted);color:#fff;border:none;border-radius:3px;padding:4px 12px;font-size:.72rem;font-weight:600;letter-spacing:.06em;cursor:pointer;white-space:nowrap;flex-shrink:0;margin-left:4px}
+
+/* ── TABS ── */
+.tabs{display:flex;gap:0;background:var(--navy2);padding:0 24px;overflow-x:auto}
+.tab{padding:14px 22px;font-size:.92rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.45);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:color .18s,border-color .18s}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+.tab:hover{color:rgba(255,255,255,.8)}
+
+/* ── MAIN ── */
+.main{padding:28px 24px 80px;max-width:980px}
+.panel{display:none}
+.panel.active{display:block}
+
+/* ── SECTION HEADER ── */
+.sec-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px}
+.sec-title{font-family:var(--fd);font-size:2.2rem;font-weight:600;color:var(--navy)}
+.btn-add{background:var(--navy);color:#fff;border:none;border-radius:3px;padding:9px 18px;font-size:.78rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:background .18s}
+.btn-add:hover{background:var(--navy2)}
+
+/* ── MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal{background:#fff;border-radius:4px;padding:32px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;position:relative}
+.modal h3{font-family:var(--fd);font-size:1.6rem;font-weight:600;color:var(--navy);margin-bottom:20px}
+.modal-close{position:absolute;top:16px;right:16px;background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--muted)}
+.field{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
+.field label{font-size:.85rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--navy)}
+.field input,.field select,.field textarea{font-family:var(--fb);font-size:1rem;color:var(--charcoal);background:var(--cream);border:1px solid var(--border);border-radius:3px;padding:10px 12px;width:100%;transition:border-color .18s}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--gold);background:#fff}
+.field textarea{resize:vertical;min-height:72px}
+.field select{appearance:none}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.btn-save{width:100%;background:var(--navy);color:#fff;border:none;border-radius:3px;padding:13px;font-size:.88rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;margin-top:8px;transition:background .18s}
+.btn-save:hover{background:var(--gold)}
+
+/* ── CARDS ── */
+.cards{display:flex;flex-direction:column;gap:12px}
+.card{background:#fff;border:1px solid var(--border);border-radius:4px;padding:20px 22px;position:relative;transition:border-color .18s,box-shadow .18s}
+.card:hover{border-color:var(--gold);box-shadow:0 2px 16px rgba(201,168,76,.1)}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.card-title{font-family:var(--fd);font-size:1.6rem;font-weight:600;color:var(--navy)}
+.card-badge{font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:2px;white-space:nowrap}
+.badge-renta{background:var(--amber-bg);color:var(--amber)}
+.badge-venta{background:#eff6ff;color:#1d4ed8}
+.badge-activo{background:var(--green-bg);color:var(--green)}
+.badge-urgente{background:var(--red-bg);color:var(--red)}
+.badge-seguimiento{background:#f5f3ff;color:#6d28d9}
+.card-meta{display:flex;gap:16px;flex-wrap:wrap;margin-top:10px}
+.card-meta-item{font-size:.95rem;color:var(--muted)}
+.card-meta-item strong{color:var(--charcoal)}
+.card-actions{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.btn-wa{background:#25d366;color:#fff;border:none;border-radius:3px;padding:7px 14px;font-size:.75rem;font-weight:600;cursor:pointer;letter-spacing:.04em;transition:background .18s}
+.btn-wa:hover{background:#1ebe5d}
+.btn-cal{background:var(--navy);color:#fff;border:none;border-radius:3px;padding:7px 14px;font-size:.75rem;font-weight:600;cursor:pointer;letter-spacing:.04em;transition:background .18s}
+.btn-cal:hover{background:var(--navy2)}
+.btn-edit{background:none;border:1px solid var(--border);border-radius:3px;padding:7px 14px;font-size:.75rem;font-weight:600;cursor:pointer;color:var(--muted);transition:border-color .18s,color .18s}
+.btn-edit:hover{border-color:var(--navy);color:var(--navy)}
+.btn-del{background:none;border:1px solid #fca5a5;border-radius:3px;padding:7px 14px;font-size:.75rem;font-weight:600;cursor:pointer;color:var(--red);transition:background .18s}
+.btn-del:hover{background:var(--red-bg)}
+.alerta-dias{font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:2px;margin-left:8px}
+.dias-ok{background:var(--green-bg);color:var(--green)}
+.dias-warn{background:var(--amber-bg);color:var(--amber)}
+.dias-urgent{background:var(--red-bg);color:var(--red)}
+
+/* ── MENSAJE WA MODAL ── */
+.wa-msg-box{background:#e9fbe9;border:1px solid #a7f3d0;border-radius:6px;padding:16px;font-size:.88rem;line-height:1.7;white-space:pre-wrap;font-family:inherit;color:#14532d;margin-bottom:14px;word-break:break-word}
+.btn-copy{width:100%;background:#25d366;color:#fff;border:none;border-radius:3px;padding:12px;font-size:.88rem;font-weight:700;cursor:pointer;letter-spacing:.04em;transition:background .18s}
+.btn-copy:hover{background:#1ebe5d}
+.btn-copy.copied{background:var(--navy)}
+
+/* ── EMPTY STATE ── */
+.empty{text-align:center;padding:48px 24px;color:var(--muted)}
+.empty p{font-size:.9rem;margin-top:8px}
+
+/* ── CALENDARIO ── */
+.btn-cal-nav{background:var(--navy);color:#fff;border:none;border-radius:3px;padding:8px 16px;font-size:.78rem;font-weight:600;cursor:pointer;letter-spacing:.04em;transition:background .18s}
+.btn-cal-nav:hover{background:var(--gold)}
+.cal-table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--border);border-radius:4px;overflow:hidden}
+.cal-table th{background:var(--navy);color:rgba(255,255,255,.7);font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:10px 8px;text-align:center}
+.cal-table td{border:1px solid var(--border);padding:8px;vertical-align:top;min-height:80px;width:14.28%;font-size:.78rem;color:var(--muted)}
+.cal-day-num{font-weight:600;color:var(--navy);margin-bottom:4px;font-size:.85rem}
+.cal-today .cal-day-num{background:var(--gold);color:#fff;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center}
+.cal-evento{font-size:.68rem;padding:2px 6px;border-radius:2px;margin-bottom:2px;line-height:1.3;cursor:default}
+.ev-pago{background:#fdf3f2;color:var(--red);border-left:2px solid var(--red)}
+.ev-vence{background:#fffbeb;color:var(--amber);border-left:2px solid var(--amber)}
+.ev-seguimiento{background:var(--green-bg);color:var(--green);border-left:2px solid var(--green)}
+.ev-comprador{background:#eff6ff;color:#1d4ed8;border-left:2px solid #1d4ed8}
+.cal-otro-mes{background:var(--cream);opacity:.5}
+
+/* ── RESPONSIVE ── */
+@media(max-width:600px){
+  .main{padding:20px 16px 80px}
+  .grid2{grid-template-columns:1fr}
+  .topbar{padding:0 16px}
+  .tabs{padding:0 16px}
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-logo">UNO <span>Brokers</span> — Panel Rafa</div>
+  <button onclick="exportarExcel()" style="background:var(--gold);color:var(--navy);border:none;border-radius:3px;padding:7px 14px;font-size:.75rem;font-weight:700;cursor:pointer;letter-spacing:.04em;white-space:nowrap;flex-shrink:0">⬇ Exportar</button>
+</div>
+
+<!-- ALERTAS -->
+<div id="alertas-bar">
+  <div class="alertas-inner" id="alertas-lista"></div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <div class="tab active" onclick="showPanel('req',this)">🔍 Requerimientos</div>
+  <div class="tab" onclick="showPanel('arr',this)">🏠 Arrendatarios</div>
+  <div class="tab" onclick="showPanel('pro',this)">📋 Prospectos</div>
+  <div class="tab" onclick="showPanel('com',this)">💼 Compradores</div>
+  <div class="tab" onclick="showPanel('seg',this)">🛡 Seguros</div>
+  <div class="tab" onclick="showPanel('cal',this)">📅 Calendario</div>
+</div>
+
+<div class="main">
+
+  <!-- ══ PANEL REQUERIMIENTOS ══ -->
+  <div class="panel active" id="panel-req">
+    <div class="sec-header">
+      <div class="sec-title">Requerimientos activos</div>
+      <button class="btn-add" onclick="openModal('req')">+ Nuevo requerimiento</button>
+    </div>
+    <div class="cards" id="cards-req"><div class="empty">📭<p>Sin requerimientos activos. Da clic en "+ Nuevo requerimiento".</p></div></div>
+  </div>
+
+  <!-- ══ PANEL ARRENDATARIOS ══ -->
+  <div class="panel" id="panel-arr">
+    <div class="sec-header">
+      <div class="sec-title">Arrendatarios activos</div>
+      <button class="btn-add" onclick="openModal('arr')">+ Nuevo arrendatario</button>
+    </div>
+    <div class="cards" id="cards-arr"><div class="empty">📭<p>Sin arrendatarios registrados. Da clic en "+ Nuevo arrendatario".</p></div></div>
+  </div>
+
+  <!-- ══ PANEL PROSPECTOS ══ -->
+  <div class="panel" id="panel-pro">
+    <div class="sec-header">
+      <div class="sec-title">Prospectos en seguimiento</div>
+      <button class="btn-add" onclick="openModal('pro')">+ Nuevo prospecto</button>
+    </div>
+    <div class="cards" id="cards-pro"><div class="empty">📭<p>Sin prospectos registrados. Da clic en "+ Nuevo prospecto".</p></div></div>
+  </div>
+
+  <!-- ══ PANEL COMPRADORES ══ -->
+  <div class="panel" id="panel-com">
+    <div class="sec-header">
+      <div class="sec-title">Cartera de compradores</div>
+      <button class="btn-add" onclick="openModal('com')">+ Nuevo comprador</button>
+    </div>
+    <div class="cards" id="cards-com"><div class="empty">💼<p>Sin compradores registrados. Da clic en "+ Nuevo comprador".</p></div></div>
+  </div>
+
+  <!-- ══ PANEL SEGUROS ══ -->
+  <div class="panel" id="panel-seg">
+    <div class="sec-header">
+      <div class="sec-title">Seguros</div>
+      <button class="btn-add" onclick="openModal('seg')">+ Nuevo seguro</button>
+    </div>
+    <div class="cards" id="cards-seg"><div class="empty">🛡<p>Sin seguros registrados.</p></div></div>
+  </div>
+
+  <!-- ══ PANEL CALENDARIO ══ -->
+  <div class="panel" id="panel-cal">
+    <div class="sec-header">
+      <div class="sec-title">Calendario 2026</div>
+      <div style="font-size:.8rem;color:var(--muted)">Eventos generados automáticamente desde tus registros</div>
+    </div>
+    <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap">
+      <button class="btn-cal-nav" onclick="cambiarMes(-1)">← Mes anterior</button>
+      <span id="cal-mes-label" style="font-family:var(--fd);font-size:1.2rem;font-weight:600;color:var(--navy);align-self:center"></span>
+      <button class="btn-cal-nav" onclick="cambiarMes(1)">Mes siguiente →</button>
+    </div>
+    <div id="cal-grid"></div>
+    <div style="margin-top:20px;display:flex;gap:16px;flex-wrap:wrap">
+      <span style="font-size:.75rem;color:var(--muted)">🔴 Pago / vencimiento urgente &nbsp; 🟡 Próximo &nbsp; 🟢 Seguimiento &nbsp; 🔵 Comprador aniversario</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══ MODAL REQUERIMIENTO ══ -->
+<div class="modal-overlay" id="modal-req">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('req')">×</button>
+    <h3 id="modal-req-title">Nuevo requerimiento</h3>
+    <input type="hidden" id="req-edit-id">
+    <div class="field"><label>Cliente (privado)</label><input type="text" id="req-cliente" placeholder="Nombre del cliente"></div>
+    <div class="field"><label>Prospecto vinculado</label>
+      <select id="req-prospecto-id">
+        <option value="">Sin vincular</option>
+      </select>
+    </div>
+    <div class="grid2">
+      <div class="field"><label>Operación</label>
+        <select id="req-op"><option>Renta</option><option>Venta</option></select>
+      </div>
+      <div class="field"><label>Tipo de inmueble</label>
+        <select id="req-tipo"><option>Departamento</option><option>Casa</option><option>Loft</option><option>Terreno</option><option>Local comercial</option><option>Oficina</option><option>Bodega</option><option>Penthouse</option></select>
+      </div>
+    </div>
+    <div class="grid2">
+      <div class="field"><label>Presupuesto máximo</label><input type="text" id="req-precio" placeholder="Ej. $17,000"></div>
+      <div class="field"><label>Moneda</label>
+        <select id="req-moneda"><option>MXN</option><option>USD</option></select>
+      </div>
+    </div>
+    <div class="field"><label>Zona / Colonia</label><input type="text" id="req-zona" placeholder="Ej. Puerta del Valle o cerca de Andares"></div>
+    <div class="grid2">
+      <div class="field"><label>Recámaras</label><input type="text" id="req-rec" placeholder="Ej. 2 o mínimo 1"></div>
+      <div class="field"><label>Condición</label>
+        <select id="req-cond"><option value="">Indiferente</option><option>Amueblado</option><option>Sin amueblar</option></select>
+      </div>
+    </div>
+    <div class="field"><label>Notas adicionales (privado)</label><textarea id="req-notas" placeholder="Detalles internos, urgencia, etc."></textarea></div>
+    
+    <div style="margin-top:16px;margin-bottom:8px">
+      <div style="font-size:.85rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border)">Respuestas de asesores</div>
+      <div id="req-respuestas-list"></div>
+      <button type="button" onclick="agregarRespuesta()" style="background:none;border:1.5px dashed var(--gold);border-radius:3px;padding:8px 16px;font-size:.82rem;font-weight:600;color:var(--gold);cursor:pointer;width:100%;margin-top:8px">+ Agregar respuesta de asesor</button>
+    </div>
+
+    <button class="btn-save" onclick="saveReq()">Guardar requerimiento</button>
+  </div>
+</div>
+
+<!-- ══ MODAL ARRENDATARIO ══ -->
+<div class="modal-overlay" id="modal-arr">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('arr')">×</button>
+    <h3 id="modal-arr-title">Nuevo arrendatario</h3>
+    <input type="hidden" id="arr-edit-id">
+    <div class="grid2">
+      <div class="field"><label>Nombre del inquilino</label><input type="text" id="arr-nombre" placeholder="Nombre completo"></div>
+      <div class="field"><label>WhatsApp</label><input type="tel" id="arr-tel" placeholder="33 1234 5678"></div>
+    </div>
+    <div class="field"><label>Arrendador (propietario)</label><input type="text" id="arr-arrendador" placeholder="Nombre del propietario"></div>
+    <div class="field"><label>Propiedad / Dirección</label><input type="text" id="arr-prop" placeholder="Ej. Dep. 607A, The Lighthouse"></div>
+    <div class="grid2">
+      <div class="field"><label>Monto de renta (MXN)</label><input type="text" id="arr-renta" placeholder="Ej. 18,000"></div>
+      <div class="field"><label>Día de pago (del mes)</label><input type="number" id="arr-dia-pago" min="1" max="31" placeholder="Ej. 1"></div>
+    </div>
+    <div class="grid2">
+      <div class="field"><label>Inicio del contrato</label><input type="date" id="arr-inicio"></div>
+      <div class="field"><label>Vencimiento del contrato</label><input type="date" id="arr-vence"></div>
+    </div>
+    <div class="field"><label>Notas (privado)</label><textarea id="arr-notas" placeholder="Depósito, fiador, condiciones especiales..."></textarea></div>
+    <button class="btn-save" onclick="saveArr()">Guardar arrendatario</button>
+  </div>
+</div>
+
+<!-- ══ MODAL PROSPECTO ══ -->
+<div class="modal-overlay" id="modal-pro">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('pro')">×</button>
+    <h3 id="modal-pro-title">Nuevo prospecto</h3>
+    <input type="hidden" id="pro-edit-id">
+    <div class="field"><label>Tipo de prospecto *</label>
+      <select id="pro-tipo-prospecto">
+        <option value="">Seleccionar...</option>
+        <option>🔍 Busca comprar</option>
+        <option>🔍 Busca rentar</option>
+        <option>🏠 Propietario que quiere vender</option>
+        <option>🏠 Propietario que quiere rentar</option>
+      </select>
+    </div>
+    <div class="field"><label>Servicio de interés</label>
+      <select id="pro-servicio">
+        <option value="">Seleccionar...</option>
+        <option>📄 Contrato de arrendamiento</option>
+        <option>🔎 Investigación de inquilinos</option>
+        <option>📊 Opinión de valor</option>
+        <option>🏢 Administración de renta</option>
+        <option>🤝 Intermediación de venta</option>
+        <option>🔑 Intermediación de renta</option>
+        <option>📋 Asesoría inmobiliaria</option>
+        <option>💼 Co-brokeraje</option>
+        <option>Otro</option>
+      </select>
+    </div>
+    <div class="grid2">
+      <div class="field"><label>Nombre</label><input type="text" id="pro-nombre" placeholder="Nombre completo"></div>
+      <div class="field"><label>WhatsApp</label><input type="tel" id="pro-tel" placeholder="33 1234 5678"></div>
+    </div>
+    <div class="field"><label>Etapa</label>
+      <select id="pro-etapa"><option>Primer contacto</option><option>Seguimiento activo</option><option>Visita agendada</option><option>Oferta enviada</option><option>Negociación</option><option>Pre-cierre</option></select>
+    </div>
+    <div class="field"><label>Propiedad / Desarrollo de interés</label><input type="text" id="pro-prop" placeholder="Ej. Bosque Real, depto 2 rec"></div>
+    <div class="field"><label>Último contacto</label><input type="date" id="pro-ultimo"></div>
+    <div class="field"><label>Próximo paso</label><input type="text" id="pro-siguiente" placeholder="Ej. Llamar el lunes para agendar visita"></div>
+    <div class="field"><label>Notas (privado)</label><textarea id="pro-notas" placeholder="Contexto, objeciones, preferencias..."></textarea></div>
+    <button class="btn-save" onclick="savePro()">Guardar prospecto</button>
+  </div>
+</div>
+
+<!-- ══ MODAL COMPRADOR ══ -->
+<div class="modal-overlay" id="modal-com">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('com')">×</button>
+    <h3 id="modal-com-title">Nuevo comprador</h3>
+    <input type="hidden" id="com-edit-id">
+    <div class="grid2">
+      <div class="field"><label>Nombre</label><input type="text" id="com-nombre" placeholder="Nombre completo"></div>
+      <div class="field"><label>WhatsApp</label><input type="tel" id="com-tel" placeholder="33 1234 5678"></div>
+    </div>
+    <div class="field"><label>Correo electrónico</label><input type="email" id="com-email" placeholder="correo@ejemplo.com"></div>
+    <div class="field"><label>Propiedad adquirida</label><input type="text" id="com-prop" placeholder="Ej. Casa Valle Real, Lote 12"></div>
+    <div class="grid2">
+      <div class="field"><label>Precio de cierre</label><input type="text" id="com-precio" placeholder="Ej. 4,500,000"></div>
+      <div class="field"><label>Moneda</label>
+        <select id="com-moneda"><option>MXN</option><option>USD</option></select>
+      </div>
+    </div>
+    <div class="grid2">
+      <div class="field"><label>Fecha de cierre</label><input type="date" id="com-fecha-cierre"></div>
+      <div class="field"><label>Comisión cobrada</label><input type="text" id="com-comision" placeholder="Ej. 135,000 MXN o 3%"></div>
+    </div>
+    <div class="field"><label>Tipo de operación</label>
+      <select id="com-tipo"><option>Compra</option><option>Renta</option><option>Inversión</option><option>Pre-venta</option></select>
+    </div>
+    <div class="field"><label>¿Podría volver a comprar / referir?</label>
+      <select id="com-potencial"><option>Sí, seguimiento activo</option><option>Posiblemente</option><option>No por ahora</option></select>
+    </div>
+    <div class="field"><label>Notas (privado)</label><textarea id="com-notas" placeholder="Referencias dadas, relación, preferencias futuras..."></textarea></div>
+    <button class="btn-save" onclick="saveCom()">Guardar comprador</button>
+  </div>
+</div>
+
+<!-- ══ MODAL SEGURO ══ -->
+<div class="modal-overlay" id="modal-seg">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('seg')">×</button>
+    <h3 id="modal-seg-title">Nuevo seguro</h3>
+    <input type="hidden" id="seg-edit-id">
+    <div class="grid2">
+      <div class="field"><label>Ramo / Tipo *</label>
+        <select id="seg-ramo">
+          <option>GMM</option>
+          <option>Autos</option>
+          <option>Vida</option>
+          <option>Inmueble</option>
+          <option>Responsabilidad Civil</option>
+          <option>Negocio</option>
+          <option>Otro</option>
+        </select>
+      </div>
+      <div class="field"><label>Compañía</label>
+        <input type="text" id="seg-compania" placeholder="Ej. AXA" value="AXA">
+      </div>
+    </div>
+    <div class="grid2">
+      <div class="field"><label>Número de póliza *</label><input type="text" id="seg-poliza" placeholder="Ej. 96616D10"></div>
+      <div class="field"><label>Asegurado</label><input type="text" id="seg-asegurado" placeholder="Nombre del asegurado" value="Rafael García Grado"></div>
+    </div>
+    <div class="grid2">
+      <div class="field"><label>Prima total</label><input type="text" id="seg-prima" placeholder="Ej. 17,454.36"></div>
+      <div class="field"><label>Fecha de vencimiento *</label><input type="date" id="seg-vence"></div>
+    </div>
+    <div class="field"><label>Notas</label><textarea id="seg-notas" placeholder="Coberturas, agente, contacto..."></textarea></div>
+    <button class="btn-save" onclick="saveSeg()">Guardar seguro</button>
+  </div>
+</div>
+
+<!-- ══ MODAL MENSAJE WA ══ -->
+<div class="modal-overlay" id="modal-wa">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('wa')">×</button>
+    <h3>Mensaje para grupos</h3>
+    <div class="wa-msg-box" id="wa-msg-text"></div>
+    <button class="btn-copy" id="btn-copy-wa" onclick="copiarMensaje()">📋 Copiar mensaje</button>
+  </div>
+</div>
+
+
+<script>
+// ── FIREBASE INIT ──
+const firebaseConfig = {
+  apiKey: "AIzaSyDaHcKIDUKiC-xxNRb7U0cUfS_ueNjWCQ",
+  authDomain: "rafa-crm-unobrokers.firebaseapp.com",
+  projectId: "rafa-crm-unobrokers",
+  storageBucket: "rafa-crm-unobrokers.firebasestorage.app",
+  messagingSenderId: "22009975256",
+  appId: "1:22009975256:web:121cbe730891f48e1da2ad"
+}
+firebase.initializeApp(firebaseConfig)
+const db = firebase.firestore()
+
+// ── STORAGE LOCAL (caché) ──
+const S = {
+  get: k => { try { return JSON.parse(localStorage.getItem(k)) || [] } catch(e) { return [] } },
+  set: (k, v) => localStorage.setItem(k, JSON.stringify(v))
+}
+
+// ── FIREBASE OPS ──
+function fbSave(col, item) {
+  S.set(col, S.get(col).filter(r => r.id !== item.id).concat(item))
+  db.collection(col).doc(item.id).set(item).catch(e => console.warn('FB save:', e))
+}
+function fbDelete(col, id) {
+  S.set(col, S.get(col).filter(r => r.id !== id))
+  db.collection(col).doc(id).delete().catch(e => console.warn('FB delete:', e))
+}
+async function loadAll() {
+  // Mostrar cargando
+  document.querySelectorAll('.cards').forEach(el => {
+    el.innerHTML = '<div class="empty">⏳<p>Cargando datos...</p></div>'
+  })
+  try {
+    const cols = ['req','arr','pro','com','seg']
+    for (const col of cols) {
+      const snap = await db.collection(col).get()
+      if (!snap.empty) S.set(col, snap.docs.map(d => d.data()))
+    }
+  } catch(e) { 
+    console.warn('FB load error:', e)
+    alert('Error conectando Firebase: ' + e.message)
+  }
+  renderReq(); renderArr(); renderPro(); renderCom(); renderSeg()
+  precargarSeguros()
+  checkAlertas()
+  renderCal()
+}
+
+// ── FECHA ──
+const hoy = new Date()
+const fechaEl = document.getElementById('fecha-hoy')
+if (fechaEl) fechaEl.textContent = hoy.toLocaleDateString('es-MX', {weekday:'long', year:'numeric', month:'long', day:'numeric'})
+
+// ── INIT APP ──
+function initApp() {
+  loadAll()
+}
+
+// ── TABS ──
+function showPanel(id, el) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'))
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'))
+  document.getElementById('panel-' + id).classList.add('active')
+  if (el) el.classList.add('active')
+}
+
+// ── MODALS ──
+function openModal(type, id) {
+  if (type === 'req') {
+    // Poblar prospectos
+    const sel = document.getElementById('req-prospecto-id')
+    if (sel) {
+      const pros = S.get('pro')
+      sel.innerHTML = '<option value="">Sin vincular</option>' + pros.map(p => `<option value="${p.id}">${p.nombre}</option>`).join('')
+    }
+  }
+  if (id) loadForEdit(type, id)
+  document.getElementById('modal-' + type).classList.add('open')
+}
+function closeModal(type) {
+  document.getElementById('modal-' + type).classList.remove('open')
+  clearForm(type)
+}
+document.querySelectorAll('.modal-overlay').forEach(m => {
+  m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open') })
+})
+
+function clearForm(type) {
+  document.getElementById('modal-' + type).querySelectorAll('input,select,textarea').forEach(el => {
+    if (el.type !== 'hidden') el.value = el.type === 'select-one' ? el.options[0]?.value : ''
+  })
+  if (type === 'req') { 
+    document.getElementById('req-edit-id').value = ''
+    document.getElementById('modal-req-title').textContent = 'Nuevo requerimiento'
+    respuestasTemp = []
+    renderRespuestasForm()
+  }
+  if (type === 'arr') { document.getElementById('arr-edit-id').value = ''; document.getElementById('modal-arr-title').textContent = 'Nuevo arrendatario' }
+  if (type === 'pro') { document.getElementById('pro-edit-id').value = ''; document.getElementById('modal-pro-title').textContent = 'Nuevo prospecto' }
+}
+
+// ── ID ──
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2)
+
+// ── DÍAS ENTRE FECHAS ──
+function diasHasta(fechaStr) {
+  const f = new Date(fechaStr + 'T00:00:00')
+  const hoyD = new Date(); hoyD.setHours(0,0,0,0)
+  return Math.round((f - hoyD) / 86400000)
+}
+
+function diasClass(d) {
+  if (d <= 1) return 'dias-urgent'
+  if (d <= 5) return 'dias-warn'
+  return 'dias-ok'
+}
+
+// ── RESPUESTAS DE ASESORES ──
+let respuestasTemp = []
+
+function agregarRespuesta() {
+  const idx = respuestasTemp.length
+  respuestasTemp.push({ nombre: '', wa: '', propiedad: '' })
+  renderRespuestasForm()
+}
+
+function eliminarRespuesta(idx) {
+  respuestasTemp.splice(idx, 1)
+  renderRespuestasForm()
+}
+
+function renderRespuestasForm() {
+  const el = document.getElementById('req-respuestas-list')
+  if (!el) return
+  el.innerHTML = respuestasTemp.map((r, i) => `
+    <div style="background:var(--cream);border:1px solid var(--border);border-radius:3px;padding:12px;margin-bottom:10px;position:relative">
+      <button type="button" onclick="eliminarRespuesta(${i})" style="position:absolute;top:8px;right:8px;background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.1rem">×</button>
+      <div style="font-size:.72rem;font-weight:700;color:var(--gold);letter-spacing:.08em;margin-bottom:8px">RESPUESTA ${i+1}</div>
+      <div class="grid2">
+        <div class="field"><label>Nombre del asesor</label><input type="text" value="${r.nombre}" oninput="respuestasTemp[${i}].nombre=this.value" placeholder="Nombre"></div>
+        <div class="field"><label>WhatsApp</label><input type="tel" value="${r.wa}" oninput="respuestasTemp[${i}].wa=this.value" placeholder="33 1234 5678"></div>
+      </div>
+      <div class="field"><label>Propiedad ofrecida</label><input type="text" value="${r.propiedad}" oninput="respuestasTemp[${i}].propiedad=this.value" placeholder="Ej. Dep. 3B Torre Andares — $16,500 amueblado"></div>
+    </div>
+  `).join('')
+}
+
+// ════════════════════════════
+// REQUERIMIENTOS
+// ════════════════════════════
+function saveReq() {
+  const editId = document.getElementById('req-edit-id').value
+  const item = {
+    id: editId || uid(),
+    cliente: document.getElementById('req-cliente').value.trim(),
+    prospectoId: document.getElementById('req-prospecto-id').value,
+    op: document.getElementById('req-op').value,
+    tipo: document.getElementById('req-tipo').value,
+    precio: document.getElementById('req-precio').value.trim(),
+    moneda: document.getElementById('req-moneda').value,
+    zona: document.getElementById('req-zona').value.trim(),
+    rec: document.getElementById('req-rec').value.trim(),
+    cond: document.getElementById('req-cond').value,
+    notas: document.getElementById('req-notas').value.trim(),
+    respuestas: respuestasTemp.filter(r => r.nombre || r.propiedad),
+    fecha: new Date().toISOString().slice(0,10),
+    alertaApagada: false
+  }
+  if (!item.zona || !item.precio) { alert('Zona y presupuesto son obligatorios.'); return }
+  let data = S.get('req')
+  if (!editId) {
+    const dup = data.find(r => r.zona.toLowerCase() === item.zona.toLowerCase() && r.tipo === item.tipo && r.op === item.op)
+    if (dup && !confirm(`Ya existe un requerimiento similar: ${dup.tipo} en ${dup.zona}. ¿Agregar de todos modos?`)) return
+  }
+  if (editId) data = data.map(r => r.id === editId ? item : r)
+  else data.push(item)
+  S.set('req', data)
+  fbSave('req', item)
+  closeModal('req')
+  renderReq()
+  checkAlertas()
+}
+
+function loadForEdit(type, id) {
+  if (type === 'req') {
+    const item = S.get('req').find(r => r.id === id); if (!item) return
+    document.getElementById('req-edit-id').value = item.id
+    document.getElementById('modal-req-title').textContent = 'Editar requerimiento'
+    document.getElementById('req-cliente').value = item.cliente || ''
+    document.getElementById('req-op').value = item.op
+    document.getElementById('req-tipo').value = item.tipo
+    document.getElementById('req-precio').value = item.precio
+    document.getElementById('req-moneda').value = item.moneda
+    document.getElementById('req-zona').value = item.zona
+    document.getElementById('req-rec').value = item.rec || ''
+    document.getElementById('req-cond').value = item.cond || ''
+    document.getElementById('req-notas').value = item.notas || ''
+    respuestasTemp = item.respuestas ? [...item.respuestas] : []
+    renderRespuestasForm()
+  }
+  if (type === 'arr') {
+    const item = S.get('arr').find(r => r.id === id); if (!item) return
+    document.getElementById('arr-edit-id').value = item.id
+    document.getElementById('modal-arr-title').textContent = 'Editar arrendatario'
+    document.getElementById('arr-nombre').value = item.nombre
+    document.getElementById('arr-tel').value = item.tel || ''
+    document.getElementById('arr-arrendador').value = item.arrendador || ''
+    document.getElementById('arr-prop').value = item.prop
+    document.getElementById('arr-renta').value = item.renta
+    document.getElementById('arr-dia-pago').value = item.diaPago || ''
+    document.getElementById('arr-inicio').value = item.inicio || ''
+    document.getElementById('arr-vence').value = item.vence || ''
+    document.getElementById('arr-notas').value = item.notas || ''
+  }
+  if (type === 'pro') {
+    const item = S.get('pro').find(r => r.id === id); if (!item) return
+    document.getElementById('pro-edit-id').value = item.id
+    document.getElementById('modal-pro-title').textContent = 'Editar prospecto'
+    document.getElementById('pro-tipo-prospecto').value = item.tipoProspecto || ''
+    document.getElementById('pro-servicio').value = item.servicio || ''
+    document.getElementById('pro-nombre').value = item.nombre
+    document.getElementById('pro-tel').value = item.tel || ''
+    document.getElementById('pro-interes').value = item.interes
+    document.getElementById('pro-etapa').value = item.etapa
+    document.getElementById('pro-prop').value = item.prop || ''
+    document.getElementById('pro-ultimo').value = item.ultimo || ''
+    document.getElementById('pro-siguiente').value = item.siguiente || ''
+    document.getElementById('pro-notas').value = item.notas || ''
+  }
+}
+
+function deleteItem(type, id) {
+  if (!confirm('¿Eliminar este registro?')) return
+  fbDelete(type, id)
+  if (type === 'req') renderReq()
+  if (type === 'arr') renderArr()
+  if (type === 'pro') renderPro()
+  if (type === 'com') renderCom()
+  checkAlertas()
+}
+
+function renderReq() {
+  const data = S.get('req')
+  const el = document.getElementById('cards-req')
+  if (!data.length) { el.innerHTML = '<div class="empty">📭<p>Sin requerimientos activos.</p></div>'; return }
+  el.innerHTML = data.map(r => {
+    const diasDesde = diasHasta(r.fecha)
+    const diasTranscurridos = -diasDesde
+    const badge = r.op === 'Renta' ? 'badge-renta' : 'badge-venta'
+    const alertaDias = diasTranscurridos >= 5 && !r.alertaApagada ? `<span class="alerta-dias dias-urgent">⚠ ${diasTranscurridos} días sin revisar</span>` : diasTranscurridos >= 3 ? `<span class="alerta-dias dias-warn">${diasTranscurridos} días</span>` : `<span class="alerta-dias dias-ok">Actualizado hace ${diasTranscurridos}d</span>`
+    return `<div class="card" id="req-${r.id}">
+      <div class="card-top">
+        <div>
+          <span class="card-title">${r.tipo} en ${r.op}</span>
+          ${alertaDias}
+        </div>
+        <span class="card-badge ${badge}">${r.op}</span>
+      </div>
+      <div class="card-meta">
+        <div class="card-meta-item">📍 <strong>${r.zona}</strong></div>
+        <div class="card-meta-item">💰 <strong>Máx. ${r.precio} ${r.moneda}</strong></div>
+        ${r.rec ? `<div class="card-meta-item">🛏 <strong>${r.rec} rec.</strong></div>` : ''}
+        ${r.cond ? `<div class="card-meta-item">🛋 <strong>${r.cond}</strong></div>` : ''}
+        ${r.cliente ? `<div class="card-meta-item">👤 <strong>${r.cliente}</strong></div>` : ''}
+        ${r.prospectoId ? (() => { const p = S.get('pro').find(x => x.id === r.prospectoId); return p ? `<div class="card-meta-item">🔗 Prospecto: <strong>${p.nombre}</strong></div>` : '' })() : ''}
+      </div>
+      ${r.respuestas && r.respuestas.length ? `<div style="margin-top:12px;background:var(--cream);border:1px solid var(--border);border-radius:3px;padding:10px 14px"><div style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Respuestas recibidas (${r.respuestas.length})</div>${r.respuestas.map(resp => `<div style="margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid var(--border);font-size:.82rem"><strong>${resp.nombre}</strong>${resp.wa ? ` · <a href="https://wa.me/52${resp.wa.replace(/\s/g,'')}" target="_blank" style="color:var(--gold)">${resp.wa}</a>` : ''}<br><span style="color:var(--muted)">${resp.propiedad}</span></div>`).join('')}</div>` : ''}
+      ${r.notas ? `<div style="margin-top:10px;font-size:.82rem;color:var(--muted)">${r.notas}</div>` : ''}
+      <div class="card-actions">
+        <button class="btn-wa" onclick="generarMsgReq('${r.id}')">📲 Generar mensaje</button>
+        <button class="btn-edit" onclick="openModal('req','${r.id}')">Editar</button>
+        ${diasTranscurridos >= 5 && !r.alertaApagada ? `<button class="btn-enterado" onclick="enteradoReq('${r.id}')">✓ Enterado</button>` : ''}
+        <button class="btn-del" onclick="deleteItem('req','${r.id}')">Eliminar</button>
+      </div>
+    </div>`
+  }).join('')
+}
+
+function enteradoReq(id) {
+  let data = S.get('req')
+  const item = data.find(r => r.id === id)
+  if (!item) return
+  const updated = {...item, fecha: new Date().toISOString().slice(0,10), alertaApagada: true}
+  data = data.map(r => r.id === id ? updated : r)
+  S.set('req', data)
+  fbSave('req', updated)
+  renderReq()
+  checkAlertas()
+}
+
+function generarMsgReq(id) {
+  const r = S.get('req').find(x => x.id === id); if (!r) return
+  let msg = `SOLICITUD DE ${r.op.toUpperCase()} — CO-BROKERAJE\n\nEstimados colegas, buenos días.\n\nSolicito su apoyo con lo siguiente:\n\n`
+  msg += `- Tipo: ${r.tipo} en ${r.op}\n`
+  if (r.cond) msg += `- Condición: ${r.cond}\n`
+  if (r.rec) msg += `- Recámaras: ${r.rec}\n`
+  msg += `- Presupuesto máximo: ${r.precio} ${r.moneda}/mes\n`
+  msg += `- Zona: ${r.zona} únicamente\n\n`
+  msg += `Por favor envíen ficha sin datos de contacto e indicando comisión a compartir.\n\n`
+  msg += `Rafa García · UNO Brokers\n33 3967 5255`
+  document.getElementById('wa-msg-text').textContent = msg
+  document.getElementById('modal-wa').classList.add('open')
+}
+
+// ════════════════════════════
+// ARRENDATARIOS
+// ════════════════════════════
+function saveArr() {
+  const editId = document.getElementById('arr-edit-id').value
+  const item = {
+    id: editId || uid(),
+    nombre: document.getElementById('arr-nombre').value.trim(),
+    tel: document.getElementById('arr-tel').value.trim(),
+    arrendador: document.getElementById('arr-arrendador').value.trim(),
+    prop: document.getElementById('arr-prop').value.trim(),
+    renta: document.getElementById('arr-renta').value.trim(),
+    diaPago: document.getElementById('arr-dia-pago').value.trim(),
+    inicio: document.getElementById('arr-inicio').value,
+    vence: document.getElementById('arr-vence').value,
+    notas: document.getElementById('arr-notas').value.trim(),
+    alertaApagada: false
+  }
+  if (!item.nombre || !item.prop) { alert('Nombre y propiedad son obligatorios.'); return }
+  let data = S.get('arr')
+  if (!editId) {
+    const dup = data.find(r => r.nombre.toLowerCase() === item.nombre.toLowerCase())
+    if (dup && !confirm(`Ya existe un arrendatario con el nombre "${dup.nombre}". ¿Agregar de todos modos?`)) return
+  }
+  if (editId) data = data.map(r => r.id === editId ? item : r)
+  else data.push(item)
+  S.set('arr', data)
+  fbSave('arr', item)
+  closeModal('arr')
+  renderArr()
+  checkAlertas()
+}
+
+function renderArr() {
+  let data = S.get('arr')
+  const el = document.getElementById('cards-arr')
+  if (!data.length) { el.innerHTML = '<div class="empty">📭<p>Sin arrendatarios registrados.</p></div>'; return }
+
+  // Orden
+  const orden = document.getElementById('arr-orden') ? document.getElementById('arr-orden').value : 'nombre'
+  if (orden === 'nombre') data = [...data].sort((a,b) => a.nombre.localeCompare(b.nombre))
+  else if (orden === 'arrendador') data = [...data].sort((a,b) => (a.arrendador||'').localeCompare(b.arrendador||''))
+  else if (orden === 'prop') data = [...data].sort((a,b) => (a.prop||'').localeCompare(b.prop||''))
+  else if (orden === 'vence') data = [...data].sort((a,b) => (a.vence||'').localeCompare(b.vence||''))
+
+  el.innerHTML = `<div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap">
+    <label style="font-size:.75rem;font-weight:600;color:var(--navy)">Ordenar por:</label>
+    <select id="arr-orden" onchange="renderArr()" style="font-family:var(--fb);font-size:.82rem;border:1px solid var(--border);border-radius:3px;padding:6px 10px;background:var(--white);color:var(--charcoal)">
+      <option value="nombre" ${orden==='nombre'?'selected':''}>Nombre (A-Z)</option>
+      <option value="arrendador" ${orden==='arrendador'?'selected':''}>Arrendador (A-Z)</option>
+      <option value="prop" ${orden==='prop'?'selected':''}>Propiedad (A-Z)</option>
+      <option value="vence" ${orden==='vence'?'selected':''}>Vencimiento</option>
+    </select>
+  </div>` + data.map(r => {
+    // Próximo pago
+    let pagoHTML = ''
+    if (r.diaPago) {
+      const hoyD = new Date(); hoyD.setHours(0,0,0,0)
+      let proxPago = new Date(hoyD.getFullYear(), hoyD.getMonth(), parseInt(r.diaPago))
+      if (proxPago <= hoyD) proxPago = new Date(hoyD.getFullYear(), hoyD.getMonth()+1, parseInt(r.diaPago))
+      const diasPago = Math.round((proxPago - hoyD)/86400000)
+      const cls = diasClass(diasPago)
+      pagoHTML = `<span class="alerta-dias ${cls}">Pago en ${diasPago}d (día ${r.diaPago})</span>`
+    }
+    // Vencimiento contrato
+    let venceHTML = ''
+    if (r.vence) {
+      const dv = diasHasta(r.vence)
+      const cls = dv <= 10 ? 'dias-urgent' : dv <= 30 ? 'dias-warn' : 'dias-ok'
+      const label = dv <= 10 ? `⚠ Vence en ${dv}d — RENOVAR` : `Contrato vence en ${dv}d`
+      venceHTML = `<span class="alerta-dias ${cls}">${label}</span>`
+    }
+    return `<div class="card">
+      <div class="card-top">
+        <div>
+          <span class="card-title">${r.nombre}</span>
+          ${pagoHTML}
+          ${venceHTML}
+        </div>
+        <span class="card-badge badge-activo">Activo</span>
+      </div>
+      <div class="card-meta">
+        <div class="card-meta-item">🏠 <strong>${r.prop}</strong></div>
+        ${r.arrendador ? `<div class="card-meta-item">👤 Propietario: <strong>${r.arrendador}</strong></div>` : ''}
+        ${r.renta ? `<div class="card-meta-item">💰 <strong>$${r.renta} MXN</strong></div>` : ''}
+        ${r.tel ? `<div class="card-meta-item">📱 <strong>${r.tel}</strong></div>` : ''}
+        ${r.inicio ? `<div class="card-meta-item">📅 Inicio: <strong>${r.inicio}</strong></div>` : ''}
+        ${r.vence ? `<div class="card-meta-item">📅 Vence: <strong>${r.vence}</strong></div>` : ''}
+      </div>
+      ${r.notas ? `<div style="margin-top:10px;font-size:.82rem;color:var(--muted)">${r.notas}</div>` : ''}
+      <div class="card-actions">
+        ${r.tel ? `<button class="btn-wa" onclick="window.open('https://wa.me/52${r.tel.replace(/\s/g,'')}','_blank')">💬 WhatsApp</button>` : ''}
+        ${r.vence ? `<button class="btn-cal" onclick="addCalendar('${r.id}')">📅 Calendar</button>` : ''}
+        <button class="btn-edit" onclick="openModal('arr','${r.id}')">Editar</button>
+        <button class="btn-del" onclick="deleteItem('arr','${r.id}')">Eliminar</button>
+      </div>
+    </div>`
+  }).join('')
+}
+
+function addCalendar(id) {
+  const r = S.get('arr').find(x => x.id === id); if (!r || !r.vence) return
+  const vence = r.vence.replace(/-/g,'')
+  const title = encodeURIComponent(`Vencimiento contrato: ${r.nombre} — ${r.prop}`)
+  const details = encodeURIComponent(`Renta: $${r.renta} MXN\nArrendatario: ${r.nombre}\nPropiedad: ${r.prop}`)
+  const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${vence}/${vence}&details=${details}`
+  window.open(url, '_blank')
+}
+
+// ════════════════════════════
+// PROSPECTOS
+// ════════════════════════════
+function savePro() {
+  const editId = document.getElementById('pro-edit-id').value
+  const item = {
+    id: editId || uid(),
+    tipoProspecto: document.getElementById('pro-tipo-prospecto').value,
+    servicio: document.getElementById('pro-servicio').value,
+    nombre: document.getElementById('pro-nombre').value.trim(),
+    tel: document.getElementById('pro-tel').value.trim(),
+    interes: document.getElementById('pro-tipo-prospecto').value,
+    etapa: document.getElementById('pro-etapa').value,
+    prop: document.getElementById('pro-prop').value.trim(),
+    ultimo: document.getElementById('pro-ultimo').value,
+    siguiente: document.getElementById('pro-siguiente').value.trim(),
+    notas: document.getElementById('pro-notas').value.trim(),
+    alertaApagada: false
+  }
+  if (!item.nombre) { alert('El nombre es obligatorio.'); return }
+  let data = S.get('pro')
+  if (!editId) {
+    const dup = data.find(r => r.nombre.toLowerCase() === item.nombre.toLowerCase())
+    if (dup && !confirm(`Ya existe un prospecto con el nombre "${dup.nombre}". ¿Agregar de todos modos?`)) return
+  }
+  if (editId) data = data.map(r => r.id === editId ? item : r)
+  else data.push(item)
+  S.set('pro', data)
+  fbSave('pro', item)
+  closeModal('pro')
+  renderPro()
+  checkAlertas()
+}
+
+function renderPro() {
+  const data = S.get('pro')
+  const el = document.getElementById('cards-pro')
+  if (!data.length) { el.innerHTML = '<div class="empty">📭<p>Sin prospectos registrados.</p></div>'; return }
+  el.innerHTML = data.map(r => {
+    let diasHTML = ''
+    if (r.ultimo) {
+      const d = -diasHasta(r.ultimo)
+      const cls = d >= 5 ? 'dias-urgent' : d >= 3 ? 'dias-warn' : 'dias-ok'
+      diasHTML = `<span class="alerta-dias ${cls}">${d === 0 ? 'Hoy' : `${d}d sin contacto`}</span>`
+    }
+    const etapaColor = {'Pre-cierre':'badge-urgente','Negociación':'badge-urgente','Oferta enviada':'badge-renta','Visita agendada':'badge-renta','Seguimiento activo':'badge-seguimiento','Primer contacto':'badge-activo'}
+    return `<div class="card">
+      <div class="card-top">
+        <div>
+          <span class="card-title">${r.nombre}</span>
+          ${diasHTML}
+        </div>
+        <span class="card-badge ${etapaColor[r.etapa]||'badge-activo'}">${r.etapa}</span>
+      </div>
+      <div class="card-meta">
+        ${r.tipoProspecto ? `<div class="card-meta-item" style="font-size:1rem;color:var(--navy);font-weight:700">${r.tipoProspecto}</div>` : ''}
+        ${r.servicio ? `<div class="card-meta-item" style="font-size:.95rem;color:var(--gold);font-weight:600">${r.servicio}</div>` : ''}
+        <div class="card-meta-item">🎯 <strong>${r.interes}</strong></div>
+        ${r.prop ? `<div class="card-meta-item">🏠 <strong>${r.prop}</strong></div>` : ''}
+        ${r.tel ? `<div class="card-meta-item">📱 <strong>${r.tel}</strong></div>` : ''}
+        ${r.siguiente ? `<div class="card-meta-item">➡ <strong>${r.siguiente}</strong></div>` : ''}
+      </div>
+      ${r.notas ? `<div style="margin-top:10px;font-size:.82rem;color:var(--muted)">${r.notas}</div>` : ''}
+      <div class="card-actions">
+        ${r.tel ? `<button class="btn-wa" onclick="window.open('https://wa.me/52${r.tel.replace(/\s/g,'')}','_blank')">💬 WhatsApp</button>` : ''}
+        <button class="btn-wa" style="background:var(--navy)" onclick="generarMsgPro('${r.id}')">📲 Generar mensaje</button>
+        <button class="btn-edit" onclick="openModal('pro','${r.id}')">Editar</button>
+        <button class="btn-enterado" onclick="enteradoPro('${r.id}')">✓ Contactado hoy</button>
+        <button class="btn-cal" onclick="convertirPro('${r.id}','com')" style="background:#1d4ed8">🏆 → Comprador</button>
+        <button class="btn-cal" onclick="convertirPro('${r.id}','arr')" style="background:var(--green)">🏠 → Arrendatario</button>
+        <button class="btn-del" onclick="deleteItem('pro','${r.id}')">Eliminar</button>
+      </div>
+    </div>`
+  }).join('')
+}
+
+function generarMsgPro(id) {
+  const r = S.get('pro').find(x => x.id === id); if (!r) return
+  let msg = `*SOLICITUD — CO-BROKERAJE*\n\nEstimados colegas, buenos días.\n\n`
+  msg += `Tengo un cliente con el siguiente requerimiento:\n\n`
+  if (r.tipoProspecto) msg += `- ${r.tipoProspecto.replace(/[🔍🏠]/g,'').trim()}\n`
+  if (r.prop) msg += `- Zona/Propiedad: ${r.prop}\n`
+  if (r.servicio) msg += `- Servicio: ${r.servicio.replace(/[📄🔎📊🏢🤝🔑📋💼]/g,'').trim()}\n`
+  msg += `\nPor favor envíen ficha sin datos de contacto e indicando comisión a compartir.\n\n`
+  msg += `Rafa García · UNO Brokers\n33 3967 5255`
+  document.getElementById('wa-msg-text').textContent = msg
+  document.getElementById('modal-wa').classList.add('open')
+}
+
+function convertirPro(id, destino) {
+  const r = S.get('pro').find(x => x.id === id)
+  if (!r) return
+  if (destino === 'com') {
+    const item = {
+      id: uid(),
+      nombre: r.nombre,
+      tel: r.tel || '',
+      email: '',
+      prop: r.prop || '',
+      precio: '',
+      moneda: 'MXN',
+      fechaCierre: new Date().toISOString().slice(0,10),
+      comision: '',
+      tipo: r.interes || 'Compra',
+      potencial: 'Sí, seguimiento activo',
+      notas: r.notas || ''
+    }
+    fbSave('com', item)
+    S.set('com', S.get('com').concat(item))
+    alert(`✅ ${r.nombre} agregado a Compradores. Completa sus datos en esa sección.`)
+    renderCom()
+  } else {
+    const item = {
+      id: uid(),
+      nombre: r.nombre,
+      tel: r.tel || '',
+      arrendador: '',
+      prop: r.prop || '',
+      renta: '',
+      diaPago: '',
+      inicio: new Date().toISOString().slice(0,10),
+      vence: '',
+      notas: r.notas || '',
+      alertaApagada: false
+    }
+    fbSave('arr', item)
+    S.set('arr', S.get('arr').concat(item))
+    alert(`✅ ${r.nombre} agregado a Arrendatarios. Completa sus datos en esa sección.`)
+    renderArr()
+  }
+}
+
+function enteradoPro(id) {
+  let data = S.get('pro')
+  const item = data.find(r => r.id === id)
+  if (!item) return
+  const updated = {...item, ultimo: new Date().toISOString().slice(0,10)}
+  data = data.map(r => r.id === id ? updated : r)
+  S.set('pro', data)
+  fbSave('pro', updated)
+  renderPro()
+  checkAlertas()
+}
+
+// ════════════════════════════
+// ALERTAS GLOBALES
+// ════════════════════════════
+function checkAlertas() {
+  const alertas = []
+  const hoyD = new Date(); hoyD.setHours(0,0,0,0)
+
+  // Requerimientos sin revisar 5+ días
+  S.get('req').forEach(r => {
+    const d = -diasHasta(r.fecha)
+    if (d >= 5 && !r.alertaApagada) {
+      alertas.push({ tipo: 'req', id: r.id, msg: `Requerimiento de <strong>${r.tipo} en ${r.zona}</strong> lleva ${d} días sin revisar.`, accion: 'enteradoReq' })
+    }
+  })
+
+  // Arrendatarios — pago mañana (1 día antes)
+  S.get('arr').forEach(r => {
+    if (!r.diaPago) return
+    let proxPago = new Date(hoyD.getFullYear(), hoyD.getMonth(), parseInt(r.diaPago))
+    if (proxPago <= hoyD) proxPago = new Date(hoyD.getFullYear(), hoyD.getMonth()+1, parseInt(r.diaPago))
+    const diasPago = Math.round((proxPago - hoyD)/86400000)
+    if (diasPago === 1 && !r.alertaPagoApagada) {
+      alertas.push({ tipo: 'arr-pago', id: r.id, msg: `<strong>${r.nombre}</strong> — pago de $${r.renta} MXN <strong>mañana</strong> (${r.prop}).` })
+    }
+    // Arrendatarios — vencimiento 10 días
+    if (r.vence && !r.alertaVenceApagada) {
+      const dv = diasHasta(r.vence)
+      if (dv <= 10 && dv >= 0) {
+        alertas.push({ tipo: 'arr-vence', id: r.id, msg: `Contrato de <strong>${r.nombre}</strong> vence en <strong>${dv} días</strong> — ${r.prop}. Renovar urgente.` })
+      }
+    }
+  })
+
+  // Prospectos sin contacto 5+ días
+  S.get('pro').forEach(r => {
+    if (!r.ultimo) return
+    const d = -diasHasta(r.ultimo)
+    if (d >= 5) {
+      alertas.push({ tipo: 'pro', id: r.id, msg: `Prospecto <strong>${r.nombre}</strong> lleva ${d} días sin contacto. Etapa: ${r.etapa}.` })
+    }
+  })
+
+  // Seguros — vencimiento 30 días
+  S.get('seg').forEach(r => {
+    if (!r.vence) return
+    const dv = diasHasta(r.vence)
+    if (dv <= 30 && dv >= 0) {
+      alertas.push({ tipo: 'seg', id: r.id, msg: `Seguro <strong>${r.ramo} ${r.compania}</strong> — Póliza ${r.poliza} vence en <strong>${dv} días</strong>.` })
+    }
+    if (dv < 0) {
+      alertas.push({ tipo: 'seg', id: r.id, msg: `⚠ Seguro <strong>${r.ramo} ${r.compania}</strong> — Póliza ${r.poliza} <strong>VENCIDO</strong> hace ${-dv} días.` })
+    }
+  })
+  const lista = document.getElementById('alertas-lista')
+  if (!alertas.length) { bar.style.display = 'none'; return }
+  bar.style.display = 'block'
+  lista.innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <div style="font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--red)">⚠ ${alertas.length} alerta${alertas.length>1?'s':''} pendiente${alertas.length>1?'s':''}</div>
+      <button onclick="cerrarTodasAlertas()" style="background:none;border:1px solid var(--red);border-radius:3px;padding:3px 10px;font-size:.72rem;font-weight:600;color:var(--red);cursor:pointer">× Cerrar todas</button>
+    </div>` +
+    alertas.map(a => `<div class="alerta-item">
+      <span>● ${a.msg}</span>
+      ${a.accion === 'enteradoReq' ? `<button class="btn-enterado" onclick="enteradoReq('${a.id}')">✓ Enterado</button>` : ''}
+      ${a.tipo === 'arr-pago' ? `<button class="btn-enterado" onclick="apagarAlertaArr('${a.id}','pago')">✓ Enterado</button>` : ''}
+      ${a.tipo === 'arr-vence' ? `<button class="btn-enterado" onclick="apagarAlertaArr('${a.id}','vence')">✓ Enterado</button>` : ''}
+      ${a.tipo === 'pro' ? `<button class="btn-enterado" onclick="enteradoPro('${a.id}')">✓ Contactado</button>` : ''}
+    </div>`).join('')
+}
+
+function cerrarTodasAlertas() {
+  document.getElementById('alertas-bar').style.display = 'none'
+}
+
+function apagarAlertaArr(id, tipo) {
+  let data = S.get('arr')
+  const campo = tipo === 'pago' ? 'alertaPagoApagada' : 'alertaVenceApagada'
+  data = data.map(r => r.id === id ? {...r, [campo]: true} : r)
+  S.set('arr', data)
+  fbSave('arr', data.find(r => r.id === id))
+  checkAlertas()
+}
+
+// ── COPIAR MENSAJE ──
+function copiarMensaje() {
+  const txt = document.getElementById('wa-msg-text').textContent
+  navigator.clipboard.writeText(txt).then(() => {
+    const btn = document.getElementById('btn-copy-wa')
+    btn.textContent = '✓ ¡Copiado!'
+    btn.classList.add('copied')
+    setTimeout(() => { btn.textContent = '📋 Copiar mensaje'; btn.classList.remove('copied') }, 2500)
+  })
+}
+
+// ════════════════════════════
+// SEGUROS
+// ════════════════════════════
+function saveSeg() {
+  const editId = document.getElementById('seg-edit-id').value
+  const item = {
+    id: editId || uid(),
+    ramo: document.getElementById('seg-ramo').value,
+    compania: document.getElementById('seg-compania').value.trim(),
+    poliza: document.getElementById('seg-poliza').value.trim(),
+    asegurado: document.getElementById('seg-asegurado').value.trim(),
+    prima: document.getElementById('seg-prima').value.trim(),
+    vence: document.getElementById('seg-vence').value,
+    notas: document.getElementById('seg-notas').value.trim()
+  }
+  if (!item.poliza || !item.vence) { alert('Póliza y fecha de vencimiento son obligatorias.'); return }
+  let data = S.get('seg')
+  if (editId) data = data.map(r => r.id === editId ? item : r)
+  else data.push(item)
+  S.set('seg', data)
+  fbSave('seg', item)
+  closeModal('seg')
+  renderSeg()
+  checkAlertas()
+}
+
+function loadForEditSeg(id) {
+  const item = S.get('seg').find(r => r.id === id); if (!item) return
+  document.getElementById('seg-edit-id').value = item.id
+  document.getElementById('modal-seg-title').textContent = 'Editar seguro'
+  document.getElementById('seg-ramo').value = item.ramo
+  document.getElementById('seg-compania').value = item.compania || ''
+  document.getElementById('seg-poliza').value = item.poliza
+  document.getElementById('seg-asegurado').value = item.asegurado || ''
+  document.getElementById('seg-prima').value = item.prima || ''
+  document.getElementById('seg-vence').value = item.vence
+  document.getElementById('seg-notas').value = item.notas || ''
+}
+
+function renderSeg() {
+  let data = S.get('seg')
+  const el = document.getElementById('cards-seg')
+  if (!data.length) { el.innerHTML = '<div class="empty">🛡<p>Sin seguros registrados.</p></div>'; return }
+  data = [...data].sort((a,b) => (a.vence||'').localeCompare(b.vence||''))
+  el.innerHTML = data.map(r => {
+    const dv = diasHasta(r.vence)
+    const cls = dv <= 30 ? 'dias-urgent' : dv <= 60 ? 'dias-warn' : 'dias-ok'
+    const label = dv < 0 ? `⚠ VENCIDO hace ${-dv}d` : dv <= 30 ? `⚠ Vence en ${dv}d` : `Vence en ${dv}d`
+    return `<div class="card">
+      <div class="card-top">
+        <span class="card-title">${r.ramo} — ${r.compania}</span>
+        <span class="alerta-dias ${cls}">${label}</span>
+      </div>
+      <div class="card-meta">
+        <div class="card-meta-item">📋 Póliza: <strong>${r.poliza}</strong></div>
+        ${r.asegurado ? `<div class="card-meta-item">👤 <strong>${r.asegurado}</strong></div>` : ''}
+        ${r.prima ? `<div class="card-meta-item">💰 Prima: <strong>$${r.prima} MXN</strong></div>` : ''}
+        <div class="card-meta-item">📅 Vence: <strong>${r.vence}</strong></div>
+      </div>
+      ${r.notas ? `<div style="margin-top:10px;font-size:.85rem;color:var(--muted)">${r.notas}</div>` : ''}
+      <div class="card-actions">
+        <button class="btn-edit" onclick="loadForEditSeg('${r.id}');openModal('seg')">Editar</button>
+        <button class="btn-cal" onclick="addCalendarSeg('${r.id}')">📅 Calendar</button>
+        <button class="btn-del" onclick="deleteItem('seg','${r.id}')">Eliminar</button>
+      </div>
+    </div>`
+  }).join('')
+}
+
+function addCalendarSeg(id) {
+  const r = S.get('seg').find(x => x.id === id); if (!r || !r.vence) return
+  const vence = r.vence.replace(/-/g,'')
+  const title = encodeURIComponent(`Renovar seguro ${r.ramo} — Póliza ${r.poliza}`)
+  const details = encodeURIComponent(`Compañía: ${r.compania}\nAsegurado: ${r.asegurado}\nPrima: $${r.prima} MXN`)
+  window.open(`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${vence}/${vence}&details=${details}`, '_blank')
+}
+
+// Precarga seguros AXA si no existen
+function precargarSeguros() {
+  if (S.get('seg').length > 0) return
+  const seguros = [
+    { id: uid(), ramo: 'GMM', compania: 'AXA', poliza: '96616D10', asegurado: 'Rafael García Grado', prima: '17,454.36', vence: '2026-07-21', notas: '' },
+    { id: uid(), ramo: 'GMM', compania: 'AXA', poliza: '91070N06', asegurado: 'Rafael García Grado', prima: '50,559.02', vence: '2026-09-17', notas: '' },
+    { id: uid(), ramo: 'Autos', compania: 'AXA', poliza: '150265520302', asegurado: 'Rafael García Grado', prima: '17,401.42', vence: '2026-10-09', notas: '' },
+    { id: uid(), ramo: 'GMM', compania: 'AXA', poliza: '96616D10', asegurado: 'Rafael García Grado', prima: '15,308.36', vence: '2027-01-21', notas: '' }
+  ]
+  S.set('seg', seguros)
+  seguros.forEach(s => fbSave('seg', s))
+  renderSeg()
+}
+
+// ════════════════════════════
+// COMPRADORES
+// ════════════════════════════
+function saveCom() {
+  const editId = document.getElementById('com-edit-id').value
+  const item = {
+    id: editId || uid(),
+    nombre: document.getElementById('com-nombre').value.trim(),
+    tel: document.getElementById('com-tel').value.trim(),
+    email: document.getElementById('com-email').value.trim(),
+    prop: document.getElementById('com-prop').value.trim(),
+    precio: document.getElementById('com-precio').value.trim(),
+    moneda: document.getElementById('com-moneda').value,
+    fechaCierre: document.getElementById('com-fecha-cierre').value,
+    comision: document.getElementById('com-comision').value.trim(),
+    tipo: document.getElementById('com-tipo').value,
+    potencial: document.getElementById('com-potencial').value,
+    notas: document.getElementById('com-notas').value.trim()
+  }
+  if (!item.nombre) { alert('El nombre es obligatorio.'); return }
+  let data = S.get('com')
+  if (!editId) {
+    const dup = data.find(r => r.nombre.toLowerCase() === item.nombre.toLowerCase())
+    if (dup && !confirm(`Ya existe un comprador con el nombre "${dup.nombre}". ¿Agregar de todos modos?`)) return
+  }
+  if (editId) data = data.map(r => r.id === editId ? item : r)
+  else data.push(item)
+  S.set('com', data)
+  fbSave('com', item)
+  closeModal('com')
+  renderCom()
+  renderCal()
+}
+
+function loadForEditCom(id) {
+  const item = S.get('com').find(r => r.id === id); if (!item) return
+  document.getElementById('com-edit-id').value = item.id
+  document.getElementById('modal-com-title').textContent = 'Editar comprador'
+  document.getElementById('com-nombre').value = item.nombre
+  document.getElementById('com-tel').value = item.tel || ''
+  document.getElementById('com-email').value = item.email || ''
+  document.getElementById('com-prop').value = item.prop || ''
+  document.getElementById('com-precio').value = item.precio || ''
+  document.getElementById('com-moneda').value = item.moneda || 'MXN'
+  document.getElementById('com-fecha-cierre').value = item.fechaCierre || ''
+  document.getElementById('com-comision').value = item.comision || ''
+  document.getElementById('com-tipo').value = item.tipo || 'Compra'
+  document.getElementById('com-potencial').value = item.potencial || 'Sí, seguimiento activo'
+  document.getElementById('com-notas').value = item.notas || ''
+}
+
+function renderCom() {
+  const data = S.get('com')
+  const el = document.getElementById('cards-com')
+  if (!data.length) { el.innerHTML = '<div class="empty">💼<p>Sin compradores registrados.</p></div>'; return }
+  const potColor = {'Sí, seguimiento activo':'badge-activo','Posiblemente':'badge-renta','No por ahora':'badge-seguimiento'}
+  el.innerHTML = data.map(r => `<div class="card">
+    <div class="card-top">
+      <span class="card-title">${r.nombre}</span>
+      <span class="card-badge ${potColor[r.potencial]||'badge-activo'}">${r.potencial}</span>
+    </div>
+    <div class="card-meta">
+      ${r.prop ? `<div class="card-meta-item">🏠 <strong>${r.prop}</strong></div>` : ''}
+      ${r.precio ? `<div class="card-meta-item">💰 <strong>$${r.precio} ${r.moneda}</strong></div>` : ''}
+      ${r.fechaCierre ? `<div class="card-meta-item">📅 Cierre: <strong>${r.fechaCierre}</strong></div>` : ''}
+      ${r.comision ? `<div class="card-meta-item">✅ Comisión: <strong>${r.comision}</strong></div>` : ''}
+      ${r.tel ? `<div class="card-meta-item">📱 <strong>${r.tel}</strong></div>` : ''}
+      ${r.email ? `<div class="card-meta-item">✉️ <strong>${r.email}</strong></div>` : ''}
+      <div class="card-meta-item">🎯 <strong>${r.tipo}</strong></div>
+    </div>
+    ${r.notas ? `<div style="margin-top:10px;font-size:.82rem;color:var(--muted)">${r.notas}</div>` : ''}
+    <div class="card-actions">
+      ${r.tel ? `<button class="btn-wa" onclick="window.open('https://wa.me/52${r.tel.replace(/\s/g,'')}','_blank')">💬 WhatsApp</button>` : ''}
+      <button class="btn-edit" onclick="loadForEditCom('${r.id}');openModal('com')">Editar</button>
+      <button class="btn-del" onclick="deleteItem('com','${r.id}')">Eliminar</button>
+    </div>
+  </div>`).join('')
+}
+
+// ════════════════════════════
+// CALENDARIO
+// ════════════════════════════
+let calMes = new Date().getMonth()
+let calAnio = new Date().getFullYear()
+
+function cambiarMes(dir) {
+  calMes += dir
+  if (calMes > 11) { calMes = 0; calAnio++ }
+  if (calMes < 0) { calMes = 11; calAnio-- }
+  renderCal()
+}
+
+function renderCal() {
+  const meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
+  document.getElementById('cal-mes-label').textContent = `${meses[calMes]} ${calAnio}`
+
+  // Recolectar eventos del mes
+  const eventos = {}
+  const addEv = (dia, html) => { if (!eventos[dia]) eventos[dia] = []; eventos[dia].push(html) }
+
+  const hoyD = new Date(); hoyD.setHours(0,0,0,0)
+
+  // Arrendatarios — pagos y vencimientos
+  S.get('arr').forEach(r => {
+    if (r.diaPago) {
+      const d = parseInt(r.diaPago)
+      if (d >= 1 && d <= 31) addEv(d, `<div class="cal-evento ev-pago">💰 Pago ${r.nombre.split(' ')[0]}</div>`)
+    }
+    if (r.vence) {
+      const fv = new Date(r.vence + 'T00:00:00')
+      if (fv.getMonth() === calMes && fv.getFullYear() === calAnio)
+        addEv(fv.getDate(), `<div class="cal-evento ev-vence">⚠ Vence ${r.nombre.split(' ')[0]}</div>`)
+    }
+  })
+
+  // Prospectos — último contacto + 5 días = próximo seguimiento
+  S.get('pro').forEach(r => {
+    if (r.ultimo) {
+      const fu = new Date(r.ultimo + 'T00:00:00')
+      fu.setDate(fu.getDate() + 5)
+      if (fu.getMonth() === calMes && fu.getFullYear() === calAnio)
+        addEv(fu.getDate(), `<div class="cal-evento ev-seguimiento">📋 Seguir ${r.nombre.split(' ')[0]}</div>`)
+    }
+  })
+
+  // Compradores — aniversario de cierre
+  S.get('com').forEach(r => {
+    if (r.fechaCierre) {
+      const fc = new Date(r.fechaCierre + 'T00:00:00')
+      if (fc.getMonth() === calMes)
+        addEv(fc.getDate(), `<div class="cal-evento ev-comprador">🎉 Aniv. ${r.nombre.split(' ')[0]}</div>`)
+    }
+  })
+
+  // Construir tabla
+  const primerDia = new Date(calAnio, calMes, 1).getDay()
+  const diasMes = new Date(calAnio, calMes + 1, 0).getDate()
+  const diasAnterior = new Date(calAnio, calMes, 0).getDate()
+
+  let html = `<table class="cal-table"><thead><tr>`
+  ;['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'].forEach(d => html += `<th>${d}</th>`)
+  html += `</tr></thead><tbody><tr>`
+
+  let celda = 0
+  // Días del mes anterior
+  for (let i = primerDia - 1; i >= 0; i--) {
+    html += `<td class="cal-otro-mes"><div class="cal-day-num">${diasAnterior - i}</div></td>`
+    celda++
+  }
+  // Días del mes actual
+  for (let d = 1; d <= diasMes; d++) {
+    if (celda % 7 === 0 && celda > 0) html += `</tr><tr>`
+    const esHoy = d === hoyD.getDate() && calMes === hoyD.getMonth() && calAnio === hoyD.getFullYear()
+    html += `<td${esHoy ? ' class="cal-today"' : ''}>`
+    html += `<div class="cal-day-num">${d}</div>`
+    if (eventos[d]) html += eventos[d].join('')
+    html += `</td>`
+    celda++
+  }
+  // Días del mes siguiente
+  const restante = celda % 7 === 0 ? 0 : 7 - (celda % 7)
+  for (let i = 1; i <= restante; i++) {
+    html += `<td class="cal-otro-mes"><div class="cal-day-num">${i}</div></td>`
+  }
+  html += `</tr></tbody></table>`
+  document.getElementById('cal-grid').innerHTML = html
+}
+
+// ── EXPORTAR EXCEL ──
+function exportarExcel() {
+  const fecha = new Date().toISOString().slice(0,10)
+  const wb = XLSX.utils.book_new()
+
+  // Arrendatarios
+  const arr = S.get('arr')
+  if (arr.length) {
+    const data = [['Nombre','Arrendador','Propiedad','Renta','Día Pago','Teléfono','Inicio','Vencimiento','Notas']]
+    arr.forEach(r => data.push([r.nombre||'',r.arrendador||'',r.prop||'',r.renta||'',r.diaPago||'',r.tel||'',r.inicio||'',r.vence||'',r.notas||'']))
+    XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(data), 'Arrendatarios')
+  }
+
+  // Requerimientos
+  const req = S.get('req')
+  if (req.length) {
+    const data = [['Cliente','Operación','Tipo','Zona','Precio','Moneda','Recámaras','Condición','Oferente','Tel Oferente','Propiedades','Notas']]
+    req.forEach(r => data.push([r.cliente||'',r.op||'',r.tipo||'',r.zona||'',r.precio||'',r.moneda||'',r.rec||'',r.cond||'',r.oferente||'',r.oferenteTel||'',r.propiedades||'',r.notas||'']))
+    XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(data), 'Requerimientos')
+  }
+
+  // Prospectos
+  const pro = S.get('pro')
+  if (pro.length) {
+    const data = [['Nombre','Teléfono','Interés','Etapa','Propiedad','Último contacto','Próximo paso','Notas']]
+    pro.forEach(r => data.push([r.nombre||'',r.tel||'',r.interes||'',r.etapa||'',r.prop||'',r.ultimo||'',r.siguiente||'',r.notas||'']))
+    XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(data), 'Prospectos')
+  }
+
+  // Compradores
+  const com = S.get('com')
+  if (com.length) {
+    const data = [['Nombre','Teléfono','Email','Propiedad','Precio','Moneda','Fecha Cierre','Comisión','Tipo','Potencial','Notas']]
+    com.forEach(r => data.push([r.nombre||'',r.tel||'',r.email||'',r.prop||'',r.precio||'',r.moneda||'',r.fechaCierre||'',r.comision||'',r.tipo||'',r.potencial||'',r.notas||'']))
+    XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(data), 'Compradores')
+  }
+
+  XLSX.writeFile(wb, `rafa-crm-${fecha}.xlsx`)
+}
+
+// ── DELEGACIÓN DE EVENTOS PARA iOS ──
+document.addEventListener('click', function(e) {
+  const btn = e.target.closest('button[onclick]')
+  if (!btn) return
+  const fn = btn.getAttribute('onclick')
+  if (fn) {
+    try { eval(fn) } catch(err) { console.warn('onclick error:', err) }
+    e.preventDefault()
+  }
+})
+
+// ── ARRANCAR ──
+if ('Notification' in window && Notification.permission === 'default') {
+  Notification.requestPermission()
+}
+initApp()
+</script>
+</body>
+</html>
