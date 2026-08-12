@@ -72,12 +72,6 @@
   <p>Todas las páginas y herramientas, con su ubicación real (verificado 8 ago 2026)</p>
 </header>
 <div class="wrap">
-  <div style="background:#fff3cd;border:1px solid #e6b800;border-radius:8px;padding:14px 18px;margin-bottom:18px;font-size:13px;color:#664d00;">
-    <strong>⚠️ Actualización importante (8 ago 2026):</strong><br>
-    Casi todo el sitio vive ahora en el repo <strong>rgarcia784-alt/unobrokers-mx</strong>, que sirve <strong>unobrokers.com.mx</strong> (dominio principal).<br>
-    El repo <strong>landing-inmobiliaria</strong> (que sirve <strong>propiedades.unobrokers.mx</strong>) quedó prácticamente vacío — solo conserva <code>index.html</code>, <code>cuanto-vale.html</code>, <code>parque-nubax.html</code> e <code>indice-paginas.html</code>.<br>
-    <strong>Antes de subir cualquier cambio, verifica en cuál de los dos repos vive realmente el archivo</strong> — no asumas por el nombre.
-  </div>
   <div class="searchbar">
     <input type="text" id="buscador" placeholder="Buscar página..." oninput="filtrar()">
     <select class="filtro-ubic" id="filtroUbic" onchange="filtrar()">
@@ -90,7 +84,15 @@
       <option value="loc-dominiopropio">Dominio propio</option>
     </select>
   </div>
-  <div class="count" id="contador">53 páginas · verificadas contra GitHub el 9 ago 2026 · 0 rotas</div>
+  <div class="count" id="contador">54 páginas · verificadas contra GitHub el 11 ago 2026 · 0 rotas</div>
+  <details id="avisoBanner" style="background:#fff3cd;border:1px solid #e6b800;border-radius:8px;margin-bottom:14px;font-size:13px;color:#664d00;">
+    <summary style="cursor:pointer;padding:10px 14px;font-weight:700;list-style:none;">⚠️ Aviso de estructura del sitio (8 ago 2026) — clic para ver/ocultar</summary>
+    <div style="padding:0 14px 14px;">
+      Casi todo el sitio vive ahora en el repo <strong>rgarcia784-alt/unobrokers-mx</strong>, que sirve <strong>unobrokers.com.mx</strong> (dominio principal).<br>
+      El repo <strong>landing-inmobiliaria</strong> (que sirve <strong>propiedades.unobrokers.mx</strong>) quedó prácticamente vacío — solo conserva <code>index.html</code>, <code>cuanto-vale.html</code>, <code>parque-nubax.html</code> e <code>indice-paginas.html</code>.<br>
+      <strong>Antes de subir cualquier cambio, verifica en cuál de los dos repos vive realmente el archivo</strong> — no asumas por el nombre.
+    </div>
+  </details>
   <div class="leyenda">
     <span class="loc-tag loc-principal">📍 unobrokers-mx</span>
     <span class="loc-tag loc-subdominio">📍 landing-inmobiliaria</span>
@@ -130,6 +132,7 @@ const items = [
 {f:"investigacion-inquilinos.html", t:"Investigación de Inquilinos en Guadalajara | Estudio Socioeconómico y Buró de Crédito", u:"https://unobrokers.com.mx/investigacion-inquilinos.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/unobrokers-mx/main/investigacion-inquilinos.html", status:"pending", statusText:"○ Indexación solicitada 8 ago 2026"},
 {f:"landmark-reserve-andares-piso25.html", t:"Departamento de Lujo en Venta en Landmark Reserve, Andares Zapopan – Piso 25", u:"https://rgarcia784-alt.github.io/landmark-reserve-andares/", dl:"https://raw.githubusercontent.com/rgarcia784-alt/landmark-reserve-andares/main/index.html", tag:"indep", tagLabel:"DOMINIO INDEPENDIENTE"},
 {f:"penthouse-landmark-puerta-de-hierro.html", t:"Penthouse en Venta en Landmark, Puerta de Hierro Zapopan – Piso 33", u:"https://rgarcia784-alt.github.io/landmark-reserve-andares/penthouse-landmark-puerta-de-hierro.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/landmark-reserve-andares/main/penthouse-landmark-puerta-de-hierro.html", tag:"indep", tagLabel:"DOMINIO INDEPENDIENTE"},
+{f:"index.html", t:"Penthouse en Renta en Landmark Reserve, Puerta de Hierro Zapopan – Piso 35", u:"https://rgarcia784-alt.github.io/landmark-reserve-ph2-rent/", dl:"https://raw.githubusercontent.com/rgarcia784-alt/landmark-reserve-ph2-rent/main/index.html", tag:"indep", tagLabel:"DOMINIO INDEPENDIENTE", status:"pending", statusText:"○ Indexación solicitada 11 ago 2026"},
 {f:"links.html", t:"UNO Brokers – Enlaces", u:"https://unobrokers.com.mx/links.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/unobrokers-mx/main/links.html"},
 {f:"los-suenos-residencial.html", t:"Los Sueños Residencial — Terrenos en Venta en Zapopan", u:"https://unobrokers.com.mx/los-suenos-residencial.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/unobrokers-mx/main/los-suenos-residencial.html"},
 {f:"los-suenos-terrenos.html", t:"Terrenos en Venta Los Sueños Residencial – Zapopan | Desde $8M MXN", u:"https://unobrokers.com.mx/los-suenos-terrenos.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/unobrokers-mx/main/los-suenos-terrenos.html"},
@@ -242,6 +245,16 @@ function filtrar() {
 }
 
 render(items);
+
+// Recordar si el aviso quedó abierto o cerrado entre visitas
+const aviso = document.getElementById('avisoBanner');
+if (aviso) {
+  if (localStorage.getItem('avisoAbierto') === 'true') aviso.setAttribute('open', '');
+  aviso.addEventListener('toggle', () => {
+    localStorage.setItem('avisoAbierto', aviso.open);
+  });
+}
+
 </script>
 </body>
 </html>
