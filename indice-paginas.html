@@ -46,6 +46,7 @@
   .status-redirect { color: var(--orange); font-weight:700; font-size:12px; }
   .status-pending { color: var(--gray); font-weight:700; font-size:12px; }
   .status-broken { color: #dc2626; font-weight:700; font-size:12px; }
+  .status-nuevo { color: #dc2626; font-weight:800; font-size:12px; background:#fef2f2; padding:2px 8px; border-radius:10px; border:1px solid #fecaca; }
   .ubic-row { margin-top:6px; display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
   .loc-tag { font-size:11px; font-weight:700; padding:3px 9px; border-radius:12px; white-space:nowrap; }
   .loc-principal { background:#dbeafe; color:#1e40af; }
@@ -84,7 +85,7 @@
       <option value="loc-dominiopropio">Dominio propio</option>
     </select>
   </div>
-  <div class="count" id="contador">54 páginas · verificadas contra GitHub el 11 ago 2026 · 0 rotas</div>
+  <div class="count" id="contador">55 páginas · verificadas contra GitHub el 20 ago 2026 · 0 rotas</div>
   <details id="avisoBanner" style="background:#fff3cd;border:1px solid #e6b800;border-radius:8px;margin-bottom:14px;font-size:13px;color:#664d00;">
     <summary style="cursor:pointer;padding:10px 14px;font-weight:700;list-style:none;">⚠️ Aviso de estructura del sitio (8 ago 2026) — clic para ver/ocultar</summary>
     <div style="padding:0 14px 14px;">
@@ -152,6 +153,7 @@ const items = [
 {f:"valle-real-zapopan.html", t:"Vende o Renta tu Casa en Valle Real, Zapopan", u:"https://unobrokers.com.mx/valle-real-zapopan.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/unobrokers-mx/main/valle-real-zapopan.html"},
 {f:"vender-casa-guadalajara.html", t:"Vender Casa en Guadalajara y Zapopan", u:"https://unobrokers.com.mx/vender-casa-guadalajara.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/unobrokers-mx/main/vender-casa-guadalajara.html"},
 {f:"vender-terreno-guadalajara.html", t:"Vender Terreno en Guadalajara y Zapopan — Avalúo Gratuito", u:"https://unobrokers.com.mx/vender-terreno-guadalajara.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/unobrokers-mx/main/vender-terreno-guadalajara.html", status:"ok", statusText:"✓ Verificada de nuevo 9 ago 2026"},
+{f:"vivaria-2360.html", t:"Vivaria 2360 — Departamentos en Preventa, Guadalajara (CADU) — Asesoría UNO Brokers", u:"https://unobrokers.com.mx/vivaria-2360.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/unobrokers-mx/main/vivaria-2360.html", status:"nuevo", statusText:"🆕 NUEVA — subida 20 ago 2026, indexación solicitada"},
 {f:"solicitud-arrendamiento.html (independiente)", t:"Solicitud de Arrendamiento — repo aparte, con FAQ y captación", u:"https://rgarcia784-alt.github.io/rentaguadalajara/solicitud-arrendamiento.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/rentaguadalajara/main/solicitud-arrendamiento.html", tag:"indep", tagLabel:"INDEPENDIENTE", status:"ok", statusText:"✓ INDEXADA"},
 {f:"the-lighthouse-zapopan (independiente)", t:"The Lighthouse Zapopan — repo aparte, con fotos, FAQ y captación", u:"https://rgarcia784-alt.github.io/lighthouse-zapopan/", dl:"https://raw.githubusercontent.com/rgarcia784-alt/lighthouse-zapopan/main/index.html", tag:"indep", tagLabel:"INDEPENDIENTE", status:"ok", statusText:"✓ INDEXADA — esta es la versión canónica de facto"},
 {f:"blog-errores-renta-zapopan (Netlify)", t:"5 errores comunes al rentar — blog migrado a Netlify, con captación", u:"https://blog-errores-renta-zapopan.netlify.app/", dl:"", tag:"prueba", tagLabel:"PRUEBA INDEXACIÓN"},
@@ -202,6 +204,7 @@ function render(list) {
     const statusHtml = it.status === 'ok' ? `<span class="status-ok">${it.statusText}</span>`
       : it.status === 'redirect' ? `<span class="status-redirect">${it.statusText}</span>`
       : it.status === 'broken' ? `<span class="status-broken">${it.statusText}</span>`
+      : it.status === 'nuevo' ? `<span class="status-nuevo">${it.statusText}</span>`
       : it.status === 'pending' ? `<span class="status-pending">${it.statusText}</span>` : '';
     const ubic = detectarUbicacion(it.u, it);
     const ubicHtml = `<span class="loc-tag ${ubic.cls}">📍 ${ubic.label}</span>`;
