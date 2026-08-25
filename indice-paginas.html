@@ -34,6 +34,9 @@
   .item.broken { border-color:#dc2626; background:#fef2f2; }
   .item .fname { font-weight:700; font-size: 13px; color: var(--navy); }
   .item .title { font-size: 13px; color: var(--gray); margin-top:2px; }
+  .item.destacado { border-width: 2px; border-color: #dc2626; }
+  .item.destacado .fname { color: #dc2626; font-size: 17px; }
+  .item.destacado .title { color: #991b1b; font-size: 14px; font-weight:600; }
   .tag { display:inline-block; font-size:10px; font-weight:700; padding:2px 7px; border-radius:4px; margin-left:6px; vertical-align:middle; }
   .tag.blog { background:#e8eef7; color:#2563eb; }
   .tag.indep { background:#fdf3e0; color:#b8860b; }
@@ -72,13 +75,27 @@
   <p>Todas las páginas y herramientas, con su ubicación real (verificado 8 ago 2026)</p>
 </header>
 <div class="wrap">
-  <div style="background:#fff3cd;border:1px solid #e6b800;border-radius:8px;padding:14px 18px;margin-bottom:18px;font-size:13px;color:#664d00;">
-    <strong>⚠️ Actualización importante (8 ago 2026):</strong><br>
-    Casi todo el sitio vive ahora en el repo <strong>rgarcia784-alt/unobrokers-mx</strong>, que sirve <strong>unobrokers.com.mx</strong> (dominio principal).<br>
-    El repo <strong>landing-inmobiliaria</strong> (que sirve <strong>propiedades.unobrokers.mx</strong>) quedó prácticamente vacío — solo conserva <code>index.html</code>, <code>cuanto-vale.html</code>, <code>parque-nubax.html</code> e <code>indice-paginas.html</code>.<br>
-    <strong>Antes de subir cualquier cambio, verifica en cuál de los dos repos vive realmente el archivo</strong> — no asumas por el nombre.
+  <div id="avisoBox" style="background:#fff3cd;border:1px solid #e6b800;border-radius:8px;margin-bottom:18px;font-size:13px;color:#664d00;overflow:hidden;">
+    <div id="avisoToggle" style="padding:10px 18px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;font-weight:700;" onclick="toggleAviso()">
+      <span>⚠️ Aviso importante (8 ago 2026) — clic para ver</span>
+      <span id="avisoFlecha">▸</span>
+    </div>
+    <div id="avisoContenido" style="display:none;padding:0 18px 14px;">
+      Casi todo el sitio vive ahora en el repo <strong>rgarcia784-alt/unobrokers-mx</strong>, que sirve <strong>unobrokers.com.mx</strong> (dominio principal).<br>
+      El repo <strong>landing-inmobiliaria</strong> (que sirve <strong>propiedades.unobrokers.mx</strong>) quedó prácticamente vacío — solo conserva <code>index.html</code>, <code>cuanto-vale.html</code>, <code>parque-nubax.html</code> e <code>indice-paginas.html</code>.<br>
+      <strong>Antes de subir cualquier cambio, verifica en cuál de los dos repos vive realmente el archivo</strong> — no asumas por el nombre.
+    </div>
   </div>
-  <div class="searchbar">
+  <script>
+    function toggleAviso() {
+      const c = document.getElementById('avisoContenido');
+      const f = document.getElementById('avisoFlecha');
+      const abierto = c.style.display === 'block';
+      c.style.display = abierto ? 'none' : 'block';
+      f.textContent = abierto ? '▸' : '▾';
+    }
+  </script>
+  <div class="searchbar" style="align-items:center;">
     <input type="text" id="buscador" placeholder="Buscar página..." oninput="filtrar()">
     <select class="filtro-ubic" id="filtroUbic" onchange="filtrar()">
       <option value="">Todas las ubicaciones</option>
@@ -89,6 +106,10 @@
       <option value="loc-firebase">Firebase (CRM)</option>
       <option value="loc-dominiopropio">Dominio propio</option>
     </select>
+    <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--gray);white-space:nowrap;padding:0 4px;">
+      <input type="checkbox" id="ocultarNoJalan" checked onchange="filtrar()">
+      Ocultar pruebas / rotas / duplicadas
+    </label>
   </div>
   <div class="count" id="contador">54 páginas · verificadas contra GitHub el 8 ago 2026 · 0 rotas</div>
   <div class="leyenda">
@@ -132,9 +153,9 @@ const items = [
 {f:"penthouse-landmark-puerta-de-hierro.html", t:"Penthouse en Venta en Landmark, Puerta de Hierro Zapopan – Piso 33", u:"https://rgarcia784-alt.github.io/landmark-reserve-andares/penthouse-landmark-puerta-de-hierro.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/landmark-reserve-andares/main/penthouse-landmark-puerta-de-hierro.html", tag:"indep", tagLabel:"DOMINIO INDEPENDIENTE"},
 {f:"links.html", t:"UNO Brokers – Enlaces", u:"https://unobrokers.com.mx/links.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/unobrokers-mx/main/links.html"},
 {f:"los-suenos-residencial.html", t:"Los Sueños Residencial — Terrenos en Venta en Zapopan", u:"https://unobrokers.com.mx/los-suenos-residencial.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/unobrokers-mx/main/los-suenos-residencial.html"},
-{f:"los-suenos-terrenos.html", t:"Terrenos en Venta Los Sueños Residencial – Zapopan | Desde $8M MXN", u:"https://unobrokers.com.mx/los-suenos-terrenos.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/unobrokers-mx/main/los-suenos-terrenos.html"},
+{f:"los-suenos-terrenos.html", t:"Terrenos en Venta Los Sueños Residencial – Zapopan | Desde $8M MXN", u:"https://unobrokers.com.mx/los-suenos-residencial.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/unobrokers-mx/main/los-suenos-terrenos.html", status:"redirect", statusText:"↪ Redirige a los-suenos-residencial.html — ESA es la buena"},
 {f:"origina-santa-fe-cdmx.html", t:"Origina Santa Fe CDMX – Departamentos en Venta", u:"https://unobrokers.com.mx/origina-santa-fe-cdmx.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/unobrokers-mx/main/origina-santa-fe-cdmx.html"},
-{f:"parque-nubax.html", t:"Parque Nubax — Venta y Pre-renta BTS · Corredor Industrial El Salto, Jalisco", u:"https://unobrokers.com.mx/parque-nubax.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/unobrokers-mx/main/parque-nubax.html", status:"ok", statusText:"✓ Con imagen de entrada actualizada"},
+{f:"parque-nubax.html", t:"Parque Nubax — Venta y Pre-renta BTS · Corredor Industrial El Salto, Jalisco", u:"https://unobrokers.com.mx/parque-nubax.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/unobrokers-mx/main/parque-nubax.html", status:"redirect", statusText:"↪ Canónica apunta a parquenubax.com.mx — ESA es la buena"},
 {f:"parquenubax.com.mx", t:"Parque Nubax — Venta y Pre-renta BTS · Corredor Industrial El Salto, Jalisco", u:"https://parquenubax.com.mx/", dl:"", tag:"indep", tagLabel:"DOMINIO INDEPENDIENTE", status:"ok", statusText:"✓ DNS verificado, verificado en Search Console"},
 {f:"portafolio-brokers.html", t:"Portafolio de Propiedades", u:"https://unobrokers.com.mx/portafolio-brokers.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/unobrokers-mx/main/portafolio-brokers.html"},
 {f:"propiedades.html", t:"Inmobiliaria en Guadalajara y Zapopan", u:"https://unobrokers.com.mx/propiedades.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/unobrokers-mx/main/propiedades.html"},
@@ -186,6 +207,29 @@ function detectarUbicacion(url, item) {
   return {label:'Otro / dominio propio', cls:'loc-otro'};
 }
 
+function esDesarrolloClave(it) {
+  const texto = (it.f + ' ' + it.t).toLowerCase();
+  const claves = ['vivaria', 'nara am', 'nara-am', 'nubax', 'sueños', 'suenos'];
+  return claves.some(k => texto.includes(k));
+}
+
+function ordenPrioridad(it) {
+  const texto = (it.f + ' ' + it.t).toLowerCase();
+  if (texto.includes('vivaria')) return 0;
+  if (texto.includes('nara am') || texto.includes('nara-am')) return 1;
+  if (texto.includes('nubax')) return 2;
+  if (texto.includes('sueños') || texto.includes('suenos')) return 3;
+  return 99;
+}
+
+function ordenarConDestacadosArriba(list) {
+  const destacados = list.filter(esDesarrolloClave)
+    .sort((a, b) => ordenPrioridad(a) - ordenPrioridad(b) || a.f.localeCompare(b.f));
+  const resto = list.filter(it => !esDesarrolloClave(it))
+    .sort((a, b) => a.f.localeCompare(b.f));
+  return { destacados, resto };
+}
+
 function render(list) {
   const cont = document.getElementById('lista');
   cont.innerHTML = '';
@@ -193,9 +237,19 @@ function render(list) {
     cont.innerHTML = '<p style="text-align:center;color:#6b7280;">No se encontraron páginas con ese término.</p>';
     return;
   }
-  list.forEach(it => {
+  const { destacados, resto } = ordenarConDestacadosArriba(list);
+  const ordenada = [...destacados, ...resto];
+  let separadorPuesto = false;
+  ordenada.forEach((it, idx) => {
+    if (!separadorPuesto && destacados.length > 0 && idx === destacados.length) {
+      const sep = document.createElement('div');
+      sep.style = 'margin:22px 0 14px;padding-top:14px;border-top:2px solid var(--border);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--gray);font-weight:700;';
+      sep.textContent = 'Resto de páginas (orden alfabético)';
+      cont.appendChild(sep);
+      separadorPuesto = true;
+    }
     const div = document.createElement('div');
-    div.className = 'item' + (it.broken ? ' broken' : '');
+    div.className = 'item' + (it.broken ? ' broken' : '') + (esDesarrolloClave(it) ? ' destacado' : '');
     const tagHtml = it.tag ? `<span class="tag ${it.tag}">${it.tagLabel}</span>` : '';
     const statusHtml = it.status === 'ok' ? `<span class="status-ok">${it.statusText}</span>`
       : it.status === 'redirect' ? `<span class="status-redirect">${it.statusText}</span>`
@@ -229,20 +283,36 @@ function render(list) {
   });
 }
 
+function esNoJalan(it) {
+  if (it.broken) return true;
+  if (it.tag === 'prueba' || it.tag === 'roto') return true;
+  if (it.tagLabel && it.tagLabel.toUpperCase().includes('DUPLICADA')) return true;
+  if (it.status === 'broken') return true;
+  return false;
+}
+
 function filtrar() {
   const q = document.getElementById('buscador').value.toLowerCase();
   const ubicSel = document.getElementById('filtroUbic').value;
+  const ocultar = document.getElementById('ocultarNoJalan').checked;
+  let ocultas = 0;
   const filtered = items.filter(it => {
     const matchTexto = it.f.toLowerCase().includes(q) || it.t.toLowerCase().includes(q);
     if (!matchTexto) return false;
-    if (!ubicSel) return true;
-    const ubic = detectarUbicacion(it.u, it);
-    return ubic.cls === ubicSel;
+    if (ubicSel) {
+      const ubic = detectarUbicacion(it.u, it);
+      if (ubic.cls !== ubicSel) return false;
+    }
+    if (ocultar && esNoJalan(it)) { ocultas++; return false; }
+    return true;
   });
   render(filtered);
+  const contador = document.getElementById('contador');
+  const base = `${filtered.length} de ${items.length} páginas`;
+  contador.textContent = ocultas > 0 ? `${base} · ${ocultas} ocultas (pruebas/rotas/duplicadas)` : base;
 }
 
-render(items);
+filtrar();
 </script>
 </body>
 </html>
