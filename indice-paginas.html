@@ -72,7 +72,7 @@
 <body>
 <header>
   <h1>Índice de Páginas — UNO Brokers</h1>
-  <p>Todas las páginas y herramientas, con su ubicación real (actualizado 12 sep 2026)</p>
+  <p>Todas las páginas y herramientas, con su ubicación real (actualizado 13 sep 2026 — 95 páginas verificadas contra GitHub, 1 rota detectada)</p>
 </header>
 <div class="wrap">
   <div id="avisoBox" style="background:#fff3cd;border:1px solid #e6b800;border-radius:8px;margin-bottom:18px;font-size:13px;color:#664d00;overflow:hidden;">
@@ -111,7 +111,7 @@
       Ocultar pruebas / rotas / duplicadas
     </label>
   </div>
-  <div class="count" id="contador">95 páginas · actualizado 12 sep 2026 · 0 rotas</div>
+  <div class="count" id="contador">96 páginas · actualizado 13 sep 2026 · 1 rota</div>
   <div class="leyenda">
     <span class="loc-tag loc-principal">📍 unobrokers-mx</span>
     <span class="loc-tag loc-subdominio">📍 landing-inmobiliaria</span>
@@ -125,7 +125,7 @@
 </div>
 
 <script>
-// Todas las URLs verificadas contra GitHub raw el 8 ago 2026. broken:true = no existe en ningún repo conocido.
+// Todas las URLs re-verificadas contra GitHub raw el 13 sep 2026 (las 95 previas dan 200; se detectó 1 nueva rota). broken:true = no existe en ningún repo conocido.
 const items = [
 {f:"administracion-de-rentas.html", t:"Administración de Rentas en Guadalajara y Zapopan", u:"https://unobrokers.com.mx/administracion-de-rentas.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/unobrokers-mx/main/administracion-de-rentas.html"},
 {f:"altare.html", t:"ALTARE Suites — Av. México 2849, Guadalajara", u:"https://unobrokers.com.mx/altare.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/unobrokers-mx/main/altare.html"},
@@ -210,6 +210,9 @@ const items = [
 {f:"solares-residencial-zapopan.html", t:"Vende o Renta tu Casa en Solares Residencial, Zapopan", u:"https://unobrokers.com.mx/solares-residencial-zapopan.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/unobrokers-mx/main/solares-residencial-zapopan.html", tag:"nuevo", tagLabel:"COLONIA", status:"pending", statusText:"○ Recién creada, pendiente de subir/indexar"},
 {f:"blog-investigar-inquilinos-zapopan.html", t:"Investigar Inquilinos en Zapopan y Guadalajara: Guía para Rentar Seguro", u:"https://unobrokers.com.mx/blog-investigar-inquilinos-zapopan.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/unobrokers-mx/main/blog-investigar-inquilinos-zapopan.html", tag:"blog", tagLabel:"BLOG"},
 
+// ── Detectada rota — 13 sep 2026: enlazada desde rentar-propiedad-guadalajara.html y captacion-departamentos-venta-zapopan-guadalajara.html, pero el archivo no existe en el repo (verificado 404 contra GitHub raw) ──
+{f:"providencia-guadalajara.html", t:"Vender o Rentar en Providencia, Guadalajara — ENLAZADA PERO NO EXISTE", u:"https://unobrokers.com.mx/providencia-guadalajara.html", dl:"", broken:true, tag:"roto", tagLabel:"ROTO · FIX YA GENERADO, FALTA SUBIR", status:"broken", statusText:"✕ 404 — redirect stub listo, pendiente de subir al repo"},
+
 // Propiedades individuales — fichas de Tokko Broker (control en propiedades-publicadas.md)
 {f:"loft-renta-universitaria-zapopan.html", t:"Loft Amueblado en Renta, Universitaria, Zapopan | $16,000 MXN [REF UAP8679965]", u:"https://unobrokers.com.mx/loft-renta-universitaria-zapopan.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/unobrokers-mx/main/loft-renta-universitaria-zapopan.html", tag:"nuevo", tagLabel:"PROPIEDAD TOKKO"},
 {f:"depto-renta-sant-uriel-chapalita.html", t:"Departamento en Renta 2 Recámaras, Sant Uriel, Chapalita | $26,000 MXN [REF EB-UD5791]", u:"https://unobrokers.com.mx/depto-renta-sant-uriel-chapalita.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/unobrokers-mx/main/depto-renta-sant-uriel-chapalita.html", tag:"nuevo", tagLabel:"PROPIEDAD TOKKO"},
@@ -246,6 +249,10 @@ function esDesarrolloClave(it) {
   return claves.some(k => texto.includes(k));
 }
 
+function esRoto(it) {
+  return !!it.broken || it.status === 'broken' || it.tag === 'roto';
+}
+
 function ordenPrioridad(it) {
   const texto = (it.f + ' ' + it.t).toLowerCase();
   if (texto.includes('vivaria')) return 0;
@@ -256,11 +263,13 @@ function ordenPrioridad(it) {
 }
 
 function ordenarConDestacadosArriba(list) {
-  const destacados = list.filter(esDesarrolloClave)
+  const rotas = list.filter(esRoto).sort((a, b) => a.f.localeCompare(b.f));
+  const activos = list.filter(it => !esRoto(it));
+  const destacados = activos.filter(esDesarrolloClave)
     .sort((a, b) => ordenPrioridad(a) - ordenPrioridad(b) || a.f.localeCompare(b.f));
-  const resto = list.filter(it => !esDesarrolloClave(it))
+  const resto = activos.filter(it => !esDesarrolloClave(it))
     .sort((a, b) => a.f.localeCompare(b.f));
-  return { destacados, resto };
+  return { destacados, resto, rotas };
 }
 
 function render(list) {
@@ -270,9 +279,10 @@ function render(list) {
     cont.innerHTML = '<p style="text-align:center;color:#6b7280;">No se encontraron páginas con ese término.</p>';
     return;
   }
-  const { destacados, resto } = ordenarConDestacadosArriba(list);
-  const ordenada = [...destacados, ...resto];
+  const { destacados, resto, rotas } = ordenarConDestacadosArriba(list);
+  const ordenada = [...destacados, ...resto, ...rotas];
   let separadorPuesto = false;
+  let separadorRotasPuesto = false;
   ordenada.forEach((it, idx) => {
     if (!separadorPuesto && destacados.length > 0 && idx === destacados.length) {
       const sep = document.createElement('div');
@@ -280,6 +290,13 @@ function render(list) {
       sep.textContent = 'Resto de páginas (orden alfabético)';
       cont.appendChild(sep);
       separadorPuesto = true;
+    }
+    if (!separadorRotasPuesto && rotas.length > 0 && idx === destacados.length + resto.length) {
+      const sep = document.createElement('div');
+      sep.style = 'margin:26px 0 14px;padding-top:14px;border-top:2px solid #dc2626;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#dc2626;font-weight:700;';
+      sep.textContent = '⚠️ Páginas rotas / no disponibles — requieren atención';
+      cont.appendChild(sep);
+      separadorRotasPuesto = true;
     }
     const div = document.createElement('div');
     div.className = 'item' + (it.broken ? ' broken' : '') + (esDesarrolloClave(it) ? ' destacado' : '');
