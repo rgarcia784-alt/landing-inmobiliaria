@@ -9,121 +9,120 @@
 <meta name="apple-mobile-web-app-title" content="Índice UNO">
 <title>Índice de Páginas — UNO Brokers</title>
 <style>
-  :root {
-    --navy: #0a1f3d; --navy-light: #13315c; --gold: #c9a227; --gold-light: #e0c258;
-    --cream: #f7f5f0; --gray: #6b7280; --border: #d9d4c7; --green: #2ecc71; --orange: #e67e22;
-  }
-  * { box-sizing: border-box; }
-  body { margin:0; font-family: 'Segoe UI', system-ui, sans-serif; background: var(--cream); color: var(--navy); padding: 24px 16px 60px; }
-  header { text-align:center; margin-bottom: 22px; padding-bottom: 16px; border-bottom: 2px solid var(--gold); }
-  header h1 { margin: 0 0 4px; color: var(--navy); font-size: 24px; }
-  header p { margin:0; color: var(--gray); font-size: 13px; }
-  .wrap { max-width: 900px; margin: 0 auto; }
-  .searchbar { margin: 18px 0; display:flex; gap:8px; flex-wrap:wrap; }
-  .searchbar input {
-    flex:1; min-width:200px; padding: 12px 16px; border-radius: 8px; border: 1px solid var(--border);
-    font-size: 15px; color: var(--navy);
-  }
-  .filtro-ubic { padding: 12px 14px; border-radius: 8px; border: 1px solid var(--border); font-size: 13px; color: var(--navy); background:#fff; }
-  .count { text-align:center; color: var(--gray); font-size: 13px; margin-bottom: 14px; }
-  .leyenda { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-bottom:18px; }
-  .item {
-    background:#fff; border:1px solid var(--border); border-radius: 8px; padding: 14px 16px; margin-bottom: 10px;
-    display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px;
-  }
-  .item.broken { border-color:#dc2626; background:#fef2f2; }
-  .item .fname { font-weight:700; font-size: 13px; color: var(--navy); }
-  .item .title { font-size: 13px; color: var(--gray); margin-top:2px; }
-  .item.destacado { border-width: 2px; border-color: #dc2626; }
-  .item.destacado .fname { color: #dc2626; font-size: 17px; }
-  .item.destacado .title { color: #991b1b; font-size: 14px; font-weight:600; }
-  .tag { display:inline-block; font-size:10px; font-weight:700; padding:2px 7px; border-radius:4px; margin-left:6px; vertical-align:middle; }
-  .tag.blog { background:#e8eef7; color:#2563eb; }
-  .tag.indep { background:#fdf3e0; color:#b8860b; }
-  .tag.otramarca { background:#f3e8fd; color:#7c3aed; }
-  .tag.landing { background:#e8fdf0; color:#15803d; }
-  .tag.prueba { background:#fde8e8; color:#c0392b; }
-  .tag.nuevo { background:#e0f2fe; color:#0369a1; }
-  .tag.roto { background:#dc2626; color:#fff; }
-  .status-ok { color: var(--green); font-weight:700; font-size:12px; }
-  .status-redirect { color: var(--orange); font-weight:700; font-size:12px; }
-  .status-pending { color: var(--gray); font-weight:700; font-size:12px; }
-  .status-broken { color: #dc2626; font-weight:700; font-size:12px; }
-  .ubic-row { margin-top:6px; display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
-  .loc-tag { font-size:11px; font-weight:700; padding:3px 9px; border-radius:12px; white-space:nowrap; }
-  .loc-principal { background:#dbeafe; color:#1e40af; }
-  .loc-subdominio { background:#e0e7ff; color:#3730a3; }
-  .loc-github { background:#1f2937; color:#f3f4f6; }
-  .loc-netlify { background:#dcfce7; color:#166534; }
-  .loc-firebase { background:#fef3c7; color:#92400e; }
-  .loc-dominiopropio { background:#fce7f3; color:#9d174d; }
-  .loc-otro { background:#f3f4f6; color:#6b7280; }
-  .url-text { font-size:11px; color:#9ca3af; font-family:monospace; word-break:break-all; }
-  .buttons { display:flex; gap:6px; flex-shrink:0; }
-  .btn-open, .btn-copy, .btn-dl {
-    font-size:12px; padding:7px 12px; border-radius:6px; text-decoration:none; font-weight:600; cursor:pointer; border:none;
-  }
-  .btn-open { background: var(--navy); color: var(--gold-light); }
-  .btn-copy { background: var(--cream); color: var(--navy); border:1px solid var(--border); }
-  .btn-copy.copied { background: var(--green); color:#fff; border-color: var(--green); }
-  .btn-dl { background: var(--gold); color: var(--navy); }
+:root {
+--navy: #0a1f3d; --navy-light: #13315c; --gold: #c9a227; --gold-light: #e0c258;
+--cream: #f7f5f0; --gray: #6b7280; --border: #d9d4c7; --green: #2ecc71; --orange: #e67e22;
+}
+* { box-sizing: border-box; }
+body { margin:0; font-family: 'Segoe UI', system-ui, sans-serif; background: var(--cream); color: var(--navy); padding: 24px 16px 60px; }
+header { text-align:center; margin-bottom: 22px; padding-bottom: 16px; border-bottom: 2px solid var(--gold); }
+header h1 { margin: 0 0 4px; color: var(--navy); font-size: 24px; }
+header p { margin:0; color: var(--gray); font-size: 13px; }
+.wrap { max-width: 900px; margin: 0 auto; }
+.searchbar { margin: 18px 0; display:flex; gap:8px; flex-wrap:wrap; }
+.searchbar input {
+flex:1; min-width:200px; padding: 12px 16px; border-radius: 8px; border: 1px solid var(--border);
+font-size: 15px; color: var(--navy);
+}
+.filtro-ubic { padding: 12px 14px; border-radius: 8px; border: 1px solid var(--border); font-size: 13px; color: var(--navy); background:#fff; }
+.count { text-align:center; color: var(--gray); font-size: 13px; margin-bottom: 14px; }
+.leyenda { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-bottom:18px; }
+.item {
+background:#fff; border:1px solid var(--border); border-radius: 8px; padding: 14px 16px; margin-bottom: 10px;
+display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px;
+}
+.item.broken { border-color:#dc2626; background:#fef2f2; }
+.item .fname { font-weight:700; font-size: 13px; color: var(--navy); }
+.item .title { font-size: 13px; color: var(--gray); margin-top:2px; }
+.item.destacado { border-width: 2px; border-color: #dc2626; }
+.item.destacado .fname { color: #dc2626; font-size: 17px; }
+.item.destacado .title { color: #991b1b; font-size: 14px; font-weight:600; }
+.tag { display:inline-block; font-size:10px; font-weight:700; padding:2px 7px; border-radius:4px; margin-left:6px; vertical-align:middle; }
+.tag.blog { background:#e8eef7; color:#2563eb; }
+.tag.indep { background:#fdf3e0; color:#b8860b; }
+.tag.otramarca { background:#f3e8fd; color:#7c3aed; }
+.tag.landing { background:#e8fdf0; color:#15803d; }
+.tag.prueba { background:#fde8e8; color:#c0392b; }
+.tag.nuevo { background:#e0f2fe; color:#0369a1; }
+.tag.roto { background:#dc2626; color:#fff; }
+.status-ok { color: var(--green); font-weight:700; font-size:12px; }
+.status-redirect { color: var(--orange); font-weight:700; font-size:12px; }
+.status-pending { color: var(--gray); font-weight:700; font-size:12px; }
+.status-broken { color: #dc2626; font-weight:700; font-size:12px; }
+.ubic-row { margin-top:6px; display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.loc-tag { font-size:11px; font-weight:700; padding:3px 9px; border-radius:12px; white-space:nowrap; }
+.loc-principal { background:#dbeafe; color:#1e40af; }
+.loc-subdominio { background:#e0e7ff; color:#3730a3; }
+.loc-github { background:#1f2937; color:#f3f4f6; }
+.loc-netlify { background:#dcfce7; color:#166534; }
+.loc-firebase { background:#fef3c7; color:#92400e; }
+.loc-dominiopropio { background:#fce7f3; color:#9d174d; }
+.loc-otro { background:#f3f4f6; color:#6b7280; }
+.url-text { font-size:11px; color:#9ca3af; font-family:monospace; word-break:break-all; }
+.buttons { display:flex; gap:6px; flex-shrink:0; }
+.btn-open, .btn-copy, .btn-dl {
+font-size:12px; padding:7px 12px; border-radius:6px; text-decoration:none; font-weight:600; cursor:pointer; border:none;
+}
+.btn-open { background: var(--navy); color: var(--gold-light); }
+.btn-copy { background: var(--cream); color: var(--navy); border:1px solid var(--border); }
+.btn-copy.copied { background: var(--green); color:#fff; border-color: var(--green); }
+.btn-dl { background: var(--gold); color: var(--navy); }
 </style>
 </head>
 <body>
 <header>
-  <h1>Índice de Páginas — UNO Brokers</h1>
-  <p>Todas las páginas y herramientas, con su ubicación real (actualizado 13 sep 2026 — 96 páginas, 0 rotas)</p>
+<h1>Índice de Páginas — UNO Brokers</h1>
+<p>Todas las páginas y herramientas, con su ubicación real (actualizado 22 sep 2026 — 97 páginas, 0 rotas)</p>
 </header>
 <div class="wrap">
-  <div id="avisoBox" style="background:#fff3cd;border:1px solid #e6b800;border-radius:8px;margin-bottom:18px;font-size:13px;color:#664d00;overflow:hidden;">
-    <div id="avisoToggle" style="padding:10px 18px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;font-weight:700;" onclick="toggleAviso()">
-      <span>⚠️ Aviso importante (8 ago 2026) — clic para ver</span>
-      <span id="avisoFlecha">▸</span>
-    </div>
-    <div id="avisoContenido" style="display:none;padding:0 18px 14px;">
-      Casi todo el sitio vive ahora en el repo <strong>rgarcia784-alt/unobrokers-mx</strong>, que sirve <strong>unobrokers.com.mx</strong> (dominio principal).<br>
-      El repo <strong>landing-inmobiliaria</strong> (que sirve <strong>propiedades.unobrokers.mx</strong>) quedó prácticamente vacío — solo conserva <code>index.html</code>, <code>cuanto-vale.html</code>, <code>parque-nubax.html</code> e <code>indice-paginas.html</code>.<br>
-      <strong>Antes de subir cualquier cambio, verifica en cuál de los dos repos vive realmente el archivo</strong> — no asumas por el nombre.
-    </div>
-  </div>
-  <script>
-    function toggleAviso() {
-      const c = document.getElementById('avisoContenido');
-      const f = document.getElementById('avisoFlecha');
-      const abierto = c.style.display === 'block';
-      c.style.display = abierto ? 'none' : 'block';
-      f.textContent = abierto ? '▸' : '▾';
-    }
-  </script>
-  <div class="searchbar" style="align-items:center;">
-    <input type="text" id="buscador" placeholder="Buscar página..." oninput="filtrar()">
-    <select class="filtro-ubic" id="filtroUbic" onchange="filtrar()">
-      <option value="">Todas las ubicaciones</option>
-      <option value="loc-principal">Dominio principal (unobrokers-mx)</option>
-      <option value="loc-subdominio">Subdominio (landing-inmobiliaria)</option>
-      <option value="loc-github">GitHub Pages</option>
-      <option value="loc-netlify">Netlify</option>
-      <option value="loc-firebase">Firebase (CRM)</option>
-      <option value="loc-dominiopropio">Dominio propio</option>
-    </select>
-    <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--gray);white-space:nowrap;padding:0 4px;">
-      <input type="checkbox" id="ocultarNoJalan" checked onchange="filtrar()">
-      Ocultar pruebas / rotas / duplicadas
-    </label>
-  </div>
-  <div class="count" id="contador">96 páginas · actualizado 13 sep 2026 · 0 rotas</div>
-  <div class="leyenda">
-    <span class="loc-tag loc-principal">📍 unobrokers-mx</span>
-    <span class="loc-tag loc-subdominio">📍 landing-inmobiliaria</span>
-    <span class="loc-tag loc-github">📍 GitHub Pages</span>
-    <span class="loc-tag loc-netlify">📍 Netlify</span>
-    <span class="loc-tag loc-firebase">📍 Firebase</span>
-    <span class="loc-tag loc-dominiopropio">📍 Dominio propio</span>
-    <span class="tag roto">ROTO</span>
-  </div>
-  <div id="lista"></div>
+<div id="avisoBox" style="background:#fff3cd;border:1px solid #e6b800;border-radius:8px;margin-bottom:18px;font-size:13px;color:#664d00;overflow:hidden;">
+<div id="avisoToggle" style="padding:10px 18px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;font-weight:700;" onclick="toggleAviso()">
+<span>⚠️ Aviso importante (8 ago 2026) — clic para ver</span>
+<span id="avisoFlecha">▸</span>
 </div>
-
+<div id="avisoContenido" style="display:none;padding:0 18px 14px;">
+Casi todo el sitio vive ahora en el repo <strong>rgarcia784-alt/unobrokers-mx</strong>, que sirve <strong>unobrokers.com.mx</strong> (dominio principal).<br>
+El repo <strong>landing-inmobiliaria</strong> (que sirve <strong>propiedades.unobrokers.mx</strong>) quedó prácticamente vacío — solo conserva <code>index.html</code>, <code>cuanto-vale.html</code>, <code>parque-nubax.html</code> e <code>indice-paginas.html</code>.<br>
+<strong>Antes de subir cualquier cambio, verifica en cuál de los dos repos vive realmente el archivo</strong> — no asumas por el nombre.
+</div>
+</div>
+<script>
+function toggleAviso() {
+const c = document.getElementById('avisoContenido');
+const f = document.getElementById('avisoFlecha');
+const abierto = c.style.display === 'block';
+c.style.display = abierto ? 'none' : 'block';
+f.textContent = abierto ? '▸' : '▾';
+}
+</script>
+<div class="searchbar" style="align-items:center;">
+<input type="text" id="buscador" placeholder="Buscar página..." oninput="filtrar()">
+<select class="filtro-ubic" id="filtroUbic" onchange="filtrar()">
+<option value="">Todas las ubicaciones</option>
+<option value="loc-principal">Dominio principal (unobrokers-mx)</option>
+<option value="loc-subdominio">Subdominio (landing-inmobiliaria)</option>
+<option value="loc-github">GitHub Pages</option>
+<option value="loc-netlify">Netlify</option>
+<option value="loc-firebase">Firebase (CRM)</option>
+<option value="loc-dominiopropio">Dominio propio</option>
+</select>
+<label style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--gray);white-space:nowrap;padding:0 4px;">
+<input type="checkbox" id="ocultarNoJalan" checked onchange="filtrar()">
+Ocultar pruebas / rotas / duplicadas
+</label>
+</div>
+<div class="count" id="contador">97 páginas · actualizado 22 sep 2026 · 0 rotas</div>
+<div class="leyenda">
+<span class="loc-tag loc-principal">📍 unobrokers-mx</span>
+<span class="loc-tag loc-subdominio">📍 landing-inmobiliaria</span>
+<span class="loc-tag loc-github">📍 GitHub Pages</span>
+<span class="loc-tag loc-netlify">📍 Netlify</span>
+<span class="loc-tag loc-firebase">📍 Firebase</span>
+<span class="loc-tag loc-dominiopropio">📍 Dominio propio</span>
+<span class="tag roto">ROTO</span>
+</div>
+<div id="lista"></div>
+</div>
 <script>
 // Todas las URLs re-verificadas contra GitHub raw el 13 sep 2026 (las 95 previas dan 200; se detectó 1 nueva rota). broken:true = no existe en ningún repo conocido.
 const items = [
@@ -199,7 +198,6 @@ const items = [
 {f:"NARA_Americas_Brochure.pdf", t:"NARA Américas — Brochure comercial", u:"https://rgarcia784-alt.github.io/nara-americas-tools/NARA_Americas_Brochure.pdf", dl:"https://raw.githubusercontent.com/rgarcia784-alt/nara-americas-tools/main/NARA_Americas_Brochure.pdf", tag:"indep", tagLabel:"DOMINIO INDEPENDIENTE", status:"ok", statusText:"✓ Publicado y enlazado desde landing y cotizador"},
 {f:"index.html", t:"Arq. Eduardo Espinosa Heredia — Dirección de Obra y Diseño Arquitectónico", u:"https://arq-eduardo-espinosa.netlify.app/", dl:"", tag:"otramarca", tagLabel:"OTRA MARCA / AGENTE"},
 {f:"CRM interno", t:"CRM UNO Brokers — Requerimientos, Arrendatarios, Prospectos, Compradores y Calendario", u:"https://rafa-crm-unobrokers.web.app/", dl:"", status:"pending", statusText:"◐ Uso interno — no indexar"},
-
 // ── Agregadas 6 sep 2026: páginas creadas en agosto-septiembre que no estaban en el índice ──
 {f:"calculadora-ajuste-renta-inpc.html", t:"Calculadora de Ajuste de Renta por INPC 2026", u:"https://unobrokers.com.mx/calculadora-ajuste-renta-inpc.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/unobrokers-mx/main/calculadora-ajuste-renta-inpc.html", tag:"nuevo", tagLabel:"HERRAMIENTA · CAPTACIÓN"},
 {f:"bienes-raices-belenes-zapopan.html", t:"Inmobiliaria en Belenes, Zapopan", u:"https://unobrokers.com.mx/bienes-raices-belenes-zapopan.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/unobrokers-mx/main/bienes-raices-belenes-zapopan.html", tag:"nuevo", tagLabel:"ZONA"},
@@ -211,10 +209,8 @@ const items = [
 {f:"colonia-americana-guadalajara.html", t:"Vende o Renta tu Casa en Colonia Americana, Guadalajara", u:"https://unobrokers.com.mx/colonia-americana-guadalajara.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/unobrokers-mx/main/colonia-americana-guadalajara.html", tag:"nuevo", tagLabel:"COLONIA"},
 {f:"solares-residencial-zapopan.html", t:"Vende o Renta tu Casa en Solares Residencial, Zapopan", u:"https://unobrokers.com.mx/solares-residencial-zapopan.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/unobrokers-mx/main/solares-residencial-zapopan.html", tag:"nuevo", tagLabel:"COLONIA", status:"pending", statusText:"○ Recién creada, pendiente de subir/indexar"},
 {f:"blog-investigar-inquilinos-zapopan.html", t:"Investigar Inquilinos en Zapopan y Guadalajara: Guía para Rentar Seguro", u:"https://unobrokers.com.mx/blog-investigar-inquilinos-zapopan.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/unobrokers-mx/main/blog-investigar-inquilinos-zapopan.html", tag:"blog", tagLabel:"BLOG"},
-
 // ── Detectada rota — 13 sep 2026: enlazada desde rentar-propiedad-guadalajara.html y captacion-departamentos-venta-zapopan-guadalajara.html, pero el archivo no existe en el repo (verificado 404 contra GitHub raw) ──
 {f:"providencia-guadalajara.html", t:"Vende o Renta tu Casa en Providencia, Guadalajara", u:"https://unobrokers.com.mx/providencia-guadalajara.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/unobrokers-mx/main/providencia-guadalajara.html", tag:"nuevo", tagLabel:"COLONIA"},
-
 // Propiedades individuales — fichas de Tokko Broker (control en propiedades-publicadas.md)
 {f:"loft-renta-universitaria-zapopan.html", t:"Loft Amueblado en Renta, Universitaria, Zapopan | $16,000 MXN [REF UAP8679965]", u:"https://unobrokers.com.mx/loft-renta-universitaria-zapopan.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/unobrokers-mx/main/loft-renta-universitaria-zapopan.html", tag:"nuevo", tagLabel:"PROPIEDAD TOKKO"},
 {f:"depto-renta-sant-uriel-chapalita.html", t:"Departamento en Renta 2 Recámaras, Sant Uriel, Chapalita | $26,000 MXN [REF EB-UD5791]", u:"https://unobrokers.com.mx/depto-renta-sant-uriel-chapalita.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/unobrokers-mx/main/depto-renta-sant-uriel-chapalita.html", tag:"nuevo", tagLabel:"PROPIEDAD TOKKO"},
@@ -231,139 +227,132 @@ const items = [
 {f:"departamento-venta-jardin-san-ignacio-zapopan.html", t:"Departamento en Venta 2 Recámaras, Jardín de San Ignacio | $4,100,000 MXN [REF UAP9480344]", u:"https://unobrokers.com.mx/departamento-venta-jardin-san-ignacio-zapopan.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/unobrokers-mx/main/departamento-venta-jardin-san-ignacio-zapopan.html", tag:"nuevo", tagLabel:"PROPIEDAD TOKKO"},
 {f:"terreno-venta-bosques-vallarta-zapopan.html", t:"Terreno en Venta 190 m², Bosques Vallarta, Zona Real | $3,420,000 MXN [REF ULA7767297]", u:"https://unobrokers.com.mx/terreno-venta-bosques-vallarta-zapopan.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/unobrokers-mx/main/terreno-venta-bosques-vallarta-zapopan.html", tag:"nuevo", tagLabel:"PROPIEDAD TOKKO"},
 {f:"terreno-promocion-los-suenos-diamante-zapopan.html", t:"Terreno en Promoción 531.76 m², Los Sueños Categoría Diamante | $9,172,860 MXN [REF ULA8586909]", u:"https://unobrokers.com.mx/terreno-promocion-los-suenos-diamante-zapopan.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/unobrokers-mx/main/terreno-promocion-los-suenos-diamante-zapopan.html", tag:"nuevo", tagLabel:"PROPIEDAD TOKKO"},
+// ── Agregada 22 sep 2026 ──
+{f:"preventas-guadalajara-zapopan.html", t:"Departamentos en Preventa en Guadalajara y Zapopan (Vivaria 2360 + NARA Américas)", u:"https://unobrokers.com.mx/preventas-guadalajara-zapopan.html", dl:"https://raw.githubusercontent.com/rgarcia784-alt/unobrokers-mx/main/preventas-guadalajara-zapopan.html", tag:"nuevo", tagLabel:"HUB · PREVENTAS", status:"pending", statusText:"○ Recién creada, pendiente de subir/indexar"},
 ];
-
 function detectarUbicacion(url, item) {
-  if (item && item.broken) return {label:'NO EXISTE', cls:'loc-otro'};
-  if (url.includes('unobrokers.com.mx')) return {label:'Dominio principal · repo: unobrokers-mx', cls:'loc-principal'};
-  if (url.includes('blog.propiedades.unobrokers.mx')) return {label:'Blog (subdominio) · repo: blog-inmobiliario-gdl', cls:'loc-subdominio'};
-  if (url.includes('propiedades.unobrokers.mx')) return {label:'Subdominio · repo: landing-inmobiliaria', cls:'loc-subdominio'};
-  if (url.includes('web.app')) return {label:'Firebase (CRM)', cls:'loc-firebase'};
-  if (url.includes('github.io')) return {label:'GitHub Pages', cls:'loc-github'};
-  if (url.includes('netlify.app')) return {label:'Netlify', cls:'loc-netlify'};
-  if (url.includes('parquenubax.com.mx')) return {label:'Dominio propio · repo: parque-nubax-industrial', cls:'loc-dominiopropio'};
-  return {label:'Otro / dominio propio', cls:'loc-otro'};
+if (item && item.broken) return {label:'NO EXISTE', cls:'loc-otro'};
+if (url.includes('unobrokers.com.mx')) return {label:'Dominio principal · repo: unobrokers-mx', cls:'loc-principal'};
+if (url.includes('blog.propiedades.unobrokers.mx')) return {label:'Blog (subdominio) · repo: blog-inmobiliario-gdl', cls:'loc-subdominio'};
+if (url.includes('propiedades.unobrokers.mx')) return {label:'Subdominio · repo: landing-inmobiliaria', cls:'loc-subdominio'};
+if (url.includes('web.app')) return {label:'Firebase (CRM)', cls:'loc-firebase'};
+if (url.includes('github.io')) return {label:'GitHub Pages', cls:'loc-github'};
+if (url.includes('netlify.app')) return {label:'Netlify', cls:'loc-netlify'};
+if (url.includes('parquenubax.com.mx')) return {label:'Dominio propio · repo: parque-nubax-industrial', cls:'loc-dominiopropio'};
+return {label:'Otro / dominio propio', cls:'loc-otro'};
 }
-
 function esDesarrolloClave(it) {
-  const texto = (it.f + ' ' + it.t).toLowerCase();
-  const claves = ['vivaria', 'nara am', 'nara-am', 'nubax', 'sueños', 'suenos'];
-  return claves.some(k => texto.includes(k));
+const texto = (it.f + ' ' + it.t).toLowerCase();
+const claves = ['vivaria', 'nara am', 'nara-am', 'nubax', 'sueños', 'suenos'];
+return claves.some(k => texto.includes(k));
 }
-
 function esRoto(it) {
-  return !!it.broken || it.status === 'broken' || it.tag === 'roto';
+return !!it.broken || it.status === 'broken' || it.tag === 'roto';
 }
-
 function ordenPrioridad(it) {
-  const texto = (it.f + ' ' + it.t).toLowerCase();
-  if (texto.includes('vivaria')) return 0;
-  if (texto.includes('nara am') || texto.includes('nara-am')) return 1;
-  if (texto.includes('nubax')) return 2;
-  if (texto.includes('sueños') || texto.includes('suenos')) return 3;
-  return 99;
+const texto = (it.f + ' ' + it.t).toLowerCase();
+if (texto.includes('vivaria')) return 0;
+if (texto.includes('nara am') || texto.includes('nara-am')) return 1;
+if (texto.includes('nubax')) return 2;
+if (texto.includes('sueños') || texto.includes('suenos')) return 3;
+return 99;
 }
-
 function ordenarConDestacadosArriba(list) {
-  const rotas = list.filter(esRoto).sort((a, b) => a.f.localeCompare(b.f));
-  const activos = list.filter(it => !esRoto(it));
-  const destacados = activos.filter(esDesarrolloClave)
-    .sort((a, b) => ordenPrioridad(a) - ordenPrioridad(b) || a.f.localeCompare(b.f));
-  const resto = activos.filter(it => !esDesarrolloClave(it))
-    .sort((a, b) => a.f.localeCompare(b.f));
-  return { destacados, resto, rotas };
+const rotas = list.filter(esRoto).sort((a, b) => a.f.localeCompare(b.f));
+const activos = list.filter(it => !esRoto(it));
+const destacados = activos.filter(esDesarrolloClave)
+.sort((a, b) => ordenPrioridad(a) - ordenPrioridad(b) || a.f.localeCompare(b.f));
+const resto = activos.filter(it => !esDesarrolloClave(it))
+.sort((a, b) => a.f.localeCompare(b.f));
+return { destacados, resto, rotas };
 }
-
 function render(list) {
-  const cont = document.getElementById('lista');
-  cont.innerHTML = '';
-  if (list.length === 0) {
-    cont.innerHTML = '<p style="text-align:center;color:#6b7280;">No se encontraron páginas con ese término.</p>';
-    return;
-  }
-  const { destacados, resto, rotas } = ordenarConDestacadosArriba(list);
-  const ordenada = [...destacados, ...resto, ...rotas];
-  let separadorPuesto = false;
-  let separadorRotasPuesto = false;
-  ordenada.forEach((it, idx) => {
-    if (!separadorPuesto && destacados.length > 0 && idx === destacados.length) {
-      const sep = document.createElement('div');
-      sep.style = 'margin:22px 0 14px;padding-top:14px;border-top:2px solid var(--border);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--gray);font-weight:700;';
-      sep.textContent = 'Resto de páginas (orden alfabético)';
-      cont.appendChild(sep);
-      separadorPuesto = true;
-    }
-    if (!separadorRotasPuesto && rotas.length > 0 && idx === destacados.length + resto.length) {
-      const sep = document.createElement('div');
-      sep.style = 'margin:26px 0 14px;padding-top:14px;border-top:2px solid #dc2626;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#dc2626;font-weight:700;';
-      sep.textContent = '⚠️ Páginas rotas / no disponibles — requieren atención';
-      cont.appendChild(sep);
-      separadorRotasPuesto = true;
-    }
-    const div = document.createElement('div');
-    div.className = 'item' + (it.broken ? ' broken' : '') + (esDesarrolloClave(it) ? ' destacado' : '');
-    const tagHtml = it.tag ? `<span class="tag ${it.tag}">${it.tagLabel}</span>` : '';
-    const statusHtml = it.status === 'ok' ? `<span class="status-ok">${it.statusText}</span>`
-      : it.status === 'redirect' ? `<span class="status-redirect">${it.statusText}</span>`
-      : it.status === 'broken' ? `<span class="status-broken">${it.statusText}</span>`
-      : it.status === 'pending' ? `<span class="status-pending">${it.statusText}</span>` : '';
-    const ubic = detectarUbicacion(it.u, it);
-    const ubicHtml = `<span class="loc-tag ${ubic.cls}">📍 ${ubic.label}</span>`;
-    const buttonsHtml = it.broken
-      ? `<span style="font-size:12px;color:#dc2626;font-weight:600;">Sin archivo disponible</span>`
-      : `<a class="btn-open" href="${it.u}" target="_blank">Abrir ↗</a>
-         <button class="btn-copy" data-url="${it.u}">Copiar link</button>
-         ${it.dl ? `<a class="btn-dl" href="${it.dl}" target="_blank" download>Descargar HTML</a>` : ''}`;
-    div.innerHTML = `
-      <div>
-        <div class="fname">${it.f} ${tagHtml} ${statusHtml}</div>
-        <div class="title">${it.t}</div>
-        <div class="ubic-row">${ubicHtml} ${it.u ? `<span class="url-text">${it.u}</span>` : ''}</div>
-      </div>
-      <div class="buttons">${buttonsHtml}</div>`;
-    cont.appendChild(div);
-  });
-  document.querySelectorAll('.btn-copy').forEach(btn => {
-    btn.addEventListener('click', () => {
-      navigator.clipboard.writeText(btn.dataset.url).then(() => {
-        const orig = btn.textContent;
-        btn.textContent = '✓ Copiado';
-        btn.classList.add('copied');
-        setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 1500);
-      });
-    });
-  });
+const cont = document.getElementById('lista');
+cont.innerHTML = '';
+if (list.length === 0) {
+cont.innerHTML = '<p style="text-align:center;color:#6b7280;">No se encontraron páginas con ese término.</p>';
+return;
 }
-
+const { destacados, resto, rotas } = ordenarConDestacadosArriba(list);
+const ordenada = [...destacados, ...resto, ...rotas];
+let separadorPuesto = false;
+let separadorRotasPuesto = false;
+ordenada.forEach((it, idx) => {
+if (!separadorPuesto && destacados.length > 0 && idx === destacados.length) {
+const sep = document.createElement('div');
+sep.style = 'margin:22px 0 14px;padding-top:14px;border-top:2px solid var(--border);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--gray);font-weight:700;';
+sep.textContent = 'Resto de páginas (orden alfabético)';
+cont.appendChild(sep);
+separadorPuesto = true;
+}
+if (!separadorRotasPuesto && rotas.length > 0 && idx === destacados.length + resto.length) {
+const sep = document.createElement('div');
+sep.style = 'margin:26px 0 14px;padding-top:14px;border-top:2px solid #dc2626;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#dc2626;font-weight:700;';
+sep.textContent = '⚠️ Páginas rotas / no disponibles — requieren atención';
+cont.appendChild(sep);
+separadorRotasPuesto = true;
+}
+const div = document.createElement('div');
+div.className = 'item' + (it.broken ? ' broken' : '') + (esDesarrolloClave(it) ? ' destacado' : '');
+const tagHtml = it.tag ? `<span class="tag ${it.tag}">${it.tagLabel}</span>` : '';
+const statusHtml = it.status === 'ok' ? `<span class="status-ok">${it.statusText}</span>`
+: it.status === 'redirect' ? `<span class="status-redirect">${it.statusText}</span>`
+: it.status === 'broken' ? `<span class="status-broken">${it.statusText}</span>`
+: it.status === 'pending' ? `<span class="status-pending">${it.statusText}</span>` : '';
+const ubic = detectarUbicacion(it.u, it);
+const ubicHtml = `<span class="loc-tag ${ubic.cls}">📍 ${ubic.label}</span>`;
+const buttonsHtml = it.broken
+? `<span style="font-size:12px;color:#dc2626;font-weight:600;">Sin archivo disponible</span>`
+: `<a class="btn-open" href="${it.u}" target="_blank">Abrir ↗</a>
+<button class="btn-copy" data-url="${it.u}">Copiar link</button>
+${it.dl ? `<a class="btn-dl" href="${it.dl}" target="_blank" download>Descargar HTML</a>` : ''}`;
+div.innerHTML = `
+<div>
+<div class="fname">${it.f} ${tagHtml} ${statusHtml}</div>
+<div class="title">${it.t}</div>
+<div class="ubic-row">${ubicHtml} ${it.u ? `<span class="url-text">${it.u}</span>` : ''}</div>
+</div>
+<div class="buttons">${buttonsHtml}</div>`;
+cont.appendChild(div);
+});
+document.querySelectorAll('.btn-copy').forEach(btn => {
+btn.addEventListener('click', () => {
+navigator.clipboard.writeText(btn.dataset.url).then(() => {
+const orig = btn.textContent;
+btn.textContent = '✓ Copiado';
+btn.classList.add('copied');
+setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 1500);
+});
+});
+});
+}
 function esNoJalan(it) {
-  if (it.broken) return true;
-  if (it.tag === 'prueba' || it.tag === 'roto') return true;
-  if (it.tagLabel && it.tagLabel.toUpperCase().includes('DUPLICADA')) return true;
-  if (it.status === 'broken') return true;
-  return false;
+if (it.broken) return true;
+if (it.tag === 'prueba' || it.tag === 'roto') return true;
+if (it.tagLabel && it.tagLabel.toUpperCase().includes('DUPLICADA')) return true;
+if (it.status === 'broken') return true;
+return false;
 }
-
 function filtrar() {
-  const q = document.getElementById('buscador').value.toLowerCase();
-  const ubicSel = document.getElementById('filtroUbic').value;
-  const ocultar = document.getElementById('ocultarNoJalan').checked;
-  let ocultas = 0;
-  const filtered = items.filter(it => {
-    const matchTexto = it.f.toLowerCase().includes(q) || it.t.toLowerCase().includes(q);
-    if (!matchTexto) return false;
-    if (ubicSel) {
-      const ubic = detectarUbicacion(it.u, it);
-      if (ubic.cls !== ubicSel) return false;
-    }
-    if (ocultar && esNoJalan(it)) { ocultas++; return false; }
-    return true;
-  });
-  render(filtered);
-  const contador = document.getElementById('contador');
-  const base = `${filtered.length} de ${items.length} páginas`;
-  contador.textContent = ocultas > 0 ? `${base} · ${ocultas} ocultas (pruebas/rotas/duplicadas)` : base;
+const q = document.getElementById('buscador').value.toLowerCase();
+const ubicSel = document.getElementById('filtroUbic').value;
+const ocultar = document.getElementById('ocultarNoJalan').checked;
+let ocultas = 0;
+const filtered = items.filter(it => {
+const matchTexto = it.f.toLowerCase().includes(q) || it.t.toLowerCase().includes(q);
+if (!matchTexto) return false;
+if (ubicSel) {
+const ubic = detectarUbicacion(it.u, it);
+if (ubic.cls !== ubicSel) return false;
 }
-
+if (ocultar && esNoJalan(it)) { ocultas++; return false; }
+return true;
+});
+render(filtered);
+const contador = document.getElementById('contador');
+const base = `${filtered.length} de ${items.length} páginas`;
+contador.textContent = ocultas > 0 ? `${base} · ${ocultas} ocultas (pruebas/rotas/duplicadas)` : base;
+}
 filtrar();
 </script>
 </body>
