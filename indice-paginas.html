@@ -31,6 +31,16 @@ font-size: 15px; color: var(--navy);
 background:#fff; border:1px solid var(--border); border-radius: 8px; padding: 14px 16px; margin-bottom: 10px;
 display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px;
 }
+.item.compartir { border:3px solid #39ff14 !important; background:#f0fff0; box-shadow:0 0 0 3px rgba(57,255,20,.35), 0 0 18px rgba(57,255,20,.55); }
+.badge-compartir { display:inline-block; background:#39ff14; color:#0a1f3d; font-weight:800; font-size:11px; letter-spacing:.5px; padding:3px 9px; border-radius:20px; margin-right:6px; vertical-align:middle; }
+.seccion-compartir { display:inline-block; background:#0a1f3d; color:#39ff14; font-weight:700; font-size:11px; padding:3px 9px; border-radius:20px; margin-right:6px; vertical-align:middle; }
+#panelCompartir { border:3px solid #39ff14; background:#0a1f3d; border-radius:12px; padding:16px 18px; margin:0 0 22px; box-shadow:0 0 18px rgba(57,255,20,.45); }
+#panelCompartir h2 { color:#39ff14; font-size:17px; margin:0 0 4px; }
+#panelCompartir p.sub { color:#cbd5e1; font-size:12px; margin:0 0 12px; }
+.pc-row { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:9px 0; border-top:1px solid rgba(57,255,20,.25); flex-wrap:wrap; }
+.pc-row .pc-name { color:#fff; font-weight:700; font-size:14px; }
+.pc-row .pc-url { color:#94a3b8; font-size:11px; word-break:break-all; }
+.pc-row .pc-btns a, .pc-row .pc-btns button { background:#39ff14; color:#0a1f3d; border:0; border-radius:6px; padding:6px 11px; font-weight:700; font-size:12px; cursor:pointer; text-decoration:none; margin-left:4px; }
 .item.broken { border-color:#dc2626; background:#fef2f2; }
 .item .fname { font-weight:700; font-size: 13px; color: var(--navy); }
 .item .title { font-size: 13px; color: var(--gray); margin-top:2px; }
@@ -121,6 +131,7 @@ Ocultar pruebas / rotas / duplicadas
 <span class="loc-tag loc-dominiopropio">📍 Dominio propio</span>
 <span class="tag roto">ROTO</span>
 </div>
+<div id="panelCompartir"></div>
 <div id="lista"></div>
 </div>
 <script>
@@ -353,6 +364,32 @@ const resto = activos.filter(it => !esDesarrolloClave(it))
 .sort((a, b) => a.f.localeCompare(b.f));
 return { destacados, resto, rotas };
 }
+
+// ⭐ PÁGINAS PARA COMPARTIR: la página principal de cada desarrollo / sección (verde fosforescente)
+const COMPARTIR = [
+ {sec:"Todo UNO Brokers (enlaces)", u:"https://unobrokers.com.mx/links.html"},
+ {sec:"NARA Américas", u:"https://unobrokers.com.mx/nara-americas.html"},
+ {sec:"Vivaria 2360", u:"https://unobrokers.com.mx/vivaria-2360.html"},
+ {sec:"Preventas (Vivaria + NARA)", u:"https://unobrokers.com.mx/preventas-guadalajara-zapopan.html"},
+ {sec:"Los Sueños Residencial", u:"https://unobrokers.com.mx/los-suenos-residencial.html"},
+ {sec:"Parque Nubax", u:"https://parquenubax.com.mx/"},
+ {sec:"Agatha · Capital Norte", u:"https://unobrokers.com.mx/departamentos-en-venta-zapopan-capital-norte.html"},
+ {sec:"Las Tecas · Vallarta", u:"https://unobrokers.com.mx/terrenos-venta-puerto-vallarta-nuevo-vallarta-las-tecas.html"},
+ {sec:"Plaza Norte · Locales", u:"https://unobrokers.com.mx/plaza-norte-locales-en-renta-capital-norte-zapopan.html"},
+ {sec:"The Lighthouse", u:"https://rgarcia784-alt.github.io/lighthouse-zapopan/"},
+ {sec:"BINVEST (portafolio)", u:"https://unobrokers.com.mx/binvest.html"},
+ {sec:"Casa Vallarta Universidad · Venta", u:"https://unobrokers.com.mx/venta/casa-en-venta-vallarta-universidad-zapopan.html"},
+ {sec:"Casa Vallarta Universidad · Renta / oficina", u:"https://unobrokers.com.mx/renta/casa-en-renta-vallarta-universidad-zapopan.html"},
+ {sec:"Coordenada Central · Renta", u:"https://unobrokers.com.mx/renta/departamento-coordenada-central-zapopan.html"},
+];
+function seccionCompartir(it){ const c = COMPARTIR.find(x => x.u === it.u); return c ? c.sec : null; }
+function renderPanelCompartir(){
+ const el = document.getElementById('panelCompartir'); if(!el) return;
+ el.innerHTML = '<h2>⭐ Páginas para compartir</h2><p class="sub">Una por desarrollo o sección: es la que tiene toda la información. Las verás también resaltadas en verde en la lista.</p>' +
+ COMPARTIR.map(c => `<div class="pc-row"><div><div class="pc-name">${c.sec}</div><div class="pc-url">${c.u}</div></div><div class="pc-btns"><a href="${c.u}" target="_blank">Abrir ↗</a><button class="pc-copy" data-url="${c.u}">Copiar link</button></div></div>`).join('');
+ el.querySelectorAll('.pc-copy').forEach(b => b.addEventListener('click', () => navigator.clipboard.writeText(b.dataset.url).then(() => { const o=b.textContent; b.textContent='✓ Copiado'; setTimeout(()=>b.textContent=o,1500); })));
+}
+renderPanelCompartir();
 function render(list) {
 const cont = document.getElementById('lista');
 cont.innerHTML = '';
@@ -364,6 +401,7 @@ const { destacados, resto, rotas } = ordenarConDestacadosArriba(list);
 const ordenada = [...destacados, ...resto, ...rotas];
 let separadorPuesto = false;
 let separadorRotasPuesto = false;
+const compartirVistos = new Set();
 ordenada.forEach((it, idx) => {
 if (!separadorPuesto && destacados.length > 0 && idx === destacados.length) {
 const sep = document.createElement('div');
@@ -381,6 +419,9 @@ separadorRotasPuesto = true;
 }
 const div = document.createElement('div');
 div.className = 'item' + (it.broken ? ' broken' : '') + (esDesarrolloClave(it) ? ' destacado' : '');
+const secComp = (!it.broken && !compartirVistos.has(it.u)) ? seccionCompartir(it) : null;
+if (secComp) { compartirVistos.add(it.u); div.className += ' compartir'; }
+const compHtml = secComp ? `<span class="badge-compartir">⭐ COMPARTIR ESTA</span><span class="seccion-compartir">${secComp}</span><br>` : '';
 const tagHtml = it.tag ? `<span class="tag ${it.tag}">${it.tagLabel}</span>` : '';
 const statusHtml = it.status === 'ok' ? `<span class="status-ok">${it.statusText}</span>`
 : it.status === 'redirect' ? `<span class="status-redirect">${it.statusText}</span>`
@@ -395,7 +436,7 @@ const buttonsHtml = it.broken
 ${it.dl ? `<a class="btn-dl" href="${it.dl}" target="_blank" download>Descargar HTML</a>` : ''}`;
 div.innerHTML = `
 <div>
-<div class="fname">${it.f} ${tagHtml} ${statusHtml}</div>
+<div class="fname">${compHtml}${it.f} ${tagHtml} ${statusHtml}</div>
 <div class="title">${it.t}</div>
 <div class="ubic-row">${ubicHtml} ${it.u ? `<span class="url-text">${it.u}</span>` : ''}</div>
 </div>
